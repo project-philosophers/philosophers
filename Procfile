@@ -1,1 +1,1 @@
-web: (cd frontend && yarn start) & (cd backend && yarn start)
+web: nuxt
