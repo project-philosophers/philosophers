@@ -5,11 +5,11 @@
   "license": "MIT",
   "engines": {
     "node": "16.x",
-    "npm": "8.x"
+    "yarn": "1.x"
   },
   "scripts": {
-    "install": "(cd frontend && npm install) & (cd backend && npm install)",
-    "start": "(cd frontend && npm start) & (cd backend && npm start)",
-    "start:dev": "cd frontend && npm run start:dev"
+    "install": "(cd frontend && yarn install) & (cd backend && yarn install)",
+    "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
+    "start:dev": "cd frontend && yarn run start:dev"
   }
 }
