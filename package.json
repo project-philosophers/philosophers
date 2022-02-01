@@ -1,14 +1,15 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/app.js",
   "license": "MIT",
   "engines": {
-    "yarn": "1.x"
+    "node": "16.x",
+    "npm": "8.x"
   },
   "scripts": {
-    "install": "(cd frontend && yarn install) & (cd backend && yarn install)",
-    "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
-    "start:dev": "cd frontend && yarn run start:dev"
+    "install": "(cd frontend && npm install) & (cd backend && npm install)",
+    "start": "(cd frontend && npm start) & (cd backend && npm start)",
+    "start:dev": "cd frontend && npm run start:dev"
   }
 }
