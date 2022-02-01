@@ -10,6 +10,7 @@
   "scripts": {
     "install": "(cd frontend && yarn install) & (cd backend && yarn install)",
     "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
-    "start:dev": "cd frontend && yarn run start:dev"
+    "start:dev": "cd frontend && yarn run start:dev",
+    "heroku-postbuild": "(cd frontend && yarn start) & (cd backend && yarn start)"
   }
 }
