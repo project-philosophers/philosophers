@@ -19,14 +19,9 @@ router.get('/', (req, res) => {
   if (req.session.username) {
     console.log(req.session.username);
     res.render('index', { title: 'hello' });
-    // next();
   } else {
     res.redirect('/users/login');
   }
-
-  // db.Users.findAll()
-  //   .then(users => res.json(users.map(user => user.dataValues)))
-  //   .catch(err => console.error(err.stack));
 });
 
 // register {name, email, password, password_confirm}
@@ -65,10 +60,12 @@ router.post('/register', [
   .catch(err => console.error(err.stack));
 });
 
+
 // login {email, password}
-router.get('/login', (req, res) => {
-  res.render('index', { title: 'login' });
-})
+
+// router.get('/login', (req, res) => {
+//   res.render('index', { title: 'login' });
+// })
 
 router.post('/login', [
   check('email').not().isEmpty().isEmail(),
@@ -111,5 +108,6 @@ router.get('/p', function(req, res, next) {
   console.log(req.session);
   res.render('index', { title: username });
 });
+
 
 module.exports = router;
