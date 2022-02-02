@@ -1,9 +1,17 @@
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  name: 'IndexPage'
+})
+</script>
+
 <template>
-  <Tutorial/>
+  <Nav/>
 </template>
 
-<script>
-export default {
-  name: 'IndexPage'
-}
-</script>
+<style>
+  * {
+    font-family: 'Courier';
+  }
+</style>
