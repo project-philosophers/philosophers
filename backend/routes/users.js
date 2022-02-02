@@ -10,6 +10,8 @@ router.use(bodyParser.json());
 
 const db = require('../models/index');
 
+const errorRes = require('../lib/error');
+
 
 // userpage
 router.get('/', (req, res) => {
@@ -99,6 +101,7 @@ router.post('/login', [
   })
   .catch(err => {
     console.error(err.stack);
+    // const 
     res.status(401).send(err.message);
   });
 });
