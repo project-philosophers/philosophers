@@ -10,7 +10,7 @@ router.use(bodyParser.json());
 
 const db = require('../models/index');
 
-const errorRes = require('../lib/error');
+const errorRes = require('../lib/errorRes');
 
 
 // userpage

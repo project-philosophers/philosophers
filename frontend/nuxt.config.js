@@ -36,6 +36,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -44,6 +45,22 @@ export default {
 
   // server
   server: {
-    port: 3001
+    // port: 3001
+  },
+
+  // axios
+  axios: {
+    // prefix: '/api'
+    // proxy: true
+  },
+
+  // proxy
+  proxy: {
+    // '/api/': {
+    //   target: 'http://localhost:3000',
+  //     pathRewrite: {
+  //       '^/api/': '/'
+  //     }
+  //   }
   }
 }
