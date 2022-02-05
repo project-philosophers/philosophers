@@ -12,8 +12,8 @@ router.post('/post', (req, res) => {
 })
 
 
-// const philsContoroller = require(('./phils'));
-// router.use('/phils', philsContoroller);
+const philsContoroller = require(('./model_routers/phils'));
+router.use('/phils', philsContoroller);
 
 
 module.exports = router;

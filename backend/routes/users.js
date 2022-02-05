@@ -106,7 +106,9 @@ router.post('/login', [
   });
 });
 
-router.get('/p', function(req, res, next) {
+
+// logout
+router.get('/logout', function(req, res, next) {
   const username = req.session.username;
   console.log(req.session);
   res.render('index', { title: username });

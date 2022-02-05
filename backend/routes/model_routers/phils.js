@@ -147,7 +147,7 @@ router.post('/update', (req, res, next) => {
 
 	// const updateFuncs = [updatePhilosophers(), updateTags()];
 
-	const ph_before = await db.Philosophers
+	const ph_before = db.Philosophers
 		.findOne({where: {id: ph.id}})
 		.catch(err => console.error(err.stack));
 
@@ -190,7 +190,7 @@ router.post('/update', (req, res, next) => {
 // delete
 // req: [userinfo, ph.id]
 // res: status
-app.post('/delete', (req, res, next) => {
+router.post('/delete', (req, res, next) => {
 	const userinfo = req.session.userinfo;
   if (!userinfo) {
   	console.log("not login");
