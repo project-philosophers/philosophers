@@ -1,6 +1,12 @@
 <script>
 export default {
-  name: 'Graph'
+  name: 'Graph',
+  mounted () {
+    console.log('hey');
+    this.$axios
+			.get('/phils/read')
+			.then(res => console.log(res.data));
+  }
 }
 </script>
 
