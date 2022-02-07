@@ -1,1 +1,1 @@
-web: node /backend/bin/www
+web: npm run production
