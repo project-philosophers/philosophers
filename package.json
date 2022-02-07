@@ -13,6 +13,6 @@
     "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
     "dev": "(cd frontend && yarn run dev) & (cd backend && yarn run dev)",
     "production": "cd backend && yarn start",
-    "heroku-postbuild": "(cd frontend && yarn start) & (cd backend && yarn start)"
+    "heroku-postbuild": "cd backend && yarn start"
   }
 }
