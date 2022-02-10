@@ -7,7 +7,9 @@ export default Vue.extend({
 </script>
 
 <template>
+<div class="">
   <Nav/>
+</div>
 </template>
 
 <style>
