@@ -50,17 +50,17 @@ export default {
 
   // axios
   axios: {
-    prefix: '/api',
-    proxy: true
+    // prefix: '/api',
+    // proxy: true
   },
 
   // proxy
   proxy: {
     // '/api/': {
     //   target: 'http://localhost:3000',
-  //     pathRewrite: {
-  //       '^/api/': '/'
-  //     }
-  //   }
+    //   pathRewrite: {
+    //     '^/api/': '/'
+    //   }
+    // }
   }
 }

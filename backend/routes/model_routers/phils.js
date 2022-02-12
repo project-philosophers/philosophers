@@ -93,7 +93,7 @@ router.get('/read', (req, res) => {
     ]
   })
     .then(phils => res.json(phils.map(ph => ph.dataValues)))
-    .catch(err => console.error(err.stack));
+		.catch(err => console.error(err.stack));
 });
 
 
