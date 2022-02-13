@@ -34,10 +34,10 @@
         const [width, height] = [500, 500];
         // const [width, height] = [window.innerWidth - 280, window.innerHeight - 38];
 
-        // const links = data.links;
-        // const nodes = data.nodes;
-        const links = data.links.map(d => Object.create(d));
-        const nodes = data.nodes.map(d => Object.create(d));
+        const links = data.links;
+        const nodes = data.nodes;
+        // const links = data.links.map(d => Object.create(d));
+        // const nodes = data.nodes.map(d => Object.create(d));
 
         const radius = 10;
 
