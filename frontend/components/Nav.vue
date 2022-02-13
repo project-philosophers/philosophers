@@ -6,9 +6,9 @@ export default {
 
 <template>
   <div class='nav'>
-    <div>Philosopher</div>
+    <nuxtLink to='/' ><h1>Philosopher</h1></nuxtLink>
     <div class="links">
-      <nuxtLink to="/login" class="nav-item">Login</nuxtLink>
+      <nuxtLink to="/users/login" class="nav-item">Login</nuxtLink>
       <nuxtLink to="#" class="nav-item">Link2</nuxtLink>
       <nuxtLink to="#" class="nav-item">Link3</nuxtLink>
     </div>
