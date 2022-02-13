@@ -8,7 +8,7 @@ var app = express();
 
 
 // session
-const session = require('express-session');
+const session = require('cookie-session');
 app.use(session({
   secret: 'philosophers',
   resave: true,
@@ -48,8 +48,8 @@ app.use(cookieParser());
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
 
 
 // nuxt
