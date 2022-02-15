@@ -32,6 +32,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/composition-api/module',
+    'nuxt-windicss',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -45,7 +47,8 @@ export default {
 
   // server
   server: {
-    // port: 3001
+    host: `0.0.0.0`,
+    port: 3000
   },
 
   // axios
@@ -64,3 +67,4 @@ export default {
     // }
   }
 }
+
