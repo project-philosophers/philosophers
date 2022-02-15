@@ -1,9 +1,11 @@
 <script>
 import GraphNetwork from './graphs/GraphNetwork';
+import GraphTimeline from './graphs/GraphTimeline.vue';
 
 export default {
   components:{
     GraphNetwork,
+    GraphTimeline
   },
   name: 'Graph',
   data () {
@@ -29,7 +31,8 @@ export default {
   <div class='graph'>
     <div>Graph</div>
     <!-- <D3 :data="data" /> -->
-    <GraphNetwork :data="data" />
+    <!-- <GraphNetwork :data="data" /> -->
+    <GraphTimeline :data="data" />
   </div>
 </template>
 
