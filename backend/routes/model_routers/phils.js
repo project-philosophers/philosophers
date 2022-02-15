@@ -85,11 +85,11 @@ router.post('/create', (req, res, next) => {
 router.get('/read', (req, res) => {
   db.Philosophers.findAll({
     include: [
-    //   { model: db.Languages, as: "languages" },
-    //   { model: db.Nationalities, as: "nationalities" },
-    //   { model: db.Education, as: "education" },
-    //   { model: db.Categories, as: "categories" },
-    //   { model: db.Keywords, as: "keywords" }
+      { model: db.Languages, as: "languages" },
+      { model: db.Nationalities, as: "nationalities" },
+      { model: db.Education, as: "education" },
+      { model: db.Categories, as: "categories" },
+      { model: db.Keywords, as: "keywords" }
     ]
   })
     .then(phils => res.json(phils.map(ph => ph.dataValues)))
