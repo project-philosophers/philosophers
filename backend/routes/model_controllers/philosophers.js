@@ -7,11 +7,11 @@ const log = require('../../lib/log');
 
 
 // check logged in
-router.get('/', (req, res) => {
-  if (!req.session.userinfo) {
-  	res.redirect('/main');
-  }
-});
+// router.get('/', (req, res) => {
+//   if (!req.session.userinfo) {
+//   	res.redirect('/main');
+//   }
+// });
 
 
 // create

@@ -12,7 +12,7 @@ router.post('/post', (req, res) => {
 })
 
 
-const philsContoroller = require(('./model_routers/phils'));
+const philsContoroller = require(('./model_controllers/philosophers'));
 router.use('/phils', philsContoroller);
 
 
