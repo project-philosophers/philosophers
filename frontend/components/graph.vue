@@ -1,11 +1,14 @@
 <script>
 import GraphNetwork from './graphs/GraphNetwork';
 import GraphTimeline from './graphs/GraphTimeline.vue';
+import GraphTable from './graphs/GraphTable.vue';
+
 
 export default {
   components:{
     GraphNetwork,
-    GraphTimeline
+    GraphTimeline,
+    GraphTable
   },
   name: 'Graph',
   data () {
@@ -32,7 +35,7 @@ export default {
     <div>Graph</div>
     <!-- <D3 :data="data" /> -->
     <!-- <GraphNetwork :data="data" /> -->
-    <GraphTimeline :data="data" />
+    <GraphTable :data="data" />
   </div>
 </template>
 
