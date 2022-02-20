@@ -76,7 +76,7 @@
             .selectAll("line")
             .data(links)
             .join("line")
-              .attr("stroke-width", d => Math.sqrt(d.value) / 2);
+              // .attr("stroke-width", d => Math.sqrt(d.value) / 2);
           const node = svg.append("g")
             // .attr("stroke", "#000")
             .attr("class", "nodes")

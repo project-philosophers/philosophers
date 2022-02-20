@@ -5,6 +5,7 @@
     name: 'GraphTable',
     data () {
       return {
+        data_table: [],
         phIndeces: [
           "name",
           // "name_original",
@@ -36,6 +37,7 @@
         // this.chart(this.preprocess(newData));
         // this.testD3(newData);
         // this.graph();
+        this.data_table = this.preprocess(newData);
       }
     },
     // mounted () {
@@ -43,10 +45,29 @@
     // },
     methods: {
       preprocess (data) {
+        const tagsIndeces = [
+          'languages',
+          'nationalities',
+          'education',
+          'categories',
+          'keywords'
+        ];
+
+        data.forEach(d => {
+          tagsIndeces.forEach(tagsIndex => {
+            d[tagsIndex] = d[tagsIndex].map(t => t.name);
+          });
+
+          if (d.influences) {
+            d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
+          }
+          if (d.influenced) {
+            d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
+          }
+        });
+
         return data;
-      },
-      // graph (data) {
-      // }
+      }
     }
   }
 </script>
@@ -67,13 +88,13 @@
     </thead>
     <table>
       <tbody>
-        <template v-for="ph in this.preprocess(this.$props.data)">
+        <template v-for="ph in this.data_table">
           <tr
             :key="ph.id"
             class='records'
           >
-            <th>{{ ph.name }}</th>
-            <template v-for="index in phIndeces.slice(1)">
+            <!-- <th>{{ ph.name }}</th> -->
+            <template v-for="index in phIndeces">
               <td
                 :key="index"
                 :class="index"
@@ -117,6 +138,7 @@
 /* } */
 
 .container thead {
+  width: 100%;
   height: 20px;
   z-index: 1;
   overflow-x: hidden;
@@ -133,7 +155,7 @@
   top: 0;
   z-index: 1;
   width: 200px;
-  text-align: center !important;
+  text-align: center;
   font-weight: bold;
   /* white-space: nowrap; */
   border-bottom: 1px double #000000;
@@ -141,7 +163,7 @@
   background-color: #FFFFFF;
 }
 
-.container th:first-child {
+.container thead th:first-child {
   position: sticky;
   left: 0;
   /* border-right: 1px solid #000000; */
@@ -167,13 +189,16 @@
   cursor: default;
   /* border-bottom: 1px solid black; */
 }
-.container tbody th {
-  text-align: left;
-  font-weight: normal;
-}
 .container tbody td {
   /* text-align: right; */
   width: 200px;
+}
+.container tbody td:first-child {
+  position: sticky;
+  left: 0;
+  text-align: left;
+  font-weight: normal;
+  background-color: transparent;
 }
 
 

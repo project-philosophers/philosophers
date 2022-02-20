@@ -8,7 +8,8 @@ export default Vue.extend({
 
 <template>
   <!-- <Nav/> -->
-  <Graph />
+  <!-- <Graph /> -->
+  <Search />
 </template>
 
 <style>
