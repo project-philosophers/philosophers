@@ -7,9 +7,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <!-- <Nav/> -->
-  <!-- <Graph /> -->
-  <Search />
+  <Nav />
 </template>
 
 <style>

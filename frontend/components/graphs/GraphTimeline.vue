@@ -25,6 +25,13 @@
             born: d.born,
             died: d.died
           }
+        }).sort((d1, d2) => {
+          if (d1.born > d2.born) return 1;
+          else if (d1.born < d2.born) return -1;
+          else {
+            if (d1.died > d2.died) return 1;
+            else if (d1.died < d2.died) return -1;
+          }
         });
       },
       graph (data) {
@@ -45,11 +52,57 @@
           //   .on("wheel.zoom", wheeled);
 
           const padding = { top: 20, right: 30, bottom: 20, left: 30 }
+
+
           const xScale = d3.scaleLinear()
             .domain([limits.minX, limits.maxX])
             .range([padding.left, width - padding.right]);
 
-          let chartHeight = height - padding.top - padding.bottom
+
+          const barHeight = 15
+          const paddingBetween = 5;
+          const lineY = (d) => {
+            let i = data.indexOf(d);
+            const y = padding.top + 10 + (i * (barHeight + paddingBetween));
+            return y;
+          }
+
+          const phRows = svg.append('g')
+            .selectAll('.rows')
+            .data(data)
+            .join('g')
+              .attr('class', 'rows')
+              // .attr('x', 0)
+              // .attr('y', 100)
+              // .call(d => console.log(d.data))
+
+          const timeBar = phRows.append('rect')
+            .attr('class', 'timeBar')
+            .attr('x', d => xScale(d.born))
+            // .attr('y', chartCenterY - barHeight / 2)
+            .attr('y', d => lineY(d))
+            .attr('width', d => xScale(d.died) - xScale(d.born))
+            .attr('height', barHeight)
+            .attr("fill", "black")
+            .attr("opacity", 0.2)
+            // .on("mouseover", d => eventMouseOver(d))
+            .on('mouseover', function(d) {d3.select(this).attr('opacity', 0.5)})
+            .on("mouseout", function(d) {d3.select(this).attr('opacity', 0.2)})
+            .on("click", d => eventClick(d));
+
+          const textElem = phRows.append('text')
+            .attr('class', 'textElem')
+            .text(d => d.name)
+            .attr('x', padding.left)
+            .attr('y', d => lineY(d))
+            // .attr('y', chartCenterY)
+            .attr('dy', '0.7rem')
+            .attr('font-size', 10);
+
+
+
+          // let chartHeight = height - padding.top - padding.bottom
+
 
           const xAxis_top = d3.axisTop(xScale)
             // .ticks(10)
@@ -68,30 +121,35 @@
           // const gY = svg.append('g')
           //   .call(yAxis);
 
-          const chartCenterY = padding.top + chartHeight / 2
           
 
-          const barHeight = 15
-          // var scheduleG = svg.selectAll()
-          //   .data(dataset)
-          //   .enter()
-          //   .append('g')
-          const paddingBetween = 5;
-          const lineY = (d) => {
-            let i = data.indexOf(d);
-            const y = padding.top + 10 + (i * (barHeight + paddingBetween));
-            return y;
-          }
+          const axisArea = svg.append('g');
+          // .call(zoom)
+
+          const area_top = axisArea.append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', width)
+            .attr('height', padding.top)
+            .attr('fill-opacity', 0);
+
+          const area_bottom = axisArea.append('rect')
+            .attr('x', 0)
+            .attr('y', height - padding.bottom)
+            .attr('width', width)
+            .attr('height', padding.bottom)
+            .attr('fill-opacity', 0);
+
 
           const zoom = d3.zoom()
             .scaleExtent([1, 10])
             .on("zoom", zoomed);
 
           svg.call(zoom)
-            // .on("wheel.zoom", null)
-            .on("wheel", pan);
-          // svg.on("wheel", wheeled)
-            // .call(zoom)
+          //  .on('wheel.zoom', null);
+
+          // axisArea.call(zoom)
+            // .on('wheel', pan);
 
           // function zoomed() {
           //   lineY.attr("transform", d3.event.transform);
@@ -159,7 +217,8 @@
               // zoom.translateBy(yScale, 0, -event.deltaY);
               // zoom.translateBy(phRows, 0, -event.deltaY);
               phRows.transition()
-                .attr("transform", "translate(0," + -event.wheelDeltaY+ ")")
+                .duration(10)
+                .attr("transform", "translate(0," + -event.deltaY+ ")")
 
                 // let new_scale = 1; // How do you make a new scale here?
                 // zoom.scaleBy(canvas, new_scale);
@@ -169,37 +228,7 @@
           }
           
 
-          const phRows = svg.append('g')
-            .selectAll('.rows')
-            .data(data)
-            .join('g')
-              .attr('class', 'rows')
-              // .attr('x', 0)
-              // .attr('y', 100)
-              // .call(d => console.log(d.data))
-
-          const timeBar = phRows.append('rect')
-            .attr('class', 'timeBar')
-            .attr('x', d => xScale(d.born))
-            // .attr('y', chartCenterY - barHeight / 2)
-            .attr('y', d => lineY(d))
-            .attr('width', d => xScale(d.died) - xScale(d.born))
-            .attr('height', barHeight)
-            .attr("fill", "black")
-            .attr("opacity", 0.2)
-            // .on("mouseover", d => eventMouseOver(d))
-            .on('mouseover', function(d) {d3.select(this).attr('opacity', 0.5)})
-            .on("mouseout", function(d) {d3.select(this).attr('opacity', 0.2)})
-            .on("click", d => eventClick(d));
-
-          const textElem = phRows.append('text')
-            .attr('class', 'textElem')
-            .text(d => d.name)
-            .attr('x', padding.left)
-            .attr('y', d => lineY(d))
-            // .attr('y', chartCenterY)
-            .attr('dy', '0.7rem')
-            .attr('font-size', 10);
+        
 
           
           // const timeLines = svg.append("g")
