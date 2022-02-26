@@ -5,7 +5,6 @@
   "license": "MIT",
   "engines": {
     "node": "16.x",
-    "npm": "8.x",
     "yarn": "1.x"
   },
   "scripts": {
@@ -14,9 +13,7 @@
     "install:dev": "(cd frontend && yarn install) & (cd backend && yarn install)",
     "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
     "dev": "(cd frontend && yarn run dev) & (cd backend && yarn run dev)",
-    "production": "cd backend && yarn start",
-    "heroku-prebuild": "cd frontend && npm install nuxt",
-    "heroku-postbuild": "(cd frontend && yarn start) & (cd backend && yarn start)"
+    "production": "cd backend && yarn start"
   },
   "dependencies": {
     "date-fns": "^2.28.0"

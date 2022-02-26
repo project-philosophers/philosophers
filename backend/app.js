@@ -8,18 +8,20 @@ var app = express();
 
 
 // session
-const session = require('cookie-session');
-app.use(session({
-  secret: 'philosophers',
-  resave: true,
-  saveUninitialized: true,
-  // proxy: true,
-  cookie: {
-    httpOnly: false, 
-    secure: false,
-    maxAge: 30 * 24 * 60 * 1000
-  }
-}));
+// const session = require('express-session');
+// app.use(session({
+//   secret: 'philosophers',
+//   resave: true,
+//   saveUninitialized: true,
+//   // proxy: true,
+//   cookie: {
+//     httpOnly: false, 
+//     secure: false,
+//     maxAge: 30 * 24 * 60 * 1000
+//   }
+// }));
+
+
 // app.set("trust proxy", true);
 // app.use(session({
 //   secret: 'philosophers',
@@ -53,11 +55,11 @@ app.use('/users', usersRouter);
 
 
 // nuxt
-const staticFiles = express.static(path.join(__dirname, '../frontend/dist/'));
-app.use(staticFiles);
+// const staticFiles = express.static(path.join(__dirname, '/public'));
+// app.use(staticFiles);
 
 // any routes not picked up by the server api will be handled by the nuxt router
-app.use('/*', staticFiles)
+// app.use('/*', staticFiles)
 
 
 
