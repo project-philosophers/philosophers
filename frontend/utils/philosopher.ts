@@ -1,84 +1,81 @@
-import { ref } from '@vue/composition-api';
+import { ref, reactive } from '@vue/composition-api';
 import data from './data.ts';
 import { format } from 'date-fns'
 
-export const philosophers = ref(data);
-
 export const getPh = (id) => {
-  const thePh = data.find(person => person.id === id)
-  return thePh;
+  return data.find(person => person.id === id)
 }
 
 export const parsePh = (thePh) => {
   return [
     {
       label: 'ID',
-      value: thePh.id
+      value: thePh.id || '',
     },
     {
       label: 'Name',
-      value: thePh.name
+      value: thePh.name || '',
     },
     {
       label: 'Original Name',
-      value: thePh.name_original
+      value: thePh.name_original || '',
     },
     {
       label: 'Other Name',
-      value: thePh.name_other
+      value: thePh.name_other || '',
     },
     {
       label: 'Gender',
-      value: thePh.gender
+      value: thePh.gender || '',
     },
     {
       label: 'Born',
-      value: thePh.born
+      value: thePh.born || '',
     },
     {
       label: 'Born Date',
-      value: thePh.born_date
+      value: thePh.born_date || '',
     },
     {
       label: 'Born Question',
-      value: thePh.born_questioning
+      value: thePh.born_questioning || '',
     },
     {
       label: 'Birth Place',
-      value: thePh.birthplace
+      value: thePh.birthplace || '',
     },
     {
       label: 'Died',
-      value: thePh.died
+      value: thePh.died || '',
     },
     {
       label: 'Died Date',
-      value: thePh.died_date
+      value: thePh.died_date || '',
     },
     {
       label: 'Death Place',
-      value: thePh.deathplace
+      value: thePh.deathplace || '',
     },
 
     {
       label: 'Died Question',
-      value: thePh.died_questioning
+      value: thePh.died_questioning || '',
     },
     {
       label: 'Influenced',
-      value: getNameList(thePh.influenced)
+      value: getNameList(thePh.influenced) || '',
     },
     {
       label: 'Influences',
-      value: getNameList(thePh.influences)
+      value: getNameList(thePh.influences) || '',
     },
     {
       label: 'CreatedAt',
-      value: format(new Date(thePh.createdAt), 'yyyy/MM/dd')
+      value: format(new Date(thePh.createdAt), 'yyyy/MM/dd') || '',
     },
     {
       label: 'Update At',
-      value: format(new Date(thePh.updatedAt), 'yyyy/MM/dd')
+      value: format(new Date(thePh.updatedAt), 'yyyy/MM/dd') || '',
     },
   ]
 }
