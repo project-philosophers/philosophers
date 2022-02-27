@@ -55,11 +55,7 @@ app.use('/users', usersRouter);
 
 
 // nuxt
-<<<<<<< HEAD
 // const staticFiles = express.static(path.join(__dirname, '../frontend/dist/'));
-=======
-// const staticFiles = express.static(path.join(__dirname, '/public'));
->>>>>>> development
 // app.use(staticFiles);
 
 // any routes not picked up by the server api will be handled by the nuxt router
