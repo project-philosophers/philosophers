@@ -36,8 +36,8 @@ export default {
     <div>Graph</div>
     <!-- <D3 :data="data" /> -->
     <!-- <GraphNetwork :data="data" /> -->
-    <GraphTimeline :data="data" />
-    <!-- <GraphTable :data="data" /> -->
+    <!-- <GraphTimeline :data="data" /> -->
+    <GraphTable :data="data" />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-// const session = require('express-session');
+const session = require('express-session');
 const { check, validationResult } = require('express-validator');
 
 let router = express.Router();
@@ -26,7 +26,13 @@ router.get('/', (req, res) => {
   }
 });
 
+
 // register {name, email, password, password_confirm}
+
+const sendEmail = (req, res, next) => {
+  next();
+}
+
 router.post('/register', [
   check('name').not().isEmpty().isAlphanumeric().isLength({min:5, max:50}),
   check('email').not().isEmpty().isEmail().custom((value, { req }) => {
@@ -41,25 +47,25 @@ router.post('/register', [
     if (req.body.password !== req.body.password_confirm) {
       throw new Error('no');
     }
-    return true;
   })
-], (req, res) => {
-
+], (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    // return res.status(422).json({ errors: errors.array() });
+    res.status(422).json({ errors: errors.array().msg });
   }
-
-  // email send
-
+  next();
+},
+sendEmail,
+(req, res) => {
   const userdata = {
     'name': req.body.name,
     'email': req.body.email,
     'password': req.body.password
   };
   db.Users.create(userdata)
-  .then(() => res.json({ result: true }))
-  .catch(err => console.error(err.stack));
+    .then(() => res.json({ result: true }))
+   .catch(err => console.error(err.stack));
 });
 
 
@@ -75,35 +81,46 @@ router.post('/login', [
 ], (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() });
+    // return res.status(422).json({ errors: errors.array() });
+    res.status(422).json({ error: errors.array().msg });
   }
-
-  db.Users.findOne({ where: { email: req.body.email } })
-  .then(user => {
-    // unregistered email 
-    if (!user) {
-      throw new Error('this email is not registered');
-    }
-    // incorrect password
-    if (req.body.password !== user.dataValues.password) {
-      throw new Error('password is incorrect');
-    }
-    
-    const username = user.dataValues.name;
-    req.session.regenerate(err => {
-      req.session.username = username;
-      req.session.save();
-      res.render('index', { title: req.session.username });
-      // console.log(req.session);
-      // res.redirect('/users/p');
+  next();
+}, async (req, res, next) => {
+  const user = await db.Users.findOne({ where: { email: req.body.email } })
+    .catch(err => {
+      console.error(err.stack);
+      res.status(401).json({ error: err.message });
     });
 
-  })
-  .catch(err => {
-    console.error(err.stack);
-    // const 
-    res.status(401).send(err.message);
-  });
+  // unregistered email 
+  if (!user) {
+    throw new Error('this email is not registered');
+    // res.status(401).json({ error: 'this email is not registered' });
+    // next();
+    // res.end();
+  }
+  // incorrect password
+  else if (req.body.password !== user.dataValues.password) {
+    throw new Error('password is incorrect');
+    // res.status(401).json({ error: 'password is incorrect' });
+    // next();
+    // res.end();
+  }
+  res.locals.username = user ? user.dataValues.name : null;
+
+  next();
+}, (req, res, next) => {
+    // const username = user.dataValues.name;
+    const username = res.locals.username;
+    console.log(username);
+    res.json(username)
+//     req.session.regenerate(err => {
+//       req.session.username = username;
+//       req.session.save();
+//       res.render('index', { title: req.session.username });
+//       // console.log(req.session);
+//       // res.redirect('/users/p');
+//     });
 });
 
 

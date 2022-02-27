@@ -4,45 +4,33 @@ const {
 } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Logs extends Model {
+  class Education extends Model {
   }
 
-  Logs.init({
+  Education.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    userId: {
-      allowNull: false,
-      type: Sequelize.INTEGER
-    },
-    DB: {
+    name: {
       allowNull: false,
       type: Sequelize.STRING
     },
-    action: {
-      allowNull: false,
-      type: Sequelize.STRING
-    },
-    data_before: {
-			allowNull: false,
-			type: Sequelize.STRING
-    },
-		data_after: {
-			allowNull: false,
-			type: Sequelize.STRING
-    },
-    date: {
+    createdAt: {
       allowNull: false,
       type: Sequelize.DATE
     },
+    updatedAt: {
+      allowNull: false,
+      type: Sequelize.DATE
+    }
   }, {
     sequelize,
-    modelName: 'Logs',
-    tableName: 'logs'
+    modelName: 'Education',
+    tableName: 'education'
   });
 
-  return Logs;
+  return Education;
 };

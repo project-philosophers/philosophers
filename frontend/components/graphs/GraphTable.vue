@@ -74,19 +74,19 @@
 
 <template>
   <div class="container">
-    <thead>
-      <tr>
-        <template v-for="index in phIndeces">
-          <th
-            :key="index"
-            :class="`columns ${index}`"
-          >
-            {{ index.toUpperCase() }}
-          </th>
-        </template>
-      </tr>
-    </thead>
     <table>
+      <thead>
+        <tr>
+          <template v-for="index in phIndeces">
+            <th
+              :key="index"
+              :class="`columns ${index}`"
+            >
+              {{ index.toUpperCase() }}
+            </th>
+          </template>
+        </tr>
+      </thead>
       <tbody>
         <template v-for="ph in this.data_table">
           <tr
@@ -146,7 +146,7 @@
 }
 .container thead th:first-child {
   z-index: 2;
-  background-color: #FFFFFF;
+  background-color: transparent;
 }
 
 .container thead th {
@@ -160,7 +160,7 @@
   /* white-space: nowrap; */
   border-bottom: 1px double #000000;
   /* background-clip: padding-box; */
-  background-color: #FFFFFF;
+  background-color: transparent;
 }
 
 .container thead th:first-child {
@@ -187,6 +187,7 @@
   height: 40px;
   max-height: 40px;
   cursor: default;
+  /* overflow-y: hidden; */
   /* border-bottom: 1px solid black; */
 }
 .container tbody td {
@@ -207,6 +208,7 @@
 }
 
 .records {
+  height: 40px;
   background-color: #FFFFFF;
 }
 .records:hover {
