@@ -1,5 +1,5 @@
-import { ref, reactive } from '@vue/composition-api';
-import data from './data.ts';
+import { ref, reactive } from 'vue';
+import data from './data';
 import { format } from 'date-fns'
 
 export const getPh = (id) => {

@@ -1,16 +1,14 @@
 <script>
-export default {
-  name: 'Nav'
-}
+
 </script>
 
 <template>
   <div class='nav'>
-    <nuxtLink to='/' ><h1>Philosophers</h1></nuxtLink>
+    <a href="/"><h1>Philosophers</h1></a>
     <div class="links">
-      <nuxtLink to="/users/login" class="nav-item">Login</nuxtLink>
-      <nuxtLink to="#" class="nav-item">Link2</nuxtLink>
-      <nuxtLink to="#" class="nav-item">Link3</nuxtLink>
+      <a href="/users/login" class="nav-item">Login</a>
+      <a href="#" class="nav-item">Link2</a>
+      <a href="#" class="nav-item">Link3</a>
     </div>
   </div>
 </template>
