@@ -50,16 +50,16 @@ app.use(cookieParser());
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/', indexRouter);
+app.use('/api/users', usersRouter);
 
 
 // nuxt
-// const staticFiles = express.static(path.join(__dirname, '../frontend/dist/'));
-// app.use(staticFiles);
+const staticFiles = express.static(path.join(__dirname, '../frontend/dist/'));
+app.use(staticFiles);
 
 // any routes not picked up by the server api will be handled by the nuxt router
-// app.use('/*', staticFiles)
+app.use('/*', staticFiles)
 
 
 

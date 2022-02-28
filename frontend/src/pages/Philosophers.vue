@@ -1,5 +1,5 @@
 <script setup>
-  import PhilosopherView from '../components/PhilosopherView.vue';
+  import PhView from '../components/PhView.vue';
   import { ref } from 'vue';
   // utils
   const phId = ref(97056520);
@@ -9,7 +9,7 @@
   <div class="main">
     <div class="graph">GRAPH</div>
     <template v-if="phId">
-      <PhilosopherView :phId="phId"/>
+      <PhView :phId="phId" />
     </template>
   </div>
   

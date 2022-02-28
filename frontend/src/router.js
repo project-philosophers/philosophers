@@ -1,5 +1,6 @@
 import * as vueRouter from "vue-router";
-import Philosophers from "./pages/Philosophers.vue";
+import Philosophers from "./pages/philosophers.vue";
+import Login from "./pages/users/login.vue";
 import Graph from "./components/Graph.vue";
 import Tags from "./components/Tags.vue";
 
@@ -12,9 +13,14 @@ const routes = [
     component: Home,
   },
   {
-    path: "/ph",
+    path: "/philosophers",
     name: "Philosophers",
     component: Philosophers,
+  },
+  {
+    path: "/users/login",
+    name: "Login",
+    component: Login,
   },
   {
     path: "/graph",
