@@ -1,6 +1,5 @@
 import { ref, reactive } from 'vue';
 import data from './data';
-import { format } from 'date-fns'
 
 export const getPh = (id) => {
   return data.find(person => person.id === id)
@@ -68,15 +67,7 @@ export const parsePh = (thePh) => {
     {
       label: 'Influences',
       value: getNameList(thePh.influences) || '',
-    },
-    {
-      label: 'CreatedAt',
-      value: format(new Date(thePh.createdAt), 'yyyy/MM/dd') || '',
-    },
-    {
-      label: 'Update At',
-      value: format(new Date(thePh.updatedAt), 'yyyy/MM/dd') || '',
-    },
+    }
   ]
 }
 

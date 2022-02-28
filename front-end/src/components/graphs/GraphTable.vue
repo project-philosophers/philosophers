@@ -1,75 +1,72 @@
-<script>
-  // import * as d3 from 'd3';
+<script setup>
+// import * as d3 from 'd3';
+import {ref, watch} from 'vue'
+const props = defineProps(['data']);
+const emit = defineEmits(['response']);
+const data_table = ref();
+const clickedPhId = ref();
 
-  export default {
-    name: 'GraphTable',
-    data () {
-      return {
-        data_table: [],
-        phIndeces: [
-          "name",
-          // "name_original",
-          // "name_other",
-          "born",
-          // "born_date",
-          // "born_questioning",
-          "died",
-          // "died_date",
-          // "died_questioning",
-          "gender",
-          "birthplace",
-          "deathplace",
-          "languages",
-          "nationalities",
-          "education",
-          "categories",
-          "keywords",
-          "influences",
-          "influenced"
-        ]
-      }
-    },
-    props: ['data'],
-    watch: {
-      data: function (newData) {
-        // console.log(this.preprocess(newData));
-        // this.graph(this.preprocess(newData));
-        // this.chart(this.preprocess(newData));
-        // this.testD3(newData);
-        // this.graph();
-        this.data_table = this.preprocess(newData);
-      }
-    },
-    // mounted () {
-    //   this.graph
-    // },
-    methods: {
-      preprocess (data) {
-        const tagsIndeces = [
-          'languages',
-          'nationalities',
-          'education',
-          'categories',
-          'keywords'
-        ];
 
-        data.forEach(d => {
-          tagsIndeces.forEach(tagsIndex => {
-            d[tagsIndex] = d[tagsIndex].map(t => t.name);
-          });
+const phIndeces = [
+  "name",
+  // "name_original",
+  // "name_other",
+  "born",
+  // "born_date",
+  // "born_questioning",
+  "died",
+  // "died_date",
+  // "died_questioning",
+  "gender",
+  "birthplace",
+  "deathplace",
+  "languages",
+  "nationalities",
+  "education",
+  "categories",
+  "keywords",
+  "influences",
+  "influenced"
+];
 
-          if (d.influences) {
-            d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
-          }
-          if (d.influenced) {
-            d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
-          }
-        });
+const preprocess = (rowData) => {
+  const data = rowData.concat();
 
-        return data;
-      }
+  const tagsIndeces = [
+    'languages',
+    'nationalities',
+    'education',
+    'categories',
+    'keywords'
+  ];
+
+  data.forEach(d => {
+    tagsIndeces.forEach(tagsIndex => {
+      d[tagsIndex] = d[tagsIndex].map(t => t.name);
+    });
+
+    if (d.influences) {
+      d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
     }
-  }
+    if (d.influenced) {
+      d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
+    }
+  });
+
+  return data;
+}
+
+const click = (id) => {
+  clickedPhId.value = id;
+  console.log('id', id);
+  emit("response", id);
+}
+
+data_table.value = preprocess(props.data)
+watch(clickedPhId, () => {
+  console.log('catch ya', clickedPhId)
+})
+
 </script>
 
 <template>
@@ -77,9 +74,8 @@
     <table>
       <thead>
         <tr>
-          <template v-for="index in phIndeces" >
+          <template v-for="index in phIndeces">
             <th
-              :key="index"
               :class="`columns ${index}`"
             >
               {{ index.toUpperCase() }}
@@ -90,13 +86,12 @@
       <tbody>
         <template v-for="ph in this.data_table">
           <tr
-            :key="ph.id"
             class='records'
+            @click="click(ph.id)"
           >
             <!-- <th>{{ ph.name }}</th> -->
             <template v-for="index in phIndeces">
               <td
-                :key="index"
                 :class="index"
               >
                 {{ ph[index] }}
@@ -192,6 +187,7 @@
 }
 .container tbody td {
   /* text-align: right; */
+  /* white-space: nowrap; */ /* CRUCIAL */
   width: 200px;
 }
 .container tbody td:first-child {

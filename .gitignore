@@ -9,6 +9,8 @@
 /backend/yarn.lock
 /frontend/yarn.lock
 
+/front-end/dist/
+
 
 
 # Created by .ignore support plugin (hsz.mobi)

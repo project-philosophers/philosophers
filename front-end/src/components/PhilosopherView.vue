@@ -15,7 +15,7 @@ philosopher.value = parsePh(getPh(`${props.phId}`));
         <template v-if="info.label === 'Influenced' || info.label === 'Influences'">
           <div :key="info.label"  class='block w-full my-1'>
             <span>{{ info.label }}: </span>
-            <template v-for="person in info.value" :key="person">
+            <template v-for="person in info.value">
               <span class='inline-block bg-white px-2 py-1 m-1 rounded-lg'>{{ person }}</span>
             </template>
           </div>

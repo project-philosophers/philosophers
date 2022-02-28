@@ -1,5 +1,7 @@
 import * as vueRouter from "vue-router";
-import Philosophers from "./pages/Philosophers.vue"
+import Philosophers from "./pages/Philosophers.vue";
+import Graph from "./components/Graph.vue";
+import Tags from "./components/Tags.vue";
 
 const Home = { template: '<div>Home</div>' }
 
@@ -13,7 +15,17 @@ const routes = [
     path: "/ph",
     name: "Philosophers",
     component: Philosophers,
-  }
+  },
+  {
+    path: "/graph",
+    name: "Graph",
+    component: Graph,
+  },
+  {
+    path: "/tags",
+    name: "Tags",
+    component: Tags,
+  },
 ];
 
 const router = vueRouter.createRouter({
