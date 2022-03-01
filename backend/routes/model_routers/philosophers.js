@@ -82,15 +82,16 @@ router.post('/create',
 // req: null
 // res: [phils]
 const readPhils = async (req, res, next) => {
-	const phils = await db.Philosophers.findAll({
-    include: [
-      { model: db.Languages, as: "languages" },
-      { model: db.Nationalities, as: "nationalities" },
-      { model: db.Education, as: "education" },
-      { model: db.Categories, as: "categories" },
-      { model: db.Keywords, as: "keywords" }
-    ]
-  })
+	const phils = await db.Philosophers.
+		findAll({
+			include: [
+				{ model: db.Languages, as: "languages" },
+				{ model: db.Nationalities, as: "nationalities" },
+				{ model: db.Education, as: "education" },
+				{ model: db.Categories, as: "categories" },
+				{ model: db.Keywords, as: "keywords" }
+			]
+		})
 		.catch(err => console.error(err.stack));
 
 	res.locals.phils = phils;
@@ -101,11 +102,12 @@ router.get('/read',
 	readPhils,
 	(req, res) => {
 		const phils = res.locals.phils;
-		const resJson = {
-			'data': phils.map(ph => ph.dataValues)
+		const resJSON = {
+			'data': phils
 		};
-		res.json(resJson);
-	});
+		res.json(resJSON);
+	}
+);
 
 
 

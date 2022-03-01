@@ -11,5 +11,17 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://philosophers-v3-api.herokuapp.com/',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        // cors: false,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   }
 })

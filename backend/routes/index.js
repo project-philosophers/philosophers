@@ -15,5 +15,7 @@ router.post('/post', (req, res) => {
 const philsContoroller = require(('./model_routers/philosophers'));
 router.use('/philosophers', philsContoroller);
 
+const tagsContoroller = require(('./model_routers/tags'));
+router.use('/tags', tagsContoroller);
 
 module.exports = router;

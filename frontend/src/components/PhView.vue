@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { getPh, parsePh } from './utils/philosopher';
+import { getPh, parsePh } from '../util/philosopher';
 
 const props = defineProps(['phId'])
 
