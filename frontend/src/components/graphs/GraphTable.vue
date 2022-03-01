@@ -1,72 +1,70 @@
 <script setup>
-// import * as d3 from 'd3';
-import {ref, watch} from 'vue'
-const props = defineProps(['data']);
-const emit = defineEmits(['response']);
-const data_table = ref();
-const clickedPhId = ref();
+  import { ref, watch } from 'vue'
+  const props = defineProps(['data']);
+  const emit = defineEmits(['response']);
+  const clickedPhId = ref();
 
 
-const phIndeces = [
-  "name",
-  // "name_original",
-  // "name_other",
-  "born",
-  // "born_date",
-  // "born_questioning",
-  "died",
-  // "died_date",
-  // "died_questioning",
-  "gender",
-  "birthplace",
-  "deathplace",
-  "languages",
-  "nationalities",
-  "education",
-  "categories",
-  "keywords",
-  "influences",
-  "influenced"
-];
-
-const preprocess = (rowData) => {
-  const data = rowData.concat();
-
-  const tagsIndeces = [
-    'languages',
-    'nationalities',
-    'education',
-    'categories',
-    'keywords'
+  const phIndeces = [
+    "name",
+    // "name_original",
+    // "name_other",
+    "born",
+    // "born_date",
+    // "born_questioning",
+    "died",
+    // "died_date",
+    // "died_questioning",
+    "gender",
+    "birthplace",
+    "deathplace",
+    "languages",
+    "nationalities",
+    "education",
+    "categories",
+    "keywords",
+    "influences",
+    "influenced"
   ];
 
-  data.forEach(d => {
-    tagsIndeces.forEach(tagsIndex => {
-      d[tagsIndex] = d[tagsIndex].map(t => t.name);
+  const preprocess = (rowData) => {
+    const data = rowData.concat();
+
+    const tagsIndeces = [
+      'languages',
+      'nationalities',
+      'education',
+      'categories',
+      'keywords'
+    ];
+
+    data.forEach(d => {
+      tagsIndeces.forEach(tagsIndex => {
+        d[tagsIndex] = d[tagsIndex].map(t => t.name);
+      });
+
+      if (d.influences) {
+        d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
+      }
+      if (d.influenced) {
+        d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
+      }
     });
 
-    if (d.influences) {
-      d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
-    }
-    if (d.influenced) {
-      d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
-    }
-  });
+    return data;
+  }
 
-  return data;
-}
+  const click = (id) => {
+    clickedPhId.value = id;
+    console.log('id', id);
+    emit("response", id);
+  }
 
-const click = (id) => {
-  clickedPhId.value = id;
-  console.log('id', id);
-  emit("response", id);
-}
+  // const data_table = preprocess(props.data);
 
-data_table.value = preprocess(props.data)
-watch(clickedPhId, () => {
-  console.log('catch ya', clickedPhId)
-})
-
+  watch(clickedPhId, () => {
+    console.log('yaeh', clickedPhId)
+  })
 </script>
 
 <template>
@@ -84,7 +82,7 @@ watch(clickedPhId, () => {
         </tr>
       </thead>
       <tbody>
-        <template v-for="ph in this.data_table">
+        <template v-for="ph in preprocess(props.data)">
           <tr
             class='records'
             @click="click(ph.id)"

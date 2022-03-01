@@ -3,6 +3,7 @@ import Philosophers from "./pages/philosophers.vue";
 import Login from "./pages/users/login.vue";
 import Graph from "./components/Graph.vue";
 import Tags from "./components/Tags.vue";
+import Search from "./components/Search.vue";
 
 const Home = { template: '<div>Home</div>' }
 
@@ -32,6 +33,11 @@ const routes = [
     name: "Tags",
     component: Tags,
   },
+  {
+    path: "/search",
+    name: "Search",
+    component: Search,
+  }
 ];
 
 const router = vueRouter.createRouter({

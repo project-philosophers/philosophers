@@ -12,7 +12,7 @@ import { ref } from 'vue'
 
 const tagsIndex = 'languages';
 // const tagsIndex = defineProps(['tagsIndex']);
-const tagsList = ['German', 'Latin', 'Latin1', 'La2tin', 'L3atin', 'L4atin', 'Lat5in', 'Lat6in'];
+const tagsList = ['German', 'Latinnnnnnn', 'Latin1', 'La2tin', 'L3atin', 'L4atin', 'Lat5in', 'Lat6in'];
 const checkedTagsList = ['German']
 
 const handleCheck = (e) => {
@@ -51,11 +51,13 @@ const handleCheck = (e) => {
   flex-direction: column;
   flex-wrap: wrap;
   overflow-x: scroll;
+  width: 200px;
   height: 100px;
+  border: 1px solid black;
 }
 .tags .tag {
   position: relative;
-  width: 100px;
+  /* width: 100px; */
   height: 18px;
 }
 .tags .tag input {
