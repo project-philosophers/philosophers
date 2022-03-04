@@ -13,6 +13,7 @@ import Nav from './components/Nav.vue'
 
 <style>
   * {
+    /* overflow: hidden; */
     font-family: 'Courier';
   }
 </style>

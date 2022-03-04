@@ -3,7 +3,7 @@
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
-  
+
   import * as d3 from 'd3';
 
   const preprocess = (data) => {
@@ -62,6 +62,7 @@
         .data(data)
         .join('g')
           .attr('class', 'rows')
+          .attr("clip-path", "url(#clip-rect)");
           // .attr('x', 0)
           // .attr('y', 100)
           // .call(d => console.log(d.data))
@@ -112,23 +113,33 @@
       //   .call(yAxis);
 
       
+      svg.append("clipPath")
+        .attr("id", "clip-rect")
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", padding.top) 
+        .attr("width", width)
+        .attr("height", height - (padding.top + padding.bottom));
 
-      const axisArea = svg.append('g');
-      // .call(zoom)
 
-      const area_top = axisArea.append('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', width)
-        .attr('height', padding.top)
-        .attr('fill-opacity', 0);
 
-      const area_bottom = axisArea.append('rect')
-        .attr('x', 0)
-        .attr('y', height - padding.bottom)
-        .attr('width', width)
-        .attr('height', padding.bottom)
-        .attr('fill-opacity', 0);
+      // const axisArea = svg.append('g');
+      // // .call(zoom)
+
+      // const area_top = axisArea.append('rect')
+      //   .attr('x', 0)
+      //   .attr('y', 0)
+      //   .attr('width', width)
+      //   .attr('height', padding.top)
+      //   // .attr('fill', 'white')
+      //   .attr('fill-opacity', 0);
+
+      // const area_bottom = axisArea.append('rect')
+      //   .attr('x', 0)
+      //   .attr('y', height - padding.bottom)
+      //   .attr('width', width)
+      //   .attr('height', padding.bottom)
+      //   .attr('fill-opacity', 0);
 
 
       const zoom = d3.zoom()
@@ -303,10 +314,10 @@
   /* .container { */
     /* overflow-x: scroll; */
   /* } */
-  svg {
+  /* svg {
     border: 5px solid #000;
     background-color: white;
-  }
+  } */
   .chartNetwork {
     position: inherit;
     width: 100%;

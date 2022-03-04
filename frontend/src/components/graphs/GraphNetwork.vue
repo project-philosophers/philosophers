@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, nextTick } from 'vue';
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
@@ -10,22 +10,43 @@
 
   const preprocess = (data) => {
     const nodes = data.map(d => {
-      return {"id": d.name}
+      return {"name": d.name}
     });
-    const links = data.map(d => {
+
+    let arr = [];
+    data.forEach((d) => {
       if (d.influences) {
-        return d.influences.map(i => {
-          return {
+        d.influences.forEach((i) => {
+          // console.log(i);
+          // const d_found = data.find(dd => dd.id === i);
+          const link = {
             "source": data.find(dd => dd.id === i).name,
             "target": d.name
+          };
+          if (!arr.includes(link)) {
+            arr.push(link);
           }
-        })
+        });
       }
-    }).filter(d => d);
+    });
+    const links = arr;
+    // const links = data.map(d => {
+    //   if (d.influences) {
+    //     return d.influences.map(i => {
+    //       console.log(d.name, data.find(dd => dd.id === i).name);
+    //       return {
+    //         "source": d.name,
+    //         "target": data.find(dd => dd.id === i).name
+    //         // "target": i.name
+    //       }
+    //     })
+    //   }
+    // }).filter(d => d);
 
     return {
       "nodes": nodes,
       "links": links
+      // "links": links
     }
   }
 
@@ -33,10 +54,11 @@
     const [width, height] = [window.innerWidth - 280, window.innerHeight - 38];
     // const [width, height] = [300, 300];
 
-    // const links = data.links;
-    // const nodes = data.nodes;
-    const links = data.links.map(d => Object.create(d));
-    const nodes = data.nodes.map(d => Object.create(d));
+    const links = data.links;
+    const nodes = data.nodes;
+    // const links = data.links.map(d => Object.create(d));
+    // const nodes = data.nodes.map(d => Object.create(d));
+    console.log(nodes, links);
     const radius = 10;
 
     const svg = d3.select('svg')
@@ -113,7 +135,7 @@
         .attr("y", d => d.y)
         .attr("visibility", "hidden");
 
-      // d3.select('#alpha_value').style('flex-basis', (simulation.alpha()*100) + '%');
+      d3.select('#alpha_value').style('flex-basis', (simulation.alpha()*100) + '%');
     }
 
     simulation.on("tick", ticked);
@@ -176,7 +198,10 @@
   }
 
   onMounted(() => {
-    graph(preprocess(props.data));
+    nextTick(() => {
+      graph(preprocess(props.data));
+    });
+    // graph(preprocess(props.data));
     // console.log(preprocess(props.data));
   })
 </script>
@@ -188,14 +213,12 @@
 </template>
 
 <style>
-  svg {
+  /* svg {
     border: 5px solid #000;
     background-color: white;
     width: 100%;
-    /* height: 100%; */
-    /* width: 100px; */
     height: 500px;
-  }
+  } */
   .chartNetwork {
     position: inherit;
     width: 100%;

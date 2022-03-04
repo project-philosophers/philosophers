@@ -60,11 +60,10 @@
     emit("response", id);
   }
 
-  // const data_table = preprocess(props.data);
 
   watch(clickedPhId, () => {
     console.log('yaeh', clickedPhId)
-  })
+  });
 </script>
 
 <template>
