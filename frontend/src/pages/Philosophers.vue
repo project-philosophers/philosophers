@@ -33,8 +33,6 @@ import PhConfirm from '../components/PhConfirm.vue';
       </template>
     </div>
   </div>
-  
-
 </template>
 
 <style>
