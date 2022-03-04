@@ -1,31 +1,32 @@
 <script setup>
-import { ref } from 'vue'
-import { getPh, parsePh } from '../util/philosopher';
-import { usePhInfo } from '@/stores/phForm'
+  import { ref } from 'vue'
+  import { usePhInfo } from '@/stores/phForm'
+import { parsePh } from '../util/philosopher';
 
-const props = defineProps(['phId', 'type'])
-const emit = defineEmits(['toNextMode'])
-const phInfo = usePhInfo()
+  const emit = defineEmits(['toNextMode', 'toLastMode'])
+  const phInfo = usePhInfo();
+  const info = phInfo.$state;
+  const ph = ref({});
+  ph.value = parsePh(info);
 
-const phData = getPh(`${props.phId}`);
-const ph = ref({});
-ph.value = parsePh(phData);
-
-const toNext = () => {
-  phInfo.$state = phData
-  emit('toNextMode', 'edit')
-}
-
+  const toNext = () => {
+    // TODO API update phInfo.$state
+    emit('toNextMode', 'view')
+  }
+  const goBack = () => {
+    emit('toLastMode', 'edit')
+  }
 </script>
 
 <template>
+
   <div class="h-screen p-10 bg-gray-100">
     <template v-for="info in ph">
       <template v-if="!!info">
         <template v-if="info.label === 'Influenced' || info.label === 'Influences'">
           <div :key="info.label"  class='block w-full my-1'>
             <span>{{ info.label }}: </span>
-            <template v-for="person in info.value">
+            <template v-for="person in info.value" :key="person">
               <span class='inline-block bg-white px-2 py-1 m-1 rounded-lg'>{{ person }}</span>
             </template>
           </div>
@@ -38,17 +39,11 @@ const toNext = () => {
         </template>
       </template>
     </template>
-    <button class="border-zinc-900 border-2 text-black py-1 px-4 rounded">
-      <template v-if="type === 'page'">
-        <router-link :to="`/philosopher/edit/${phId}`">Edit</router-link>
-      </template>
-      <template v-else>
-        <p @click="toNext">Edit</p>
-      </template>
-    </button>
+    <button @click="goBack" class="border-zinc-900 border-2 text-black py-1 px-4 rounded">Back</button>
+    <button @click="toNext" class="pl-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">Confirm</button>
   </div>
+  
 </template>
 
 <style>
-
 </style>
