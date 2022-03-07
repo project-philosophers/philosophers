@@ -1,9 +1,9 @@
 <script setup>
   import PhView from '../components/PhView.vue';
   import PhEdit from '../components/PhEdit.vue';
-  import Test from '../components/Test.vue';
+  import Graph from '../components/Graph.vue';
   import { ref } from 'vue';
-import PhConfirm from '../components/PhConfirm.vue';
+  import PhConfirm from '../components/PhConfirm.vue';
   // utils
   const phId = ref(97056520);
   const mode = ref('view')
@@ -18,7 +18,7 @@ import PhConfirm from '../components/PhConfirm.vue';
 
 <template>
   <div class="main flex">
-    <div class="graph w-8/12">GRAPH</div>
+    <Graph class="graph w-8/12" />
     <div class="w-4/12">
       <template v-if="phId">
         <template v-if="mode === 'view'">

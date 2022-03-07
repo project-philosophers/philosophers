@@ -30,7 +30,7 @@ const toNext = () => {
             </template>
           </div>
         </template>
-        <template v-else>
+        <template v-else-if="!!info.value">
           <div :key="info.label"  class='block w-full my-1'>
             <span>{{ info.label }}: </span>
             <span>{{ info.value }}</span>
