@@ -8,18 +8,20 @@ var app = express();
 
 
 // session
-const session = require('cookie-session');
-app.use(session({
-  secret: 'philosophers',
-  resave: true,
-  saveUninitialized: true,
-  // proxy: true,
-  cookie: {
-    httpOnly: false, 
-    secure: false,
-    maxAge: 30 * 24 * 60 * 1000
-  }
-}));
+// const session = require('express-session');
+// app.use(session({
+//   secret: 'philosophers',
+//   resave: true,
+//   saveUninitialized: true,
+//   // proxy: true,
+//   cookie: {
+//     httpOnly: false, 
+//     secure: false,
+//     maxAge: 30 * 24 * 60 * 1000
+//   }
+// }));
+
+
 // app.set("trust proxy", true);
 // app.use(session({
 //   secret: 'philosophers',
@@ -48,8 +50,8 @@ app.use(cookieParser());
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/', indexRouter);
+app.use('/api/users', usersRouter);
 
 
 // nuxt
