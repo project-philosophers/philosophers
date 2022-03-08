@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-  <div class="h-screen flex flex-wrap justify-center p-10 bg-gray-100">
+  <div class="flex flex-wrap justify-center p-10 bg-gray-100">
     <div class="block w-full my-2">
       <span>Name:</span>
       <template v-if="mode == 'isEditing'">
