@@ -26,6 +26,45 @@ const tagsTables = {
   keywords: db.Keywords
 };
 
+
+
+// tags_create
+// req: req.body.data = { userinfo: userinfo, index: index, tag: tag }
+// res: status
+const createTag = (req, res, next) => {
+  const index = req.body.index;
+	const tagName = req.body.tag.name;
+
+  tagsTables[index]
+    .create({
+      name: tagName
+    })
+  .catch(err => console.error(err.stack));
+
+  next();
+}
+
+router.post('/create',
+  authUser,
+  createTag,
+  (req, res, next) => {
+		const logData = {
+			userId: userinfo.id,
+			DB: "tags",
+			action: "create",
+			data_before: null,
+			data_after: JSON.stringify(tag)
+		};
+		log(logData);
+		next();
+	},
+	(req, res) => {
+		res.json('created');
+	}
+);
+
+
+
 // tags_read
 // req: [tagsIndex]
 // res: [tags]
@@ -53,7 +92,6 @@ router.get('/read',
 );
 
 
-
 // tags_update
 // req: req.body.data = { userinfo: userinfo, index: index, tag: tag }
 // res: status
@@ -69,110 +107,78 @@ const findTag = async (req, res, next) => {
 	next();
 }
 const updateTag = (req, res, next) => {
-	
+  const tag = res.body.tag;
+
+	tagsTables[index]
+    .update({
+      name: tag.name
+    },
+    { where: { id: tag.id } }
+    )
+    .catch(err => console.error(err.stack));
+  
+  res.locals.tag_new = tag;
+  next();
 }
 
-
-router.post('/update', (req, res) => {
-  const userinfo = req.session.userinfo;
-  const index = req.body.index;
-  const tag = req.body.tag;
-
-  tagsTables[index].update({
-    name: tag.name
-  },
-  {where: {id: tag.id}}
-  )
-  .then(() => {
-    const now = new Date();
-    const log = {
-      date: now,
-      userID: userinfo.userID,
-      type: "update",
-      dataType: "tags",
-      dataName: index,
-      dataID: tag.id,
-      data_before: null,
-      data_after: JSON.stringify(tag)
-    };
-    db.Logs.create(log)
-    .catch(err => console.error(err.stack));
-
-    res.end();
-  })
-  .catch(err => console.error(err.stack));
-});
-
-
-// tags_add
-router.post('/add', (req, res) => {
-  const userinfo = req.session.userinfo;
-  const index = req.body.index;
-  let tag = {
-    id: null,
-    name: req.body.newTagName
+router.post('/update',
+  authUser,
+  findTag,
+  updateTag,
+  // (req, res, next) => {
+  //   const userinfo = req.session.userinfo;
+  
+  //   const logData = {
+  //     userId: userinfo.id,
+  //     DB: 'tags',
+  //     action: 'update',
+  //     data_before: JSON.stringify(res.locals.tag_old),
+  //     data_after: JSON.stringify(res.locals.tag_new)
+  //   };
+  //   log(logData)
+  //   next();
+  // },
+  (req, res) => {
+    res.json('updated');
   }
+);
 
-  tagsTables[index].create({
-    name: tag.name
-  })
-  .then(() => {
-    tagsTables[index].findOne({where: {name: tag.name}})
-    .then(t => {
-      tag.id = t.id;
-      console.log(tag.id);
-    })
-    .then(() => {
-      const now = new Date();
-      const log = {
-        date: now,
-        userID: userinfo.userID,
-        type: "add",
-        dataType: "tags",
-        dataName: index,
-        dataID: tag.id,
-        data_before: null,
-        data_after: JSON.stringify(tag)
-      };
-      db.Logs.create(log)
-      .catch(err => console.error(err.stack));
 
-      res.end();
-    });
-  })
-  .catch(err => console.error(err.stack));
-});
 
 
 
 // tags_delete
-router.post('/delete', (req, res) => {
-  const userinfo = req.session.userinfo;
+// req: [userinfo, ph.id]
+// res: status
+const deleteTag = (req, res, next) => {
   const index = req.body.index;
-  const tag = req.body.tag;
+	const tag_old = req.body.tag;
+	tagsTables[index]
+		.destroy({ where: { id: tag_old.id } })
+		.catch(err => console.error(err.stack));
+	
+	res.locals.tag_old = tag_old;
+	next();
+}
 
-  tagsTables[index].destroy({
-    where: {id: tag.id}
-  })
-  .then(() => {
-    const now = new Date();
-    const log = {
-      date: now,
-      userID: userinfo.userID,
-      type: "delete",
-      dataType: "tags",
-      dataName: index,
-      dataID: tag.id,
-      data_before: JSON.stringify(tag),
-      data_after: null
-    };
-    db.Logs.create(log)
-    .catch(err => console.error(err.stack));
-
-    res.end();
-  })
-  .catch(err => console.error(err.stack));
-});
+router.post('/delete',
+	authUser,
+	deleteTag,
+	// (req, res, next) => {
+	// 	const logData = {
+	// 		userId: userinfo.id,
+	// 		DB: "tags",
+	// 		action: "delete",
+	// 		data_before: JSON.stringify(res.locals.tag_old),
+	// 		data_after: null
+	// 	};
+	// 	log(logData);
+	// 	next();
+	// },
+	(req, res) => {
+		res.json('deleted');
+	}
+);
 
 
 

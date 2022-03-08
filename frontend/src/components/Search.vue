@@ -4,21 +4,28 @@ import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
 // import  from 'https://unpkg.com/d3-simple-slider@1.10.4/dist/d3-simple-slider.min.js'
 
-// const condition = ref();
 
-const conditions = {
-  name: null,
-  period: {
-    from: 0,
-    to: 2000
-  },
-  tags: {
-    categories: [],
-    education: [],
-    keywords: [],
-    languages: [],
-    nationalities: []
-  }
+import { useConditions } from '@/stores/conditions';
+const conditions = useConditions();
+
+// const conditions = {
+//   name: null,
+//   period: {
+//     from: 0,
+//     to: 2000
+//   },
+//   tags: {
+//     categories: [],
+//     education: [],
+//     keywords: [],
+//     languages: [],
+//     nationalities: []
+//   }
+// }
+
+const changeText = (e) => {
+  conditions.$state.name = e.target.value;
+  console.log(conditions.$state);
 }
 
 
@@ -27,7 +34,7 @@ const drawSlider = () => {
   const data = [-1000, 2000];
 
   // Range
-  var sliderRange = sliderBottom()
+  const sliderRange = sliderBottom()
     .min(d3.min(data))
     .max(d3.max(data))
     .width(500)
@@ -36,18 +43,22 @@ const drawSlider = () => {
     .default([1500, 1800])
     .fill('#2196f3')
     .handle(
-      d3
-        .symbol()
+      d3.symbol()
         .type(d3.symbolCircle)
         .size(200)()
     )
     .on('onchange', val => {
       d3.select('p#value-range')
-        .text(val.map(d3.format('100'))
-        .join(' -'));
+        .text(val.map(d3.format('1'))
+        .join(' - '));
+    })
+    .on('end', val => {
+      conditions.$state.period.from = val[0];
+      conditions.$state.period.to = val[1];
+      console.log(conditions.$state);
     });
 
-  var gRange = d3
+  const gRange = d3
     .select('div#slider-range')
     .append('svg')
     .attr('width', 100)
@@ -72,24 +83,42 @@ onMounted(() => {
 
 
 <template>
-  <div class='search'>
+  <div class='search-container'>
     <div>Search</div>
-    <div class="row align-items-center">
+    <!-- <div class="row align-items-center"> -->
+    <div class="slider">
       <div class="col-sm-2"><p id="value-range"></p></div>
       <div class="col-sm"><div id="slider-range"></div></div>
     </div>
-    <!-- {{ this.result }} -->
-    <!-- <svg></svg> -->
+    <!-- <div class="search_area"> -->
+      <input
+        id="name-search"
+        placeholder="search"
+        @input="(e) => changeText(e)"
+      />
+    <!-- </div> -->
   </div>
 </template>
 
 <style>
-.search svg {
+.search-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+}
+.search-container svg {
   width: 700px;
   height: 300px;
 }
 #slider-range {
   width: 500px;
+}
+.search-container #name-search {
+  padding-left: 20px;
+  width: 500px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
   /* .nav {
     width: 100vw;

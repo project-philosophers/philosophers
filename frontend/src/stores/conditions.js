@@ -1,16 +1,27 @@
 import { defineStore } from 'pinia'
 
-export const useCounterStore = defineStore({
+export const useConditions = defineStore({
   id: 'conditions',
   state: () => ({
-    counter: 0
+    name: null,
+    period: {
+      from: 0,
+      to: 2000
+    },
+    tags: {
+      categories: [],
+      education: [],
+      keywords: [],
+      languages: [],
+      nationalities: []
+    }
   }),
   getters: {
-    doubleCount: (state) => state.counter * 2
+    // doubleCount: (state) => state.counter * 2
   },
   actions: {
-    increment() {
-      this.counter++
-    }
+    // increment() {
+    //   this.counter++
+    // }
   }
 })

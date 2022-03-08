@@ -30,9 +30,9 @@ const done = () => {
 </script>
 
 <template>
-  <div class='tags_container'>
+  <div class='tags-container'>
     <div>{{ tagsIndex }}</div>
-    <div class='tags_list'>
+    <div class='tags-list'>
       <template v-for="t in tagsList">
         <div class="tag">
           <input
@@ -60,14 +60,14 @@ const done = () => {
 </template>
 
 <style>
-.tags_container {
+.tags-container {
   display: flex;
   flex-direction: column;
   width: 250px;
   height: 200px;
   border: 1px solid black;
 }
-.tags_list {
+.tags-list {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -76,17 +76,17 @@ const done = () => {
   height: 70%;
   margin-left: 5%;
 }
-.tags_list .tag {
+.tags-list .tag {
   position: relative;
   width: 150px;
   height: 18px;
 }
-.tags_list .tag input {
+.tags-list .tag input {
   position: absolute;
   bottom: 0;
   cursor: pointer;
 }
-.tags_list .tag label {
+.tags-list .tag label {
   position: absolute;
   left: 20px;
   font-size: 15px;
