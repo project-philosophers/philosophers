@@ -19,8 +19,7 @@ import { parsePh } from '../util/philosopher';
 </script>
 
 <template>
-
-  <div class="h-screen p-10 bg-gray-100">
+  <div class="h-screen p-10 bg-orange-100">
     <template v-for="info in ph">
       <template v-if="!!info">
         <template v-if="info.label === 'Influenced' || info.label === 'Influences'">
