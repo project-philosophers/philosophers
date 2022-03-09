@@ -2,6 +2,7 @@
   import PhView from '../components/PhView.vue';
   import PhEdit from '../components/PhEdit.vue';
   import Graph from '../components/Graph.vue';
+  import SearchPanel from '../components/SearchPanel.vue';
   import { ref } from 'vue';
   import PhConfirm from '../components/PhConfirm.vue';
   // utils
@@ -19,6 +20,7 @@
 <template>
   <div class="main flex">
     <Graph class="graph w-8/12" />
+    <SearchPanel class="fixed bottom-px"/>
     <div class="w-4/12">
       <template v-if="phId">
         <template v-if="mode === 'view'">
