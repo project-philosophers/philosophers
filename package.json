@@ -12,7 +12,7 @@
     "install": "(cd frontend && yarn install) & (cd backend && yarn install)",
     "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
     "dev": "(cd frontend && yarn run dev) & (cd backend && yarn run dev)",
-    "production": "cd backend && yarn start"
+    "production": "cd backend && yarn run production"
   },
   "dependencies": {}
 }

@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted, nextTick } from 'vue';
+  import { ref, onMounted, nextTick, watch } from 'vue';
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
@@ -197,9 +197,13 @@
     //// const setClickedPh = context.Click.setClickedPh;
   }
 
+// watch(phils, () => {
+  // graph(preprocess(phils));
+// })
+
   onMounted(() => {
     nextTick(() => {
-      graph(preprocess(props.data));
+      graph(preprocess(phils));
     });
     // graph(preprocess(props.data));
     // console.log(preprocess(props.data));

@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watch } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
@@ -64,6 +64,10 @@
   watch(clickedPhId, () => {
     console.log('yaeh', clickedPhId)
   });
+
+  onMounted(() => {
+    // const datap = preprocess(props.data);
+  })
 </script>
 
 <template>

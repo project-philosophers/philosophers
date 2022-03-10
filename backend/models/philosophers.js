@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: Sequelize.STRING
     },
+    name_full: {
+      type: Sequelize.TEXT
+    },
     name_original: {
       type: Sequelize.TEXT
     },

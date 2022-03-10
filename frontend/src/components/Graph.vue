@@ -17,10 +17,14 @@ import { ref } from 'vue';
 // phils.value = await axios.get('/api/philosophers/read');
 // console.log(phils.data.data);
 
-const graphType = ref('network')
+const graphType = ref('timeline')
 const changeType = (type) => {
   graphType.value = type
 };
+
+const www = (id) => {
+  console.log(id);
+}
 
 </script>
 

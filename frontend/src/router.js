@@ -1,9 +1,13 @@
 import * as vueRouter from "vue-router";
+
 import Philosophers from "./pages/philosophers.vue";
 import Login from "./pages/users/login.vue";
+
 import Graph from "./components/Graph.vue";
 import Tags from "./components/Tags.vue";
 import Search from "./components/Search.vue";
+
+import World from './components/graphs/GraphMap.vue'
 
 const Home = { template: '<div>Home</div>' }
 
@@ -37,6 +41,11 @@ const routes = [
     path: "/search",
     name: "Search",
     component: Search,
+  },
+  {
+    path: "/graph/world",
+    name: "World",
+    component: World,
   }
 ];
 

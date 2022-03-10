@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useConditions = defineStore({
+export const usePhilosophers = defineStore({
   id: 'conditions',
   state: () => ({
     name: null,

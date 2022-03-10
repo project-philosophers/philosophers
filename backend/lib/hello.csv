@@ -1,0 +1,12 @@
+id, name, name_original, name_other, born, born_date, born_questioning, died, died_date, died_questioning, gender, birthplace, deathplace, influenced, influences
+92687501, Descartes, null, null, 1596, null, null, 1650, null, null, male, null, null, [00950212/43159293/97056520], null
+00950212, Spinoza, null, null, 1632, null, null, 1677, null, null, male, null, null, [97056520/58540054/64312836], [92687501]
+43159293, Malbranche, null, null, 1638, null, null, 1715, null, null, male, null, null, null, [92687501]
+97056520, Leibniz, null, null, 1646, null, null, 1716, null, null, male, null, null, [32889134], [92687501/00950212]
+33429962, Locke, null, null, 1632, null, null, 1704, null, null, male, null, null, [81277889], null
+81277889, Berkeley, null, null, 1685, null, null, 1753, null, null, male, null, null, [43937724], [33429962]
+43937724, Hume, null, null, 1711, null, null, 1776, null, null, male, null, null, [32889134], [81277889]
+32889134, Kant, null, null, 1724, null, null, 1804, null, null, male, null, null, [82260680/58540054/64312836], [97056520/43937724]
+82260680, Fichte, null, null, 1762, null, null, 1814, null, null, male, null, null, [58540054/64312836], [32889134]
+58540054, Schelling, null, null, 1775, null, null, 1854, null, null, male, null, null, null, [32889134/82260680]
+64312836, Hegel, null, null, 1770, null, null, 1831, null, null, male, null, null, null, [32889134/82260680]
