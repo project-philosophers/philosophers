@@ -2,24 +2,27 @@
 import { ref, onMounted } from 'vue';
 import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
+import { useSearchCondition } from '@/stores/conditions'
 // import  from 'https://unpkg.com/d3-simple-slider@1.10.4/dist/d3-simple-slider.min.js'
 
 // const condition = ref();
+const searchCondition = useSearchCondition();
+const conditions = searchCondition.$state;
 
-const conditions = {
-  name: null,
-  period: {
-    from: 0,
-    to: 2000
-  },
-  tags: {
-    categories: [],
-    education: [],
-    keywords: [],
-    languages: [],
-    nationalities: []
-  }
-}
+// const conditions = {
+//   name: null,
+//   period: {
+//     from: 0,
+//     to: 2000
+//   },
+//   tags: {
+//     categories: [],
+//     education: [],
+//     keywords: [],
+//     languages: [],
+//     nationalities: []
+//   }
+// }
 
 
 const drawSlider = () => {
@@ -42,6 +45,7 @@ const drawSlider = () => {
         .size(200)()
     )
     .on('onchange', val => {
+      conditions.period = val
       d3.select('p#value-range')
         .text(val.map(d3.format('100'))
         .join(' -'));
@@ -74,6 +78,7 @@ onMounted(() => {
 <template>
   <div class='search'>
     <div>Search</div>
+    <div>Name<input v-model="conditions.name"/></div>
     <div class="row align-items-center">
       <div class="col-sm-2"><p id="value-range"></p></div>
       <div class="col-sm"><div id="slider-range"></div></div>
@@ -86,7 +91,7 @@ onMounted(() => {
 <style>
 .search svg {
   width: 700px;
-  height: 300px;
+  height: 100px;
 }
 #slider-range {
   width: 500px;
