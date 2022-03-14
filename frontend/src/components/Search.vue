@@ -1,9 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
+import { useSearchCondition } from '@/stores/conditions'
 // import  from 'https://unpkg.com/d3-simple-slider@1.10.4/dist/d3-simple-slider.min.js'
+const emit = defineEmits(['triggerPeriodSearch'])
 
+// <<<<<<< HEAD
 
 import { useConditions } from '@/stores/conditions';
 const conditions = useConditions();
@@ -26,11 +29,17 @@ const conditions = useConditions();
 const changeText = (e) => {
   conditions.$state.name = e.target.value;
   console.log(conditions.$state);
+// =======
+const searchCondition = useSearchCondition();
+const conditions = searchCondition.$state;
+// console.log(conditions)
+
+const triggerPeriodSearch = (val) => {
+  emit('triggerPeriodSearch', val);
+// >>>>>>> 6cddffa3b9b15ff57f22de86476402b51d26ac1d
 }
 
-
 const drawSlider = () => {
-  // var data = [0, 0.005, 0.01, 0.015, 0.02, 0.025];
   const data = [-1000, 2000];
 
   // Range
@@ -49,6 +58,7 @@ const drawSlider = () => {
     )
     .on('onchange', val => {
       d3.select('p#value-range')
+<<<<<<< HEAD
         .text(val.map(d3.format('1'))
         .join(' - '));
     })
@@ -56,6 +66,14 @@ const drawSlider = () => {
       conditions.$state.period.from = val[0];
       conditions.$state.period.to = val[1];
       console.log(conditions.$state);
+=======
+        .text(val.map(d3.format('100'))
+        .join(' -'));
+    })
+    .on("end", val => {
+      conditions.period = val
+      triggerPeriodSearch(val);
+>>>>>>> 6cddffa3b9b15ff57f22de86476402b51d26ac1d
     });
 
   const gRange = d3
@@ -85,8 +103,13 @@ onMounted(() => {
 <template>
   <div class='search-container'>
     <div>Search</div>
+<<<<<<< HEAD
     <!-- <div class="row align-items-center"> -->
     <div class="slider">
+=======
+    <div>Name<input v-model="conditions.name"/></div>
+    <div class="row align-items-center">
+>>>>>>> 6cddffa3b9b15ff57f22de86476402b51d26ac1d
       <div class="col-sm-2"><p id="value-range"></p></div>
       <div class="col-sm"><div id="slider-range"></div></div>
     </div>
@@ -108,7 +131,7 @@ onMounted(() => {
 }
 .search-container svg {
   width: 700px;
-  height: 300px;
+  height: 100px;
 }
 #slider-range {
   width: 500px;

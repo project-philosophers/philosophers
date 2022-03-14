@@ -4,17 +4,13 @@
   import PhConfirm from '../components/PhConfirm.vue';
   import Test from '../components/Test.vue';
 
-
-  import Graph from '../components/Graph.vue';
-  import SearchPanel from '../components/SearchPanel.vue';
   import { ref } from 'vue';
-
 
   
   // utils
   const phId = ref(97056520);
   const mode = ref('view')
-  
+
   const toNext = (nextMode) => {
     mode.value = nextMode
   }
@@ -26,7 +22,6 @@
 <template>
   <div class="main flex">
     <Graph class="graph w-8/12" />
-    <SearchPanel class="fixed bottom-px"/>
     <div class="w-4/12">
       <template v-if="phId">
         <template v-if="mode === 'view'">

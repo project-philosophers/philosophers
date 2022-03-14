@@ -20,7 +20,7 @@
           // console.log(i);
           // const d_found = data.find(dd => dd.id === i);
           const link = {
-            "source": data.find(dd => dd.id === i).name,
+            "source": data.find(dd => dd.id === i).name, // TODO
             "target": d.name
           };
           if (!arr.includes(link)) {
@@ -58,7 +58,7 @@
     const nodes = data.nodes;
     // const links = data.links.map(d => Object.create(d));
     // const nodes = data.nodes.map(d => Object.create(d));
-    console.log(nodes, links);
+    // console.log(nodes, links);
     const radius = 10;
 
     const svg = d3.select('svg')
