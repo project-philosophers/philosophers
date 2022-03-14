@@ -4,15 +4,17 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import WindiCSS from 'vite-plugin-windicss'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), WindiCSS()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+const isLocal = process.env.IS_LOCAL || false;
+let serverConfig;
+if (isLocal) {
+  serverConfig = {
+    port: 3001,
+    proxy: {
+      '/api': 'http://localhost:3000/'
     }
-  },
-  server: {
+  };
+} else {
+  serverConfig = {
     proxy: {
       '/api': {
         target: 'https://philosophers-v3-api.herokuapp.com/',
@@ -23,5 +25,18 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
-  }
+  };
+}
+
+
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue(), WindiCSS()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  server: serverConfig
 })

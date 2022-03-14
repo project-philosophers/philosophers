@@ -1,8 +1,10 @@
 import * as vueRouter from "vue-router";
 
-import Home from './pages/index.vue';
+// import Index from './pages/index.vue';
 
 import Philosophers from "./pages/philosophers.vue";
+
+import Register from "./pages/users/register.vue";
 import Login from "./pages/users/login.vue";
 
 import Graph from "./components/Graph.vue";
@@ -11,7 +13,7 @@ import Search from "./components/Search.vue";
 
 import World from './components/graphs/GraphMap.vue'
 
-// const Home = { template: '<div>Home</div>' }
+const Home = { template: '<div>Home</div>' }
 
 const routes = [
   {
@@ -23,6 +25,11 @@ const routes = [
     path: "/philosophers",
     name: "Philosophers",
     component: Philosophers,
+  },
+  {
+    path: "/users/register",
+    name: "Register",
+    component: Register,
   },
   {
     path: "/users/login",

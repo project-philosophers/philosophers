@@ -1,11 +1,11 @@
 <script setup>
-import Nav from './components/Nav.vue'
+import Nav from './components/Navigation.vue'
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <Nav />
+      <!-- <Nav /> -->
     </div>
   </header>
   <router-view></router-view>

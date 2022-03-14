@@ -1,5 +1,6 @@
 <script setup>
 import Vue from 'vue'
+import Nav from '../components/Navigation.vue';
 
 </script>
 

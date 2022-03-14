@@ -47,6 +47,10 @@ const sendEmail = (req, res, next) => {
   next();
 }
 
+router.post('/test', (req, res) => {
+  console.log(req.body.userinfo);
+})
+
 router.post('/register', [
   check('name').not().isEmpty().isAlphanumeric().isLength({min:5, max:50}),
   check('email').not().isEmpty().isEmail().custom((value, { req }) => {
@@ -74,14 +78,16 @@ router.post('/register', [
 },
 sendEmail,
 (req, res) => {
-  const userdata = {
-    'name': req.body.name,
-    'email': req.body.email,
-    'password': req.body.password
-  };
-  db.Users.create(userdata)
-    .then(() => res.json({ result: true }))
-   .catch(err => console.error(err.stack));
+  const userinfo = req.body.userinfo;
+  console.log(userinfo);
+  // const userinfo = {
+  //   'name': req.body.name,
+  //   'email': req.body.email,
+  //   'password': req.body.password
+  // };
+  // db.Users.create(userinfo)
+  //   .then(() => res.json({ result: true }))
+  //   .catch(err => console.error(err.stack));
 });
 
 
