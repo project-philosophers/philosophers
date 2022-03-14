@@ -1,6 +1,8 @@
 <script setup>
-  import { onMounted, ref, watch } from 'vue'
+  import { nextTick, onMounted, ref, watch } from 'vue';
   const props = defineProps(['data']);
+  import { usePhilosophers } from '@/stores/philosophers';
+
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
 
@@ -28,7 +30,9 @@
   ];
   
   const preprocess = (rowData) => {
-    const data = rowData.concat();
+    // const data = rowData.concat();
+    const data = JSON.parse(JSON.stringify(rowData));
+    // const data = [...rowData];
 
     const tagsIndeces = [
       'languages',
@@ -65,9 +69,18 @@
     console.log('yaeh', clickedPhId)
   });
 
-  onMounted(() => {
-    // const datap = preprocess(props.data);
-  })
+  // let datap = [];
+  const phils = props.data;
+  const datap = preprocess(phils);
+  // watch(phils, () => {
+  //   datap = preprocess(props.data);
+  // })
+
+  // onMounted(() => {
+  //   nextTick(() => {
+  //     const datap = preprocess(phils);
+  //   })
+  // })
 </script>
 
 <template>
@@ -85,7 +98,7 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="ph in preprocess(props.data)">
+        <template v-for="ph in datap">
           <tr
             class='records'
             @click="click(ph.id)"
@@ -142,7 +155,7 @@
 }
 .container thead th:first-child {
   z-index: 2;
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .container thead th {
@@ -156,7 +169,7 @@
   /* white-space: nowrap; */
   border-bottom: 1px double #000000;
   /* background-clip: padding-box; */
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .container thead th:first-child {
@@ -206,7 +219,8 @@
 
 .records {
   height: 40px;
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
+  background-color: transparent;
 }
 .records:hover {
   background-color: #AAAAAA;

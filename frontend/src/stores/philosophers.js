@@ -1,27 +1,33 @@
 import { defineStore } from 'pinia'
 
 export const usePhilosophers = defineStore({
-  id: 'conditions',
+  id: 'philosophers',
   state: () => ({
-    name: null,
-    period: {
-      from: 0,
-      to: 2000
-    },
-    tags: {
-      categories: [],
-      education: [],
-      keywords: [],
-      languages: [],
-      nationalities: []
-    }
+    phils: []
   }),
   getters: {
-    // doubleCount: (state) => state.counter * 2
+    preprocessTimeline (state) {
+      const phils = state.phils;
+      return phils.map(d => {
+        return {
+          id: d.id,
+          name: d.name,
+          born: d.born,
+          died: d.died
+        }
+      }).sort((d1, d2) => {
+        if (d1.born > d2.born) return 1;
+        else if (d1.born < d2.born) return -1;
+        else {
+          if (d1.died > d2.died) return 1;
+          else if (d1.died < d2.died) return -1;
+        }
+      });
+    }
   },
   actions: {
-    // increment() {
-    //   this.counter++
-    // }
+    updatePhils (data) {
+      this.phils = data;
+    }
   }
 })

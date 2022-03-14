@@ -7,8 +7,8 @@
     <a href="/"><h1>Philosophers</h1></a>
     <div class="links">
       <a href="/users/login" class="nav-item">Login</a>
-      <a href="#" class="nav-item">Link2</a>
-      <a href="#" class="nav-item">Link3</a>
+      <!-- <a href="#" class="nav-item">Link2</a>
+      <a href="#" class="nav-item">Link3</a> -->
     </div>
   </div>
 </template>

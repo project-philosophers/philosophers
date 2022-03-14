@@ -5,6 +5,10 @@ import Vue from 'vue'
 
 <template>
   <Nav />
+  <li>
+    <ol><a href="/philosophers">Philosophers</a></ol>
+    <ol>Literature</ol>
+  </li>
 </template>
 
 <style>

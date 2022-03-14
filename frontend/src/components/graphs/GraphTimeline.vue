@@ -24,6 +24,13 @@
     });
   }
 
+  // import { usePhilosophers } from '@/stores/philosophers';
+  // const philosophers = usePhilosophers();
+  // const phils = storeToRefs(philosophers);
+  // console.log(phils);
+
+  // console.log(phils.$state);
+
   const graph = (data) => {
     const [width, height] = [window.innerWidth - 280, 200];
     // const [width, height] = [15000, window.innerHeight - 70];
@@ -62,9 +69,9 @@
         .data(data)
         .join('g')
           .attr('class', 'rows')
-          .attr("clip-path", "url(#clip-rect)");
-          // .attr('x', 0)
-          // .attr('y', 100)
+          .attr("clip-path", "url(#clip-rect)")
+          .attr('x', 0)
+          .attr('y', 100)
           // .call(d => console.log(d.data))
 
       const timeBar = phRows.append('rect')
@@ -113,44 +120,49 @@
       //   .call(yAxis);
 
       
-      svg.append("clipPath")
-        .attr("id", "clip-rect")
-        .append("rect")
-        .attr("x", 0)
-        .attr("y", padding.top) 
-        .attr("width", width)
-        .attr("height", height - (padding.top + padding.bottom));
+      // svg.append("clipPath")
+      //   .attr("id", "clip-rect")
+      //   .append("rect")
+      //   .attr("x", 0)
+      //   .attr("y", padding.top) 
+      //   .attr("width", width)
+      //   .attr("height", height - (padding.top + padding.bottom));
 
 
 
-      // const axisArea = svg.append('g');
-      // // .call(zoom)
+      const axisArea = svg.append('g')
+        // .attr('color', 'white');
+      // .call(zoom)
 
-      // const area_top = axisArea.append('rect')
-      //   .attr('x', 0)
-      //   .attr('y', 0)
-      //   .attr('width', width)
-      //   .attr('height', padding.top)
-      //   // .attr('fill', 'white')
-      //   .attr('fill-opacity', 0);
+      const area_top = axisArea.append('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', width)
+        .attr('height', padding.top)
+        .attr('fill', 'white')
+        .attr('fill-opacity', 0);
 
-      // const area_bottom = axisArea.append('rect')
-      //   .attr('x', 0)
-      //   .attr('y', height - padding.bottom)
-      //   .attr('width', width)
-      //   .attr('height', padding.bottom)
-      //   .attr('fill-opacity', 0);
+      const area_bottom = axisArea.append('rect')
+        .attr('x', 0)
+        .attr('y', height - padding.bottom)
+        .attr('width', width)
+        .attr('height', padding.bottom)
+        // .attr('color', 'white')
+        .attr('fill-opacity', 0);
 
 
       const zoom = d3.zoom()
         .scaleExtent([1, 10])
+        // .wheelDelta(delta)
         .on("zoom", zoomed);
 
-      svg.call(zoom)
+      // svg.call(zoom)
       //  .on('wheel.zoom', null);
 
-      // axisArea.call(zoom)
-        // .on('wheel', pan);
+      // svg.on('wheel', pan);
+
+      axisArea.call(zoom)
+        .on('wheel', pan);
 
       // function zoomed() {
       //   lineY.attr("transform", d3.event.transform);
@@ -158,26 +170,38 @@
       //   gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
       // }
 
-      function zoomed(event) {
-        let dx = Math.abs(event.deltaX);
-        let dy = Math.abs(event.deltaY);
+      function delta(event) {
+        console.log(event.deltaY);
+        return -event.deltaY * (event.deltaMode ? 120 : 1) / 1500
+      }
 
+      var currentTransform = d3.zoomIdentity;
+
+      function zoomed(event) {
+        // let dx = Math.abs(event.wheelDelta);
+        // let dy = Math.abs(event.transform.y);
+        // let dy = Math.abs(event.sourceEvent.wheelDeltaY);
+        // console.log(event.wheelDelta);
+        // console.log();
+        // if (dy > 6) {
+          gX_top.call(xAxis_top.scale(event.transform.rescaleX(xScale)));
+          gX_bottom.call(xAxis_bottom.scale(event.transform.rescaleX(xScale)));
+          let new_xScale = event.transform.rescaleX(xScale);
+
+          d3.selectAll('.timeBar')
+            .attr('x', d => new_xScale(d.born))
+            .attr('width', d => new_xScale(d.died) - new_xScale(d.born))
+        // }
         // if (dx > dy) {
         //   console.log("dx");
         // } else if (dx < dy) {
         // d3.select('svg').attr("transform", event.transform);
-        gX_top.call(xAxis_top.scale(event.transform.rescaleX(xScale)));
-        gX_bottom.call(xAxis_bottom.scale(event.transform.rescaleX(xScale)));
-        let new_xScale = event.transform.rescaleX(xScale);
 
         // d3.select('.timeLines')
         //   .selectAll('rect')
         //   .data(data)
         //     .attr('x', d => new_xScale(d.born))
         //     .attr('width', d => new_xScale(d.died) - new_xScale(d.born))
-        d3.selectAll('.timeBar')
-          .attr('x', d => new_xScale(d.born))
-          .attr('width', d => new_xScale(d.died) - new_xScale(d.born))
 
         // d3.select('.textElems')
         //   .selectAll('text')
@@ -205,7 +229,7 @@
         let dx = Math.abs(event.deltaX);
         let dy = Math.abs(event.deltaY);
 
-        if (dx > dy) {
+        // if (dx > dy) {
           // console.log("dx");
           // zoom.translateBy(timeLines, -event.deltaX);
             // tUpdate(d3.zoomTransform(canvas.node()));
@@ -213,18 +237,33 @@
           // phRows.transition()
           //   .attr("transform", "translate(" + -event.wheelDeltaX + ", 0)")
 
-        } else if (dx < dy) {
-          console.log("dy");
+        // } else if (dx < dy) {
+
+        // if (dy > 12) {
+          console.log(dy);
           // zoom.translateBy(yScale, 0, -event.deltaY);
           // zoom.translateBy(phRows, 0, -event.deltaY);
-          phRows.transition()
-            .duration(10)
-            .attr("transform", "translate(0," + -event.deltaY+ ")")
+          // currentTransform.x += event.wheelDeltaX;
+          // currentTransform.y += event.wheelDeltaY;
+          // timeBar.translate(currentTransform.x, currentTransform.y);
+
+          current_translate = event.transform(svg.attr("transform")).translate;
+            ddx = event.wheelDeltaX + current_translate[0];
+            ddy = event.wheelDeltaY + current_translate[1];
+            
+          timeBar.attr("transform", "translate(" + [ddx,ddy] + ")");
+
+          // timeBar.translate(0, -dy)
+            // .attr('y', d => lineY(d) + dy);
+            // .attr('fill', 'green')
+          //   .duration(100)
+            // .attr("transform", "translate(0," + -event.deltaY+ ")")
+          // phRows.attr('y', y => y + dy);
 
             // let new_scale = 1; // How do you make a new scale here?
             // zoom.scaleBy(canvas, new_scale);
             // tUpdate(d3.zoomTransform(canvas.node()));
-        }
+        // }
         event.preventDefault();
       }
       
@@ -300,6 +339,7 @@
 
   onMounted(() => {
     graph(preprocess(props.data));
+    // graph(phils);
     // console.log('hey');
   })
 </script>
