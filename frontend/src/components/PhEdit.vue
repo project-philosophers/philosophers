@@ -4,11 +4,15 @@
   const emit = defineEmits(['toNextMode', 'toLastMode'])
   const phInfo = usePhInfo();
   const info = phInfo.$state;
+
   const toNext = () => {
-    phInfo.$state = info
+    phInfo.$state = info // TODO 効かない
+    console.log('toNext', phInfo.$state)
     emit('toNextMode', 'confirm')
   }
+
   const goBack = () => {
+    console.log('goBack', phInfo.$state)
     emit('toLastMode', 'view')
   }
 </script>
@@ -28,7 +32,7 @@
     <div class="block w-full my-1"><label>Died Date </label><input v-model="info.died_date" class="pl-2" /></div>
     <div class="block w-full my-1"><label>Death Place </label><input v-model="info.deathplace" class="pl-2" /></div>
     <div class="block w-full my-1"><label>Died Question </label><input v-model="info.died_questioning" class="pl-2" /></div>
-    <button @click="goBack" class="border-zinc-900 border-2 text-black py-1 px-4 rounded">Back</button>
+    <button @click="goBack" class="ml-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">Back</button>
     <button @click="toNext" class="ml-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">Next</button>
   </div>
 </template>

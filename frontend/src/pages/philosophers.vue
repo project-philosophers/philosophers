@@ -8,7 +8,7 @@
   // utils
   const phId = ref(97056520);
   const mode = ref('view')
-
+  
   const toNext = (nextMode) => {
     mode.value = nextMode
   }

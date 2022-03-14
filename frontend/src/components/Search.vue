@@ -1,32 +1,20 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
 import { useSearchCondition } from '@/stores/conditions'
 // import  from 'https://unpkg.com/d3-simple-slider@1.10.4/dist/d3-simple-slider.min.js'
+const emit = defineEmits(['triggerPeriodSearch'])
 
-// const condition = ref();
 const searchCondition = useSearchCondition();
 const conditions = searchCondition.$state;
+// console.log(conditions)
 
-// const conditions = {
-//   name: null,
-//   period: {
-//     from: 0,
-//     to: 2000
-//   },
-//   tags: {
-//     categories: [],
-//     education: [],
-//     keywords: [],
-//     languages: [],
-//     nationalities: []
-//   }
-// }
-
+const triggerPeriodSearch = (val) => {
+  emit('triggerPeriodSearch', val);
+}
 
 const drawSlider = () => {
-  // var data = [0, 0.005, 0.01, 0.015, 0.02, 0.025];
   const data = [-1000, 2000];
 
   // Range
@@ -45,10 +33,13 @@ const drawSlider = () => {
         .size(200)()
     )
     .on('onchange', val => {
-      conditions.period = val
       d3.select('p#value-range')
         .text(val.map(d3.format('100'))
         .join(' -'));
+    })
+    .on("end", val => {
+      conditions.period = val
+      triggerPeriodSearch(val);
     });
 
   var gRange = d3
