@@ -1,9 +1,14 @@
 <script setup>
   import { usePhInfo } from '@/stores/phForm'
+  import { initPh } from '../util/philosopher';
 
   const emit = defineEmits(['toNextMode', 'toLastMode'])
+  const props = defineProps(['phId'])
+
   const phInfo = usePhInfo();
-  const info = phInfo.$state;
+  // すでに保存されてるstateがあるかどうか
+  const info = Object.keys(phInfo.$state).length ? phInfo.$state : initPh();
+
   const toNext = () => {
     phInfo.$state = info
     emit('toNextMode', 'confirm')
@@ -15,7 +20,6 @@
 
 <template>
   <div class="h-screen p-10 bg-orange-100">
-    <div class="block w-full my-1"><label>ID: </label><input v-model="info.id" class="pl-2" /></div>
     <div class="block w-full my-1"><label>Name: </label><input v-model="info.name" class="pl-2" /></div>
     <div class="block w-full my-1"><label>Original Name </label><input v-model="info.name_original" class="pl-2" /></div>
     <div class="block w-full my-1"><label>Other Name </label><input v-model="info.name_other" class="pl-2" /></div>
