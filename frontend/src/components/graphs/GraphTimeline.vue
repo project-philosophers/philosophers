@@ -2,7 +2,10 @@
   import { ref, onMounted } from 'vue';
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
-  const clickedPhId = ref();
+  import { useSelectedPh } from '../../stores/selectedPh';
+  import { storeToRefs } from 'pinia';
+  const selectedPh = useSelectedPh();
+  const { selectedPhId } = storeToRefs(selectedPh);
 
   import * as d3 from 'd3';
   
@@ -279,7 +282,8 @@
         // context.Over.setOveredPh(null);
       };
       const eventClick = (d_all) => {
-        // const d = d_all.target.__data__;
+        const d = d_all.target.__data__;
+        selectedPhId.value = d.id;
         // funcFocus(d);
         // d3.select(this)
         //   .attr("id", "select");
