@@ -2,7 +2,7 @@
   import { ref } from 'vue'
   import { usePhInfo } from '@/stores/phForm'
   import { parsePh } from '../util/philosopher';
-  import axios from 'axios';
+  import client from '../../config/axios.js'
 
   const emit = defineEmits(['toNextMode', 'toLastMode'])
   const props = defineProps(['phId'])
@@ -15,7 +15,7 @@
 
   const toNext = async () => {
     if (mode.value === 'create'){
-      const res = await axios({
+      const res = await client({
         method: 'post',
         url: `/create`,
         data: {
@@ -27,7 +27,7 @@
         resError.value = true
       })
     } else {
-      const res = await axios({
+      const res = await client({
         method: 'put',
         url: `/update`,
         data: {

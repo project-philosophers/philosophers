@@ -7,7 +7,7 @@ const props = defineProps(['phId', 'type'])
 const emit = defineEmits(['toNextMode'])
 const phInfo = usePhInfo()
 
-const phData = getPh(`${props.phId}`);
+const phData = getPh(props.phId);
 const ph = ref({});
 ph.value = parsePh(phData);
 
