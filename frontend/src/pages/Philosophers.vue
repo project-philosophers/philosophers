@@ -8,7 +8,7 @@
   // utils
   const phId = ref();
   const mode = ref('view')
-  
+
   const isShowRightSide = ref(true);
   const isCreating = ref(false);
 
