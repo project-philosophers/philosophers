@@ -1,17 +1,47 @@
 <script setup>
   import { ref } from 'vue'
   import { usePhInfo } from '@/stores/phForm'
-import { parsePh } from '../util/philosopher';
+  import { parsePh } from '../util/philosopher';
+  import axios from 'axios';
 
   const emit = defineEmits(['toNextMode', 'toLastMode'])
+  const props = defineProps(['phId'])
+  const mode = ref(props.phId === 'create' ? 'create' : 'update')
   const phInfo = usePhInfo();
   const info = phInfo.$state;
   const ph = ref({});
   ph.value = parsePh(info);
+  const resError = ref(false);
 
-  const toNext = () => {
-    // TODO API update phInfo.$state
-    emit('toNextMode', 'view')
+  const toNext = async () => {
+    if (mode.value === 'create'){
+      const res = await axios({
+        method: 'post',
+        url: `/create`,
+        data: {
+          id: ph.id,
+          ...info
+        }
+      }).catch(error => {
+        console.log(error),
+        resError.value = true
+      })
+    } else {
+      const res = await axios({
+        method: 'put',
+        url: `/update`,
+        data: {
+          ...info
+        }
+      }).catch(error => {
+        console.log(error),
+        resError.value = true
+      })
+    }
+
+    if (ref.state === 200) {
+      emit('toNextMode', 'view')
+    }
   }
   const goBack = () => {
     emit('toLastMode', 'edit')
@@ -38,6 +68,7 @@ import { parsePh } from '../util/philosopher';
         </template>
       </template>
     </template>
+    <p v-if="resError">Fail to {{mode}}, try later.</p>
     <button @click="goBack" class="border-zinc-900 border-2 text-black py-1 px-4 rounded">Back</button>
     <button @click="toNext" class="pl-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">Confirm</button>
   </div>
