@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="z-5">
     <Search @triggerPeriodSearch="val => triggerPeriodSearch(val)"/>
   </div>
 </template>

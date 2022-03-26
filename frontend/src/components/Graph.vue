@@ -7,8 +7,13 @@ import SideBar from './graphs/SideBar.vue';
 import { usePhFiltered } from '@/stores/phFilter'
 const phFiltered = usePhFiltered();
 const phils = phFiltered.$state;
+// import { storeToRefs } from 'pinia';
+// const phils = storeToRefs(phFiltered);
+// console.log(phils.value);
 
 import { ref } from 'vue';
+
+
 // const phils = ref();
 // phils.value = await axios.get('/api/philosophers/read');
 // console.log(phils.data.data);

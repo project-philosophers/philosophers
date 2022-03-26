@@ -5,9 +5,9 @@
 <template>
   <div>
     <div class="h-screen flex flex-wrap justify-center content-center p-10 bg-gray-100">
-      <div class="w-5/12 bg-white rounded-xl	relative py-12 px-20 h-fit">
+      <div class="w-8/12 bg-white rounded-xl	relative py-12 px-20 h-fit">
         <form class="w-full flex justify-between flex-wrap">
-          <span class="login-form-title block w-full text-2xl text-left text-gray-500 py-7 leading-5 uppercase">Account Login</span>
+          <span class="login-form-title block w-full text-2xl text-left text-gray-500 py-7 leading-5 uppercase">Login</span>
           <span class="form-label text-sm	py-2 text-gray-500 uppercase">Username</span>
           <div class="w-full rounded-sm	border-1 relative bg-white validate-input mb-8" data-validate="Username is required">
             <input class="block w-full text-gray-500 bg-transparent h-fit py-4 px-3" type="text" name="username">
@@ -42,16 +42,16 @@
 
 <style>
   .login-form-title{
-    font-family: Raleway-Medium;
+    font-weight: bold;
   }
   .form-label {
-    font-family: Raleway-SemiBold;
+    /* font-family: Raleway-SemiBold; */
   }
   .input100 {
-    font-family: Raleway-Medium;
+    /* font-family: Raleway-Medium; */
   }
   .label-checkbox100 {
-    font-family: Raleway-Regular;
+    /* font-family: Raleway-Regular; */
   }
   /* .focus-input100{
     position: absolute;

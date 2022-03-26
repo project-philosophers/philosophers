@@ -3,8 +3,8 @@ import { defineStore } from 'pinia'
 export const usePhForm = defineStore({
   id: 'phForm',
   state: () => ({
-    "id": "",
-    "name": "",
+    "id": '',
+    "name": '',
     "name_original": '',
     "name_other": '',
     "born": '',
@@ -13,7 +13,7 @@ export const usePhForm = defineStore({
     "died": '',
     "died_date": '',
     "died_questioning": false,
-    "gender": "",
+    "gender": '',
     "birthplace": '',
     "deathplace": '',
     "influences": [],

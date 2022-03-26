@@ -11,7 +11,8 @@
     "build": "cd frontend && yarn build",
     "install": "(cd frontend && yarn install) & (cd backend && yarn install)",
     "start": "(cd frontend && yarn start) & (cd backend && yarn start)",
-    "dev": "(cd frontend && yarn run dev) & (cd backend && yarn run dev)",
+    "dev": "cd frontend && yarn dev",
+    "dev:local": "(cd frontend && IS_LOCAL=true yarn dev) & (cd backend && yarn dev)",
     "production": "cd backend && yarn run production"
   },
   "dependencies": {}

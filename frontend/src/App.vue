@@ -1,5 +1,5 @@
 <script setup>
-import Nav from './components/Nav.vue'
+import Nav from './components/Navigation.vue'
 </script>
 
 <template>
@@ -13,7 +13,7 @@ import Nav from './components/Nav.vue'
 
 <style>
   * {
-    /* overflow: hidden; */
+    overflow: hidden;
     font-family: 'Courier';
   }
 </style>

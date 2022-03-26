@@ -29,22 +29,17 @@ export const search = async (data, conditions) => {
     .catch(err => console.log(err));
 }
 
-// (async () => {
-//   const res = await search(data, conditions);
-//   console.log(res);;
-// })();
 
+const tagsSearch = (data0, tagsConditions) => {
+  let data = data0.concat();
+  const isAllIncludes = (target, arr) => arr.every(el => target.includes(el));
 
-// const tagsSearch = (data0, tagsConditions) => {
-//   let data = data0.concat();
-//   const isAllIncludes = (target, arr) => arr.every(el => target.includes(el));
-
-//   Object.keys(tagsConditions).forEach(tagName => {
-//     // name -> id
-//     data = data.filter(d => isAllIncludes(d[tagName].map(t => t.name), tagsConditions[tagName]))
-//   });
-//   return data;
-// }
+  Object.keys(tagsConditions).forEach(tagName => {
+    // name -> id
+    data = data.filter(d => isAllIncludes(d[tagName].map(t => t.name), tagsConditions[tagName]))
+  });
+  return data;
+}
 
 const periodSearch = (data, periodConditions) => {
   const [from, to] = [periodConditions.from, periodConditions.to];

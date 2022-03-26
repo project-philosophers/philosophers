@@ -1,11 +1,15 @@
 <script setup>
-  import { onMounted, ref, watch } from 'vue'
+  import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
   const props = defineProps(['data']);
+  // import { usePhilosophers } from '@/stores/philosophers';
+  const phils = props.data;
+  // console.log(phils);
+
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
 
 
-  const phIndeces = [
+  const philsIndeces = [
     "name",
     // "name_original",
     // "name_other",
@@ -28,7 +32,13 @@
   ];
   
   const preprocess = (rowData) => {
-    const data = rowData.concat();
+    // console.log(rowData);
+    // const data = rowData.concat();
+    if (rowData === []) {
+      return;
+    }
+    const data = JSON.parse(JSON.stringify(rowData));
+    // const data = [...rowData];
 
     const tagsIndeces = [
       'languages',
@@ -65,9 +75,8 @@
     console.log('yaeh', clickedPhId)
   });
 
-  onMounted(() => {
-    // const datap = preprocess(props.data);
-  })
+  const philsData = phils;
+
 </script>
 
 <template>
@@ -75,7 +84,7 @@
     <table>
       <thead>
         <tr>
-          <template v-for="index in phIndeces">
+          <template v-for="index in philsIndeces">
             <th
               :class="`columns ${index}`"
             >
@@ -85,13 +94,13 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="ph in preprocess(props.data)">
+        <template v-for="ph in philsData">
           <tr
             class='records'
             @click="click(ph.id)"
           >
             <!-- <th>{{ ph.name }}</th> -->
-            <template v-for="index in phIndeces">
+            <template v-for="index in philsIndeces">
               <td
                 :class="index"
               >
@@ -142,7 +151,7 @@
 }
 .container thead th:first-child {
   z-index: 2;
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .container thead th {
@@ -156,7 +165,7 @@
   /* white-space: nowrap; */
   border-bottom: 1px double #000000;
   /* background-clip: padding-box; */
-  background-color: transparent;
+  background-color: #FFFFFF;
 }
 
 .container thead th:first-child {
@@ -206,7 +215,8 @@
 
 .records {
   height: 40px;
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
+  background-color: transparent;
 }
 .records:hover {
   background-color: #AAAAAA;
