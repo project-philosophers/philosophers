@@ -1,16 +1,33 @@
 import { ref, reactive } from 'vue';
 import data from './data';
 
+export const initPh = () => {
+  return {
+    name: '',
+    name_original: '',
+    name_other: '',
+    born: '',
+    born_date: '',
+    born_questioning: '',
+    died: '',
+    died_date: '',
+    died_questioning: '',
+    gender: '',
+    birthplace: '',
+    deathplace: '',
+    influences: [],
+    influenced: [],
+  }
+}
+
 export const getPh = (id) => {
   return data.find(person => person.id === id)
 }
 
 export const parsePh = (thePh) => {
+  console.log('thePh', thePh)
+  
   return [
-    {
-      label: 'ID',
-      value: thePh.id || '',
-    },
     {
       label: 'Name',
       value: thePh.name || '',

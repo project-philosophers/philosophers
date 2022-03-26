@@ -99,7 +99,6 @@
             class='records'
             @click="click(ph.id)"
           >
-            <!-- <th>{{ ph.name }}</th> -->
             <template v-for="index in philsIndeces">
               <td
                 :class="index"

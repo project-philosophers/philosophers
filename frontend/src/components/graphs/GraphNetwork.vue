@@ -206,7 +206,11 @@
         d3.forceCenter(width/2, height/2)
         // d3.forceCenter(width, height)
       );
-
+nodes.forEach(n => {
+      n['x'] = 10;
+      n['fixed'] = 'TRUE';
+      console.log(n);
+    });
     // console.log(nodes, links);
     return {
       nodes: nodes,
@@ -215,7 +219,13 @@
   } 
 
   const draw = (graphData) => {
+    // const nodes = graphData.nodes;
     const nodes = graphData.nodes;
+    // nodes.forEach(n => {
+    //   n['x'] = 10;
+    //   n['fixed'] = 'TRUE';
+    //   console.log(n);
+    // });
     const links = graphData.links;
     console.log(nodes, links);
 
@@ -224,26 +234,24 @@
     const svg = d3.select('svg')
       .attr('viewBox', [0, 0, width, height])
 
-    // const simulation = d3.forceSimulation(nodes)
-    //   .force("link",
-    //     d3.forceLink(links)
-    //       .id(d => d.name)
-    //       .strength(0.1)
-    //     // .distance(200)
-    //   )
-    //   .force("charge",
-    //     d3.forceManyBody()
-    //       .strength(-20)
-    //   )
-    //   .force("center",
-    //     d3.forceCenter(width/2, height/2)
-    //     // d3.forceCenter(width, height)
-    //   );
-    const simulation = d3.forceSimulation();
+    const simulation = d3.forceSimulation(nodes)
+      .force("link",
+        d3.forceLink(links)
+          .id(d => d.name)
+          .strength(0.1)
+        // .distance(200)
+      )
+      .force("charge",
+        d3.forceManyBody()
+          .strength(-20)
+      )
+      .force("center",
+        d3.forceCenter(width/2, height/2)
+        // d3.forceCenter(width, height)
+      );
+    // const simulation = d3.forceSimulation();
 
-    const link = svg.append("g")
-      .attr("class", "links")
-      .selectAll("line")
+    const link = svg.selectAll("line")
       .data(links)
       .join("line")
         .attr("x1", d => d.source.x)
@@ -253,9 +261,7 @@
         .attr("stroke", "#aaa")
         .attr("stroke-width", 2)
         .attr("stroke-opacity", 0.2);
-    const node = svg.append("g")
-      .attr("class", "nodes")
-      .selectAll("circle")
+    const node = svg.selectAll("circle")
       .data(nodes)
       .join("circle")
         .attr("cx", function(d) { return d.x = Math.max((radius+1), Math.min(width - (radius+1), d.x)); })
@@ -271,9 +277,7 @@
         .on("mouseover", d => eventMouseOver(d))
         .on("mouseout", d => eventMouseOut(d))
         .on("click", d => eventClick(d));
-    const textElems = svg.append('g')
-        .attr('class', "textElems")
-        .selectAll('text')
+    const textElems = svg.selectAll('text')
         .data(nodes)
         .join('text')
           .text(d => d.name)
@@ -297,7 +301,7 @@
       // d3.select('#alpha_value').style('flex-basis', (simulation.alpha()*100) + '%');
     }
 
-    // simulation.on("tick", ticked);
+    simulation.on("tick", ticked);
 
     function dragstarted (event, d) {
       if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -357,13 +361,17 @@ const graphsvg = ref(null);
 
   onMounted(() => {
     // console.log(preprocess(phils));
-    // console.log(func(preprocess(phils)));
+    const data = preprocess(phils);
+    // console.log('1', func(data));
     // nextTick(() => {
     //   draw(func(preprocess(phils)));
     // });
     // nextTick(() => {
-      const data = preprocess(phils);
-      graph(data);
+    
+      // graph(data);
+    
+  draw(func(preprocess(phils)));
+    // console.log('2', func());
     // });
     // console.log(graphsvg.value);
   })
@@ -376,6 +384,7 @@ const graphsvg = ref(null);
 <template>
   <div class="container">
     <svg ref="graphsvg"></svg>
+    <!-- <svg viewBox="0,0,628,606"><g class="links"><line x1="-20.88892748977138" y1="-3.694957148205299" x2="7.0710678118654755" y2="0" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="19.78781566111266" y1="-12.587388583889217" x2="7.0710678118654755" y2="0" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="-28.490243449190146" y1="11.760358336627238" x2="-9.03088751750192" y2="8.273032735715967" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="13.734179949820856" y1="-29.34914481047001" x2="1.3823220809823638" y2="-15.750847141167634" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="13.734179949820856" y1="-29.34914481047001" x2="11.382848792909423" y2="14.846910566099618" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="1.3823220809823638" y1="-15.750847141167634" x2="11.382848792909423" y2="14.846910566099618" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="-20.88892748977138" y1="-3.694957148205299" x2="19.78781566111266" y2="-12.587388583889217" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="-9.03088751750192" y1="8.273032735715967" x2="-6.618637082526906" y2="24.621000044064004" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="13.734179949820856" y1="-29.34914481047001" x2="-12.62245871740517" y2="-24.303776166007665" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="1.3823220809823638" y1="-15.750847141167634" x2="-12.62245871740517" y2="-24.303776166007665" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="-20.88892748977138" y1="-3.694957148205299" x2="27.3856864633483" y2="10.001208773502414" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="7.0710678118654755" y1="0" x2="13.734179949820856" y2="-29.34914481047001" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line><line x1="-6.618637082526906" y1="24.621000044064004" x2="13.734179949820856" y2="-29.34914481047001" stroke="#aaa" stroke-width="2" stroke-opacity="0.2" style="stroke-opacity: 0.2;"></line></g><g class="nodes"><circle cx="11" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11.382848792909423" cy="14.846910566099618" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="19.78781566111266" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="24.621000044064004" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="27.3856864633483" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="11" cy="11.760358336627238" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle><circle cx="13.734179949820856" cy="11" r="10" fill="black" opacity="0.2" style="opacity: 0.2;"></circle></g><g class="textElems"><text font-size="10" style="visibility: hidden;">Leibniz</text><text font-size="10" style="visibility: hidden;">Berkeley</text><text font-size="10" style="visibility: hidden;">Fichte</text><text font-size="10" style="visibility: hidden;">Schelling</text><text font-size="10" style="visibility: hidden;">René Descartes</text><text font-size="10" style="visibility: hidden;">Baruch De Spinoza</text><text font-size="10" style="visibility: hidden;">David Hume</text><text font-size="10" style="visibility: hidden;">Hegel</text><text font-size="10" style="visibility: hidden;">Malbranche</text><text font-size="10" style="visibility: hidden;">John Locke</text><text font-size="10" style="visibility: hidden;">Immanuel Kant</text></g></svg> -->
   </div>
 </template>
 
@@ -415,3 +424,4 @@ const graphsvg = ref(null);
     color: "red";
   }
 </style>
+
