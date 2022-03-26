@@ -8,31 +8,21 @@ var app = express();
 
 
 // session
-const session = require('cookie-session');
+const session = require('express-session');
+
+app.set("trust proxy", 1);
 app.use(session({
   secret: 'philosophers',
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   // proxy: true,
   cookie: {
-    httpOnly: false, 
-    secure: false,
+    httpOnly: true,  
+    secure: (process.env.NODE_ENV && process.env.NODE_ENV == 'production') ? true : false,
     maxAge: 30 * 24 * 60 * 1000
   }
 }));
-// app.set("trust proxy", true);
-// app.use(session({
-//   secret: 'philosophers',
-//   resave: true,
-//   saveUninitialized: true,
-//   proxy: true,
-//   cookie: {
-//     // httpOnly: false,
-//     httpOnly: true,  
-//     secure: true,
-//     maxAge: 30 * 24 * 60 * 1000
-//   }
-// }));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -48,8 +38,8 @@ app.use(cookieParser());
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api', indexRouter);
+app.use('/api/users', usersRouter);
 
 
 // nuxt

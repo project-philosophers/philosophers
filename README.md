@@ -1,17 +1,3 @@
-# project
+# Philsoophers
 
-## directory
-
-
-
-## terminal
-
-### dev
-```
-yarn run dev
-```
-
-### start
-```
-yarn start
-```
+## BE COOL!
