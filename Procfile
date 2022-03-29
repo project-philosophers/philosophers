@@ -1,1 +1,1 @@
-web: yarn run production
+web: cd backend && NODE_ENV=production node ./bin/www
