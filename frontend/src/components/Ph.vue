@@ -73,13 +73,13 @@
   <template v-if="isShowRightSide">
     <template v-if="!!phId">
       <template v-if="mode === 'view'">
-        <PhView :phId="phId" @toNextMode="nextMode => toNext(nextMode)" />
+        <PhView :phId="phId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
       </template>
       <template v-else-if="mode === 'edit'">
-        <PhEdit :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()"/>
+        <PhEdit :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
       </template>
       <template v-if="mode === 'confirm'">
-        <PhConfirm :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" />
+        <PhConfirm :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
       </template>
     </template>
   </template>
