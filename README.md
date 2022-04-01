@@ -1,3 +1,3 @@
-# Philsoophers
+# Philosophers
 
 ## BE COOL!
