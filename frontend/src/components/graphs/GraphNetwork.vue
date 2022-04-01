@@ -351,8 +351,11 @@ nodes.forEach(n => {
       funcFocus(d);
       d3.select(this)
         .attr("id", "select");
+
+      // selectedPhId.update(d.id);
+      
       // const phils = eval(context.phils);
-      const ph_found = phils.find(ph => ph.name == d.name);
+      // const ph_found = phils.find(ph => ph.name == d.name);
       // context.Click.setClickedPh(ph_found);
     };
   }

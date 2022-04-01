@@ -11,7 +11,7 @@ const phData = getPh(props.phId);
 // console.log(phData);
 const ph = ref({});
 ph.value = parsePh(phData);
-// console.log(ph.value);
+console.log(ph.value);
 
 const toNext = () => {
   phInfo.$state = phData

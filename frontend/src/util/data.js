@@ -67,7 +67,7 @@ const data = [{
   "birthplace": null,
   "deathplace": null,
   "influences": ["32889134", "82260680"],
-  "influenced": null,
+  "influenced": [],
   "createdAt": "2021-03-19T10:07:43.014Z",
   "updatedAt": "2021-03-19T10:07:43.014Z"
 }, {
@@ -84,7 +84,7 @@ const data = [{
   "gender": "male",
   "birthplace": null,
   "deathplace": null,
-  "influences": null,
+  "influences": [],
   "influenced": ["00950212", "43159293", "97056520"],
   "createdAt": "2021-03-19T10:07:43.014Z",
   "updatedAt": "2021-05-24T13:22:01.534Z"
@@ -139,7 +139,7 @@ const data = [{
   "birthplace": null,
   "deathplace": null,
   "influences": ["32889134", "82260680"],
-  "influenced": null,
+  "influenced": [],
   "createdAt": "2021-03-19T10:07:43.014Z",
   "updatedAt": "2021-06-02T06:30:01.737Z"
 }, {
@@ -157,7 +157,7 @@ const data = [{
   "birthplace": null,
   "deathplace": null,
   "influences": ["92687501"],
-  "influenced": null,
+  "influenced": [],
   "createdAt": "2021-03-19T10:07:43.014Z",
   "updatedAt": "2021-06-02T16:07:17.394Z"
 }, {
@@ -174,7 +174,7 @@ const data = [{
   "gender": "male",
   "birthplace": null,
   "deathplace": null,
-  "influences": null,
+  "influences": [],
   "influenced": ["81277889"],
   "createdAt": "2021-03-19T10:07:43.014Z",
   "updatedAt": "2021-06-02T18:21:06.986Z"

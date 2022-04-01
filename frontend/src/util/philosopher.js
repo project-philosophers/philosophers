@@ -24,74 +24,68 @@ export const getPh = (id) => {
   return data.find(person => person.id === id)
 }
 
-export const parsePh = (thePh) => {
-  // console.log('thePh', thePh)
+export const parsePh = (ph) => {
+  // console.log('ph', ph)
   
   return [
     {
       label: 'Name',
-      value: thePh.name || '',
+      value: ph.name || '',
     },
     {
       label: 'Original Name',
-      value: thePh.name_original || '',
+      value: ph.name_original || '',
     },
     {
       label: 'Other Name',
-      value: thePh.name_other || '',
+      value: ph.name_other || '',
     },
     {
       label: 'Gender',
-      value: thePh.gender || '',
+      value: ph.gender || '',
     },
     {
       label: 'Born',
-      value: thePh.born || '',
+      value: ph.born || '',
     },
     {
       label: 'Born Date',
-      value: thePh.born_date || '',
+      value: ph.born_date || '',
     },
     {
       label: 'Born Question',
-      value: thePh.born_questioning || '',
+      value: ph.born_questioning || '',
     },
     {
       label: 'Birth Place',
-      value: thePh.birthplace || '',
+      value: ph.birthplace || '',
     },
     {
       label: 'Died',
-      value: thePh.died || '',
+      value: ph.died || '',
     },
     {
       label: 'Died Date',
-      value: thePh.died_date || '',
+      value: ph.died_date || '',
     },
     {
       label: 'Death Place',
-      value: thePh.deathplace || '',
+      value: ph.deathplace || '',
     },
 
     {
       label: 'Died Question',
-      value: thePh.died_questioning || '',
+      value: ph.died_questioning || '',
     },
     {
       label: 'Influenced',
-      value: getNameList(thePh.influenced) || '',
+      value: getNameList(ph.influenced) || [],
     },
     {
       label: 'Influences',
-      value: getNameList(thePh.influences) || '',
+      value: getNameList(ph.influences) || [],
     }
   ]
 }
 
-export const getNameList = (idArr) => {
-  const nameArr = [];
-  idArr.forEach(id => {
-    nameArr.push(getPh(id).name)
-  });
-  return nameArr;
-}
+const getNameList = (arr) => arr.map(id => getPh(id).name);
