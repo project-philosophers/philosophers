@@ -2,10 +2,10 @@
   import { ref, onMounted } from 'vue';
   const props = defineProps(['data']);
   const emit = defineEmits(['response']);
-  import { useSelectedPh } from '../../stores/selectedPh';
+  import { useSelectedPhId } from '@/stores/selectedPh';
   import { storeToRefs } from 'pinia';
-  const selectedPh = useSelectedPh();
-  const { selectedPhId } = storeToRefs(selectedPh);
+  const selectedPhId = useSelectedPhId();
+  // const { selectedPhId } = storeToRefs(selectedPh);
 
   import * as d3 from 'd3';
 
@@ -194,19 +194,6 @@
         .attr('font-size', 10);
 
 
-
-
-      
-      // svg.append("clipPath")
-      //   .attr("id", "clip-rect")
-      //   .append("rect")
-      //   .attr("x", 0)
-      //   .attr("y", padding.top) 
-      //   .attr("width", width)
-      //   .attr("height", height - (padding.top + padding.bottom));
-
-
-
       // const axisArea = svg.append('g')
       //   // .attr('color', 'white');
       // // .call(zoom)
@@ -235,14 +222,7 @@
 
       svg_top.call(zoom)
       svg_bottom.call(zoom)
-        // phRows.transition()
-        //   .attr('y', 100);
-        // timeBar.attr("transform", "translate(" + [0,e.wheelDeltaY] + ")");
-        // timeBar.attr('y', d => lineY(d) + e.wheelDeltaY);
-      // });
 
-      // axisArea.call(zoom)
-        // .on('wheel', pan);
 
 
       function delta(event) {
@@ -329,40 +309,6 @@
       }
       
 
-    
-
-      
-      // const timeLines = svg.append("g")
-      //   .attr("class", "timeLines")
-      //   .selectAll("rect")
-      //   .data(data)
-      //   .join("rect")
-      //     .attr('x', d => xScale(d.born))
-      //     // .attr('y', chartCenterY - barHeight / 2)
-      //     .attr('y', d => lineY(d))
-      //     .attr('width', d => xScale(d.died) - xScale(d.born))
-      //     .attr('height', barHeight)
-      //     .attr("fill", "black")
-      //     .attr("opacity", 0.2)
-      //     // .on("mouseover", d => eventMouseOver(d))
-      //     .on('mouseover', function(d) {d3.select(this).attr('opacity', 0.5)})
-      //     .on("mouseout", function(d) {d3.select(this).attr('opacity', 0.2)})
-      //     .on("click", d => eventClick(d));
-
-      // const textElems = svg.append('g')
-      //   .attr('class', "textElems")
-      //   .selectAll('text')
-      //   .data(data)
-      //   .join('text')
-      //   // .text(dataset.date.format(dateDispFormat))
-      //     .text(d => d.name)
-      //     .attr('x', padding.left)
-      //     .attr('y', d => lineY(d))
-      //     // .attr('y', chartCenterY)
-      //     .attr('dy', '0.7rem')
-      //     .attr('font-size', 10);
-
-
       const eventMouseOver = (d0) => {
         d3.select(this).attr('style', 'fill: red');
         const d = d0.target.__data__;
@@ -380,7 +326,8 @@
       };
       const eventClick = (d_all) => {
         const d = d_all.target.__data__;
-        selectedPhId.value = d.id;
+        selectedPhId.update(d.id);
+        // console.log(selectedPhId.$state);
         // funcFocus(d);
         // d3.select(this)
         //   .attr("id", "select");

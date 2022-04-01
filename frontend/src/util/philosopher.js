@@ -25,7 +25,7 @@ export const getPh = (id) => {
 }
 
 export const parsePh = (thePh) => {
-  console.log('thePh', thePh)
+  // console.log('thePh', thePh)
   
   return [
     {

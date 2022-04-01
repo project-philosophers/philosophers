@@ -8,6 +8,9 @@
   const emit = defineEmits(['response']);
   const clickedPhId = ref();
 
+  import { useSelectedPhId } from '@/stores/selectedPh';
+  // import { storeToRefs } from 'pinia';
+  const selectedPhId = useSelectedPhId();
 
   const philsIndeces = [
     "name",
@@ -66,14 +69,10 @@
 
   const click = (id) => {
     clickedPhId.value = id;
-    console.log('id', id);
-    emit("response", id);
+    selectedPhId.update(id);
+    // console.log('id', id);
+    // emit("response", id);
   }
-
-
-  watch(clickedPhId, () => {
-    console.log('yaeh', clickedPhId)
-  });
 
   const philsData = phils;
 

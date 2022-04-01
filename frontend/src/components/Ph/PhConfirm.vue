@@ -1,8 +1,8 @@
 <script setup>
   import { ref } from 'vue'
   import { usePhInfo } from '@/stores/phForm'
-  import { parsePh } from '../util/philosopher';
-  import client from '../../config/axios.js'
+  import { parsePh } from '../../util/philosopher';
+  import client from '../../../config/axios.js'
 
   const emit = defineEmits(['toNextMode', 'toLastMode'])
   const props = defineProps(['phId'])

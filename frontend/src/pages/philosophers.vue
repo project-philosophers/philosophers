@@ -1,8 +1,14 @@
 <script setup>
   import axios from 'axios';
+  import { ref, watchEffect, watch } from 'vue';
+// ../components/Ph/PhView.vue
+  import Graph from '../components/Graph.vue';
+  import Search from '../components/Search.vue';
+  import Ph from '../components/Ph.vue';
 
-  import PhView from '../components/PhView.vue';
-  import PhEdit from '../components/PhEdit.vue';
+  // import PhView from '../components/PhView.vue';
+  // import PhEdit from '../components/PhEdit.vue';
+
 // <<<<<<< HEAD
 //   import PhConfirm from '../components/PhConfirm.vue';
 //   import Test from '../components/Test.vue';
@@ -29,84 +35,88 @@
 //   //   philosophers.updatePhils(phils);
 //   //   console.log(philosophers.preprocessTimeline);
 //   // })
+// ../components/Ph/PhConfirm.vue
+
+
+// const phils = ref();
+// phils.value = await axios.get('/api/philosophers/read');
+// console.log(phils.data.data);
 
 
   
-// =======
-  import Graph from '../components/Graph.vue';
-  import SearchPanel from '../components/SearchPanel.vue';
-  import PhConfirm from '../components/PhConfirm.vue';
+// ======
+  // import PhConfirm from '../components/PhConfirm.vue';
 
-  import { ref, watchEffect } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { useSelectedPh } from '../../src/stores/selectedPh';
-  const selectedPh = useSelectedPh();
+//   import { ref, watchEffect, watch } from 'vue';
+//   import { storeToRefs } from 'pinia';
+//   import { useSelectedPh } from '../../src/stores/selectedPh';
+//   const selectedPh = useSelectedPh();
 
-  const { selectedPhId } = storeToRefs(selectedPh);
+//   const { selectedPhId } = storeToRefs(selectedPh);
 
-// >>>>>>> fdbe3cd1721a1196351a86d020ed1577e9883ada
-  // utils
-  const phId = ref();
-  const mode = ref('view')
-// =======
-  const isShowRightSide = ref(true);
-  const isCreating = ref(false);
+// // >>>>>>> fdbe3cd1721a1196351a86d020ed1577e9883ada
+//   // utils
+//   const phId = ref();
+//   const mode = ref('view')
+// // =======
+//   const isShowRightSide = ref(true);
+//   const isCreating = ref(false);
 
-  watchEffect(() => {
-    // TODO SWITCH ID
-    // TODO CLOSE SIDE
-    phId.value = selectedPhId.value;
-    if(mode.value === 'view' && phId.value){
-      isShowRightSide.value = true;
-    }
-    else {
-      console.log('I saw it :)', selectedPhId.value)
-    }
+//   watchEffect(() => {
+//     // TODO SWITCH ID
+//     // TODO CLOSE SIDE
+//     phId.value = selectedPhId.value;
+//     if(mode.value === 'view' && phId.value){
+//       isShowRightSide.value = true;
+//     }
+//     else {
+//       console.log('I saw it :)', selectedPhId.value)
+//     }
+//   })
+// // >>>>>>> fdbe3cd1721a1196351a86d020ed1577e9883ada
+
+//   const toNext = (nextMode) => {
+//     mode.value = nextMode
+//   }
+//   const goBack = (lastMode) => {
+//     mode.value = lastMode
+//   }
+//   const toCreate = () => {
+//     isShowRightSide.value = true;
+//     phId.value = 'create';
+//     mode.value = 'edit';
+//     isCreating.value = true;
+//   }
+//   const cancelCreate = () => {
+//     isCreating.value = false;
+//     isShowRightSide.value =false;
+//     mode.value = 'view';
+//   }
+
+
+  import { usePhFiltered } from '@/stores/filteredPhils'
+  const phFiltered = usePhFiltered();
+  // const phils = phFiltered.$state;
+  import { useSearchConditions } from '@/stores/conditions';
+  const searchConditions = useSearchConditions();
+  let conditions = searchConditions.$state;
+
+  import { search } from '../lib/search';
+  import data from '../util/data';
+
+  watch(conditions, async () => {
+    // console.log('graph-conditions', conditions);
+    const filteredPhils = await search(data, conditions);
+    phFiltered.filterPhils(filteredPhils);
+    // console.log(filteredPhils);
   })
-// >>>>>>> fdbe3cd1721a1196351a86d020ed1577e9883ada
-
-  const toNext = (nextMode) => {
-    mode.value = nextMode
-  }
-  const goBack = (lastMode) => {
-    mode.value = lastMode
-  }
-  const toCreate = () => {
-    isShowRightSide.value = true;
-    phId.value = 'create';
-    mode.value = 'edit';
-    isCreating.value = true;
-  }
-  const cancelCreate = () => {
-    isCreating.value = false;
-    isShowRightSide.value =false;
-    mode.value = 'view';
-  }
-
 </script>
 
 <template>
   <div class="main flex">
-    <Graph
-      class="graph w-8/12"
-    />
-    <SearchPanel class="w-8/12 fixed bottom-px"/>
-    <div class="w-4/12">
-      <div v-if="!isCreating" class="fixed" @click="toCreate()">Add philosopher</div>
-      <template v-if="isShowRightSide">
-        <template v-if="!!phId">
-          <template v-if="mode === 'view'">
-            <PhView @toNextMode="nextMode => toNext(nextMode)" :phId="phId"/>
-          </template>
-          <template v-else-if="mode === 'edit'">
-            <PhEdit :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()"/>
-          </template>
-          <template v-if="mode === 'confirm'">
-            <PhConfirm :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" />
-          </template>
-        </template>
-      </template>
-    </div>
+    <Graph class="graph w-9/12" />
+    <Search class="w-9/12 fixed bottom-0" />
+    <Ph class="w-3/12 fixed" />
   </div>
 </template>
 

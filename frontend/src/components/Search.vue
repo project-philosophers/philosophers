@@ -2,41 +2,25 @@
 import { onMounted } from 'vue';
 import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
-import { useSearchCondition } from '@/stores/conditions'
-// import  from 'https://unpkg.com/d3-simple-slider@1.10.4/dist/d3-simple-slider.min.js'
-const emit = defineEmits(['triggerPeriodSearch'])
+import { usePhFiltered } from '@/stores/filteredPhils';
+import { useSearchConditions } from '@/stores/conditions';
+// const emit = defineEmits(['triggerPeriodSearch'])
 
-// <<<<<<< HEAD
+const phFiltered = usePhFiltered();
+// const conditions = searchConditions.$state;
 
-// import { useConditions } from '@/stores/conditions';
-// const conditions = useConditions();
+const searchConditions = useSearchConditions();
+let conditions = searchConditions.$state;
 
-// // const conditions = {
-// //   name: null,
-// //   period: {
-// //     from: 0,
-// //     to: 2000
-// //   },
-// //   tags: {
-// //     categories: [],
-// //     education: [],
-// //     keywords: [],
-// //     languages: [],
-// //     nationalities: []
-// //   }
-// // }
-
-// const changeText = (e) => {
-//   conditions.$state.name = e.target.value;
-//   console.log(conditions.$state);
-// =======
-const searchCondition = useSearchCondition();
-const conditions = searchCondition.$state;
-// console.log(conditions)
-
-const triggerPeriodSearch = (val) => {
-  emit('triggerPeriodSearch', val);
-// >>>>>>> 6cddffa3b9b15ff57f22de86476402b51d26ac1d
+const triggerPeriodSearch = async (val) => {
+  // emit('triggerPeriodSearch', val);
+  conditions.period = {
+    from: val[0],
+    to: val[1],
+  };
+  // console.log(conditions);
+  // const filtered = await phFiltered.search(conditions);
+  searchConditions.updateConditions(conditions);
 }
 
 const drawSlider = () => {
@@ -56,24 +40,9 @@ const drawSlider = () => {
         .type(d3.symbolCircle)
         .size(200)()
     )
-    .on('onchange', val => {
-      // d3.select('p#value-range')
-// <<<<<<< HEAD
-    //     .text(val.map(d3.format('1'))
-    //     .join(' - '));
-    // })
-    // .on('end', val => {
-    //   conditions.$state.period.from = val[0];
-    //   conditions.$state.period.to = val[1];
-    //   console.log(conditions.$state);
-// =======
-        // .text(val.map(d3.format('100'))
-        // .join(' -'));
-    })
     .on("end", val => {
-      conditions.period = val
+      conditions.period = val;
       triggerPeriodSearch(val);
-// >>>>>>> 6cddffa3b9b15ff57f22de86476402b51d26ac1d
     });
 
   const gRange = d3
@@ -85,13 +54,6 @@ const drawSlider = () => {
     .attr('transform', 'translate(30,30)');
 
   gRange.call(sliderRange);
-
-  // d3.select('p#value-range').text(
-  //   sliderRange
-  //     .value()
-  //     .map(d3.format('100'))
-  //     .join(' -')
-  // );
 }
 
 onMounted(() => {
@@ -101,7 +63,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class='search-container'>
+  <div class='search-container z-10'>
     <div>Search</div>
     <div>
       <input
@@ -111,7 +73,7 @@ onMounted(() => {
       />
     </div>
     <div class="row align-items-center">
-      <div class="col-sm-2"><p id="value-range"></p></div>
+      <!-- <div class="col-sm-2"><p id="value-range"></p></div> -->
       <div class="col-sm"><div id="slider-range"></div></div>
     </div>
   </div>
@@ -128,7 +90,7 @@ onMounted(() => {
   height: 100px;
 }
 #slider-range {
-  width: 500px;
+  /* width: 500px; */
 }
 .search-container #name-search {
   padding-left: 20px;

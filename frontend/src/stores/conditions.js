@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const useSearchCondition = defineStore({
-  id: 'searchCondition',
+export const useSearchConditions = defineStore({
+  id: 'searchConditions',
   state: () => ({
-  name: null,
+  name: '',
   period: {
     from: 0,
     to: 2000
@@ -17,34 +17,11 @@ export const useSearchCondition = defineStore({
   }
 }),
   getters: {
-    condition: (state) => state,
+    conditions: (state) => state,
   },
   actions: {
-  }
-})
-
-export const useCounterStore = defineStore({
-  id: 'conditions',
-  state: () => ({
-    name: null,
-    period: {
-      from: 0,
-      to: 2000
-    },
-    tags: {
-      categories: [],
-      education: [],
-      keywords: [],
-      languages: [],
-      nationalities: []
+    updateConditions(conditions) {
+      this.$state = conditions;
     }
-  }),
-  getters: {
-    // doubleCount: (state) => state.counter * 2
-  },
-  actions: {
-    // increment() {
-    //   this.counter++
-    // }
   }
 })

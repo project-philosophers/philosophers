@@ -9,9 +9,14 @@ export const usePhFiltered = defineStore({
     phFiltered: (state) => state,
   },
   actions: {
-    async search(conditions) {
-      return search(data, conditions)
+    filterPhils(data) {
+      this.$state = data;
     },
+    // async search(conditions) {
+    //   const filteredPhils = await search(data, conditions);
+    //   console.log(filteredPhils);
+    //   this.$state = filteredPhils;
+    // },
     clearFilter() {
       this.phFiltered = data
     },

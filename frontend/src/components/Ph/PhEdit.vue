@@ -1,6 +1,6 @@
 <script setup>
   import { usePhInfo } from '@/stores/phForm'
-  import { initPh } from '../util/philosopher';
+  import { initPh } from '../../util/philosopher';
 
   const emit = defineEmits(['toNextMode', 'toLastMode', 'toCancel'])
   const props = defineProps(['phId'])

@@ -4,21 +4,17 @@ import GraphTimeline from './graphs/GraphTimeline.vue';
 import GraphTable from './graphs/GraphTable.vue';
 import SideBar from './graphs/SideBar.vue';
 
-import { usePhFiltered } from '@/stores/phFilter'
+import { usePhFiltered } from '@/stores/filteredPhils'
 const phFiltered = usePhFiltered();
 const phils = phFiltered.$state;
-// import { storeToRefs } from 'pinia';
-// const phils = storeToRefs(phFiltered);
-// console.log(phils.value);
 
-import { ref } from 'vue';
+// import { useSearchConditions } from '@/stores/conditions';
+// const searchConditions = useSearchConditions();
+// let conditions = searchConditions.$state;
 
+import { ref, watch } from 'vue';
 
-// const phils = ref();
-// phils.value = await axios.get('/api/philosophers/read');
-// console.log(phils.data.data);
-
-const graphType = ref('timeline')
+const graphType = ref('table')
 const changeType = (type) => {
   graphType.value = type
 };
@@ -27,6 +23,9 @@ const www = (id) => {
   console.log(id);
 }
 
+watch(phils, () => {
+  console.log('graph-phils', phils.length);
+})
 </script>
 
 

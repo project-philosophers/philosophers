@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { getPh, parsePh } from '../util/philosopher';
+import { getPh, parsePh } from '../../util/philosopher';
 import { usePhInfo } from '@/stores/phForm'
 
 const props = defineProps(['phId', 'type'])
@@ -8,8 +8,10 @@ const emit = defineEmits(['toNextMode'])
 const phInfo = usePhInfo()
 
 const phData = getPh(props.phId);
+// console.log(phData);
 const ph = ref({});
 ph.value = parsePh(phData);
+// console.log(ph.value);
 
 const toNext = () => {
   phInfo.$state = phData
