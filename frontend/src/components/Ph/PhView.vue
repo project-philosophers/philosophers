@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { getPh, parsePh } from '../../util/philosopher';
 import { usePhInfo } from '@/stores/phForm'
 
@@ -7,11 +7,17 @@ const props = defineProps(['phId', 'type'])
 const emit = defineEmits(['toNextMode'])
 const phInfo = usePhInfo()
 
-const phData = getPh(props.phId);
-// console.log(phData);
+import { useSelectedPhId } from '@/stores/selectedPh';
+let phData = getPh(props.phId);
+const selectedPhId = useSelectedPhId();
 const ph = ref({});
+
 ph.value = parsePh(phData);
-// console.log(ph.value);
+
+watch(selectedPhId, () => {
+  phData = getPh(selectedPhId.$state.id);
+  ph.value = parsePh(phData);
+})
 
 const toNext = () => {
   phInfo.$state = phData
