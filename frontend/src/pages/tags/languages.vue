@@ -1,7 +1,7 @@
 <script setup>
   import axios from 'axios';
   import { ref, onMounted, onBeforeMount } from 'vue';
-  import SideBar from '../../components/graphs/SideBar.vue';
+  // import SideBar from '../../components/graphs/SideBar.vue';
 
 
   // import { usePhilosophers } from '@/stores/philosophers';

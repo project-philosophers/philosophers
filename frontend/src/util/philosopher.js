@@ -30,6 +30,7 @@ export const parsePh = (ph) => {
   return [
     {
       label: 'Name',
+      type: '',
       value: ph.name || '',
     },
     {
@@ -72,7 +73,6 @@ export const parsePh = (ph) => {
       label: 'Death Place',
       value: ph.deathplace || '',
     },
-
     {
       label: 'Died Question',
       value: ph.died_questioning || '',
@@ -88,4 +88,4 @@ export const parsePh = (ph) => {
   ]
 }
 
-const getNameList = (arr) => arr.map(id => getPh(id).name);
+export const getNameList = (arr) => arr.map(id => getPh(id).name);

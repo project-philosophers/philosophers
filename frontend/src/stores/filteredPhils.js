@@ -1,16 +1,19 @@
 import { defineStore } from 'pinia'
 import { search } from '../lib/search'
-import data from '../util/data'; // TODO APIからとる
+import data0 from '../util/data'; // TODO APIからとる
 
 export const usePhFiltered = defineStore({
   id: 'phils',
-  state: () => (data),
+  state: () => ({
+    data: data0
+  }),
+  // state: () => (data),
   getters: {
-    phFiltered: (state) => state,
+    phFiltered: (state) => state.data,
   },
   actions: {
     filterPhils(data) {
-      this.$state = data;
+      this.data = data;
     },
     // async search(conditions) {
     //   const filteredPhils = await search(data, conditions);

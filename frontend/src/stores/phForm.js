@@ -26,9 +26,15 @@ export const usePhForm = defineStore({
   }
 })
 
-export const usePhInfo = defineStore({
-  id: 'phInfo',
+export const usePhInput = defineStore({
+  id: 'phInput',
   state: () => ({}),
   actions: {
+    init(input) {
+      this.$state = input;
+    },
+    update(input) {
+      this.$state = input;
+    }
   }
 })

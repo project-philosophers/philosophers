@@ -1,5 +1,17 @@
 import { defineStore } from 'pinia'
 
+export const useGraphType = defineStore({
+  id: 'graphType',
+  state: () => ({
+    type: 'table'
+  }),
+  actions: {
+    switchType(type) {
+      this.type = type;
+    }
+  }
+})
+
 export const useGraphNetwork = defineStore({
   id: 'graph',
   state: () => ({

@@ -7,7 +7,6 @@
   const { userInfo } = storeToRefs(storeUserInfo);
 
   // let userName = userInfo.name || 'Login';
-  // const userName = 'Login';
   watch(userInfo, () => {
     const userName = userInfo.name || 'Login';
   });
@@ -15,7 +14,7 @@
 
 <template>
   <div class='nav w-full h-12 flex justify-around items-center shadow-md'>
-    <a href="/"><h1>Philosophers</h1></a>
+    <a href="/"><h1 class="absolute top-0 left-0 text-3xl">Philosophers</h1></a>
     <div class="links">
       <!-- <a href="/users/login" class="nav-item">Login</a> -->
       <a href="/users/login" class="nav-item">{{ userName || 'Login' }}</a>

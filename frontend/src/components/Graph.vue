@@ -1,37 +1,45 @@
 <script setup>
+import { ref, watch } from 'vue';
+
 import GraphNetwork from './graphs/GraphNetwork.vue';
 import GraphTimeline from './graphs/GraphTimeline.vue';
 import GraphTable from './graphs/GraphTable.vue';
-import SideBar from './graphs/SideBar.vue';
+// import SideBar from './graphs/SideBar.vue';
 
 import { usePhFiltered } from '@/stores/filteredPhils'
 const phFiltered = usePhFiltered();
-const phils = phFiltered.$state;
+// const phils = phFiltered.data;
+console.log('kore', phFiltered.data);
+// const phils = ref();
+// phils.value = phFiltered.data;
+const phils = ref(phFiltered.data);
 
 // import { useSearchConditions } from '@/stores/conditions';
 // const searchConditions = useSearchConditions();
 // let conditions = searchConditions.$state;
 
-import { ref, watch } from 'vue';
+const graphType = ref('');
+import { useGraphType } from '@/stores/graphs';
+const storeGraphType = useGraphType();
+graphType.value = storeGraphType.type;
 
-const graphType = ref('table')
-const changeType = (type) => {
-  graphType.value = type
-};
+watch(storeGraphType, () => {
+  graphType.value = storeGraphType.type;
+})
 
-const www = (id) => {
-  console.log(id);
-}
-
-watch(phils, () => {
-  console.log('graph-phils', phils.length);
+watch(phFiltered, () => {
+  console.log('korekore', phFiltered.data);
+  phils.value = phFiltered.data;
+  // phFiltered.data === undefined 
+  //   ? console.log(`*`, phils) 
+  //   : phils.value = phFiltered.data
+  
 })
 </script>
 
 
 <template>
   <div class='graphs_container flex'>
-    <SideBar @changeGraphType="type => changeType(type)" />
     <template v-if="graphType === 'network'">
       <GraphNetwork :data="phils" />
     </template>
@@ -39,10 +47,7 @@ watch(phils, () => {
       <GraphTimeline :data="phils" />
     </template>
     <template v-else-if="graphType === 'table'">
-      <GraphTable
-        :data="phils"
-        @response="id => www(id)"
-      />
+      <GraphTable :data="phils" />
     </template>
   </div>
 </template>

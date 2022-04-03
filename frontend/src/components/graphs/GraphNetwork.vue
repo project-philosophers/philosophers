@@ -1,8 +1,6 @@
 <script setup>
   import { ref, onMounted, nextTick, watch, onBeforeUnmount} from 'vue';
   const props = defineProps(['data']);
-  const emit = defineEmits(['response']);
-  const clickedPhId = ref();
 
   import * as d3 from 'd3';
 

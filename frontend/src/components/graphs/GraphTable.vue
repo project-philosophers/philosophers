@@ -1,12 +1,20 @@
 <script setup>
-  import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
+  import { nextTick, onBeforeMount, onMounted, ref, watch, computed } from 'vue';
   const props = defineProps(['data']);
   // import { usePhilosophers } from '@/stores/philosophers';
   const phils = props.data;
-  // console.log(phils);
 
+  console.log('phils', phils);
+
+  watch(props.data, (to, from) => {
+    console.log('changed');
+    console.log(to === from)
+  })
+  watch(phils, (to, from) => {
+    console.log('changed');
+    console.log(to === from)
+  })
   const emit = defineEmits(['response']);
-  const clickedPhId = ref();
 
   import { useSelectedPhId } from '@/stores/selectedPh';
   // import { storeToRefs } from 'pinia';
@@ -67,14 +75,11 @@
     return data;
   }
 
-  const click = (id) => {
-    clickedPhId.value = id;
-    selectedPhId.update(id);
-    // console.log('id', id);
-    // emit("response", id);
-  }
-
-  const philsData = phils;
+  watch(phils, () => {
+    console.log('phils', phils);
+    console.log(props.data);
+  })
+  const philsData = props.data;
 
 </script>
 
@@ -93,10 +98,10 @@
         </tr>
       </thead>
       <tbody>
-        <template v-for="ph in philsData">
+        <template v-for="ph in data">
           <tr
             class='records'
-            @click="click(ph.id)"
+            @click="selectedPhId.update(ph.id);"
           >
             <template v-for="index in philsIndeces">
               <td
@@ -188,7 +193,7 @@
 }
 .container tbody tr {
   height: 40px;
-  max-height: 40px;
+  /* max-height: 40px; */
   cursor: default;
   /* overflow-y: hidden; */
   /* border-bottom: 1px solid black; */
@@ -197,6 +202,7 @@
   /* text-align: right; */
   /* white-space: nowrap; */ /* CRUCIAL */
   width: 200px;
+  overflow-y: hidden;
 }
 .container tbody td:first-child {
   position: sticky;

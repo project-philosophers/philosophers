@@ -1,13 +1,13 @@
 <script setup>
   import { ref, watchEffect, watch } from 'vue';
   import { getPh, parsePh } from '../util/philosopher';
-  import { usePhInfo } from '@/stores/phForm'
+  // import { usePhInfo } from '@/stores/phForm'
 
   import PhView from './Ph/PhView.vue';
   import PhEdit from './Ph/PhEdit.vue';
   import PhConfirm from './Ph/PhConfirm.vue';
 
-  const phId = ref();
+  const presentPhId = ref();
   const mode = ref('view')
 
   const isShowRightSide = ref(true);
@@ -35,9 +35,9 @@
 
   watch(selectedPhId, () => {
     // if (phId === select)
-    console.log('change');
-    phId.value = selectedPhId.$state.id;
-    console.log(phId.value);
+    // console.log('change');
+    presentPhId.value = selectedPhId.id;
+    // console.log(presentPhId.value);
     // if(mode.value === 'view' && phId.value){
       // isShowRightSide.value = true;
     // }
@@ -55,7 +55,7 @@
   }
   const toCreate = () => {
     isShowRightSide.value = true;
-    phId.value = 'create';
+    // phId.value = 'create';
     mode.value = 'edit';
     isCreating.value = true;
   }
@@ -70,19 +70,19 @@
 
 <template>
   <!-- <div v-if="!isCreating" class="fixed" @click="toCreate()">Add philosopher</div> -->
-  <template v-if="isShowRightSide">
-    <template v-if="!!phId">
+  <!-- <template v-if="isShowRightSide"> -->
+    <template v-if="!!presentPhId">
       <template v-if="mode === 'view'">
-        <PhView :phId="phId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
+        <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
       </template>
       <template v-else-if="mode === 'edit'">
-        <PhEdit :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
+        <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
       </template>
       <template v-if="mode === 'confirm'">
-        <PhConfirm :phId="phId" @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
+        <PhConfirm @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
       </template>
     </template>
-  </template>
+  <!-- </template> -->
 </template>
 
 <style>

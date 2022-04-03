@@ -3,14 +3,14 @@ import { onMounted } from 'vue';
 import * as d3 from 'd3';
 import { sliderBottom } from 'd3-simple-slider';
 import { usePhFiltered } from '@/stores/filteredPhils';
-import { useSearchConditions } from '@/stores/conditions';
+import { useSearchConditions } from '@/stores/search';
 // const emit = defineEmits(['triggerPeriodSearch'])
 
 const phFiltered = usePhFiltered();
 // const conditions = searchConditions.$state;
 
 const searchConditions = useSearchConditions();
-let conditions = searchConditions.$state;
+let conditions = searchConditions.conditions;
 
 const triggerPeriodSearch = async (val) => {
   // emit('triggerPeriodSearch', val);
@@ -33,7 +33,8 @@ const drawSlider = () => {
     .width(500)
     .tickFormat(d3.format('100'))
     .ticks(5)
-    .default([800, 1100])
+    // default period
+    .default([-1000, 2000])
     .fill('#2196f3')
     .handle(
       d3.symbol()
@@ -63,8 +64,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class='search-container z-10'>
-    <div>Search</div>
+  <div class='search-container left-15 pt-10 pl-20 round z-2'>
+    <!-- <div>Search</div> -->
     <div>
       <input
         id="name-search"
@@ -83,14 +84,11 @@ onMounted(() => {
 .search-container {
   display: flex;
   flex-direction: column;
-  padding-left: 100px;
+  /* padding-left: 100px; */
 }
 .search-container svg {
   width: 700px;
   height: 100px;
-}
-#slider-range {
-  /* width: 500px; */
 }
 .search-container #name-search {
   padding-left: 20px;
@@ -99,18 +97,4 @@ onMounted(() => {
   border: 1px solid black;
   border-radius: 5px;
 }
-  /* .nav {
-    width: 100vw;
-    height: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  }
-  .links {
-    display: flex;
-  }
-  .nav-item {
-    margin-left: 15px;
-  } */
 </style>
