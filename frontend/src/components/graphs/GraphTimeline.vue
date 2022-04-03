@@ -217,7 +217,7 @@
 
 
       const zoom = d3.zoom()
-        .scaleExtent([1, 10])
+        // .scaleExtent([1, 10])
         // .wheelDelta(delta)
         .on("zoom", zoomed);
 
@@ -369,11 +369,6 @@
     height: 150px;
     overflow: scroll;
   }
-
-  /* .chart { */
-    /* width: 500px; */
-    /* overflow-y: hidden; */
-  /* } */
 
   .textElems {
     font-family: "Courier";
