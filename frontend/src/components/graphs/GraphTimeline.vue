@@ -44,9 +44,9 @@
     const paddingBetween = 5;
     const barHeight = 15
 
-
-    // console.log(data.length);
+    // TODO: width
     const width = window.innerWidth;
+    // const width = 10000;
     const height = padding.top + ((paddingBetween + barHeight) * data.length) + padding.bottom;
     // const [width, height] = [window.innerWidth - 280, 500];
     // const [width, height] = [15000, window.innerHeight - 70];
@@ -119,7 +119,7 @@
         .attr('class', 'chart')
         // .style('width', width)
         .append('svg')
-        // .style('width', width)
+        .attr('width', width)
         .attr("viewBox", [0, 0, width, height]);
       
       const svg_bottom = d3.select('#graph-timeline')
@@ -361,6 +361,10 @@
 </template>
 
 <style scoped>
+  .container {
+    /* width: calc(70vw - 20px); */
+    width: 1000px;
+  }
 
   #graph-timeline {
     position: relative;
