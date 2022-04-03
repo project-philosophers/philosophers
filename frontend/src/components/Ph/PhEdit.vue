@@ -5,7 +5,6 @@
 
   const emit = defineEmits(['toNextMode', 'toLastMode', 'toCancel'])
   const props = defineProps(['phId'])
-  // console.log('phId', props.phId)
 
   const phInput = usePhInput();
   // すでに保存されてるstateがあるかどうか
@@ -23,6 +22,7 @@
     emit('toCancel')
   }
 
+
   const phDataDic = {
     name: 'Name',
     name_original: 'Original Name',
@@ -35,7 +35,6 @@
     died_date: 'Died Date',
     deathplace: 'Death Place'
   }
-
 
 
   import { useSelectedPhId } from '@/stores/selectedPh';
@@ -60,14 +59,13 @@
     if (editingKey !== 'default') {
       console.log(editingKey, selectedPhId.id);
       phInput.data[editingKey].push(selectedPhId.id);
-      // console.log(phInput.data[editingKey]);
     }
   })
 
 </script>
 
 <template>
-  <div class="h-screen p-8 bg-orange-100 text-xs overflow-y-scroll">
+  <div class="h-screen pb-20 p-8 bg-orange-100 text-xs overflow-y-scroll">
     <template v-for="key in Object.keys(phDataDic)">
       <div class="block w-full my-1">
         <label>{{ phDataDic[key] }}: </label>

@@ -41,7 +41,7 @@
 </script>
 
 <template>
-  <div class="h-screen p-8 bg-gray-100 text-xs overflow-y-scroll">
+  <div class="h-screen pb-20 p-8 bg-gray-100 text-xs overflow-y-scroll">
     <template v-for="key in Object.keys(phDataDic)">
       <div class='block w-full my-1'>
         <span>{{ phDataDic[key] }}: </span>

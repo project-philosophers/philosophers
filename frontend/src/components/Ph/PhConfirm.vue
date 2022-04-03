@@ -54,7 +54,7 @@
 </script>
 
 <template>
-  <div class="h-screen p-8 bg-green-100 text-xs overflow-y-scroll">
+  <div class="h-screen pb-20 p-8 bg-green-100 text-xs overflow-y-scroll">
     <template v-for="info in ph">
       <template v-if="!!info">
         <template v-if="info.label === 'Influenced' || info.label === 'Influences'">
