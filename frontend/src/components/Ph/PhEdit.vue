@@ -1,15 +1,15 @@
 <script setup>
   import { ref, watch } from 'vue';
   import { usePhInput } from '@/stores/phForm'
-  import { initPh, getNameList } from '../../util/philosopher';
+  import { initPh, getPh, getNameList } from '../../util/philosopher';
 
   const emit = defineEmits(['toNextMode', 'toLastMode', 'toCancel'])
   const props = defineProps(['phId'])
-  console.log('phId', props.phId)
+  // console.log('phId', props.phId)
 
   const phInput = usePhInput();
   // すでに保存されてるstateがあるかどうか
-  const inputData = Object.keys(phInput.$state).length ? phInput.$state : initPh();
+  const inputData = Object.keys(phInput.data).length ? phInput.data : initPh();
 
   const toConfirm = () => {
     phInput.update(inputData);
@@ -37,24 +37,30 @@
   }
 
 
-  const edittingKey = ref();
-  edittingKey.value = 'default';
 
   import { useSelectedPhId } from '@/stores/selectedPh';
   const selectedPhId = useSelectedPhId();
-  console.log(selectedPhId.id);
 
-  const plusInfs = e => {
-    const key = e.target.id;
-    edittingKey.value = key;
-    console.log('on', key);
+  let editingKey = 'default';
+  const stateEditingKey = ref(editingKey);
+
+  const plusInf = e => {
+    editingKey = editingKey === 'default' ? e.target.id : 'default';
+    stateEditingKey.value = editingKey;
+  }
+  const deleteInf = (key, id) => {
+    phInput.data[key] = phInput.data[key].filter(i => i !== id);
   }
 
+  watch(stateEditingKey, () => {
+    stateEditingKey.value = editingKey;
+  })
+
   watch(selectedPhId, () => {
-    const key = edittingKey.value;
-    if (key !== 'default') {
-      console.log(selectedPhId.id);
-      console.log(phInput);
+    if (editingKey !== 'default') {
+      console.log(editingKey, selectedPhId.id);
+      phInput.data[editingKey].push(selectedPhId.id);
+      // console.log(phInput.data[editingKey]);
     }
   })
 
@@ -71,13 +77,11 @@
      <template v-for="key in ['influenced', 'influences']">
       <div class='block w-full my-1'>
         <span>{{ key }}: </span>
-        <span :id="key" class='plus inline-block bg-white px-1 py-0 rounded-lg cursor-pointer' @click="(e) => plusInfs(e)">
-          {{ edittingKey.value == key ? '-' : '+' }}
-        </span>
-        <template v-for="p in getNameList(inputData[key])">
+        <span :id="key" :key="stateEditingKey" class='plus inline-block bg-white px-1 py-0 rounded-lg cursor-pointer' @click="(e) => plusInf(e)">{{ stateEditingKey !== key ? '+' : '-' }}</span>
+        <template v-for="id in inputData[key]">
           <span class='inline-block bg-white px-2 py-1 m-1 rounded-lg cursor-pointer'>
-            {{ p + ' ' }}
-            <span>x</span>
+            {{ getPh(id).name + ' ' }}
+            <span @click="deleteInf(key, id)">x</span>
           </span>
         </template>
       </div>

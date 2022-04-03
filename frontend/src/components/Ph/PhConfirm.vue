@@ -8,7 +8,7 @@
   const props = defineProps(['phId'])
   const mode = ref(props.phId === 'create' ? 'create' : 'update')
   const phInput = usePhInput();
-  const info = phInput.$state;
+  const info = phInput.data;
   const ph = ref({});
   ph.value = parsePh(info);
   const resError = ref(false);

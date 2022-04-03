@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div class="h-screen w-15 flex-col items-center bg-red-200">
+  <div class="sidebar h-screen w-15 flex-col items-center bg-red-200">
     <div>
       <ul>
         <li class="cursor-pointer" @click="graphType.switchType('timeline')">timeline</li>
@@ -18,7 +18,7 @@
     </div>
     <!-- <div class="absolute bottom-0"> -->
     <div>
-      <div class="cursor-pointer" @click="isSearching.switch()">Search</div>
+      <div class="absolute bottom-0 cursor-pointer" @click="isSearching.switch()">Search</div>
     </div>
   </div>
 </template>

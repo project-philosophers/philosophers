@@ -31,7 +31,7 @@ const drawSlider = () => {
     .min(d3.min(data))
     .max(d3.max(data))
     .width(500)
-    .tickFormat(d3.format('100'))
+    // .tickFormat(d3.format('100'))
     .ticks(5)
     // default period
     .default([-1000, 2000])
@@ -64,11 +64,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class='search-container left-15 pt-10 pl-20 round z-2'>
+  <div class='search-container left-1/12 w-7/12 pt-5 pl-10 border-2 rounded-3xl z-2'>
     <!-- <div>Search</div> -->
     <div>
       <input
         id="name-search"
+        class="ml-5"
         placeholder="Name"
         @input="(e) => changeText(e)"
       />
@@ -84,10 +85,10 @@ onMounted(() => {
 .search-container {
   display: flex;
   flex-direction: column;
-  /* padding-left: 100px; */
+  /* box-sizing: border-box; */
 }
 .search-container svg {
-  width: 700px;
+  width: 100%;
   height: 100px;
 }
 .search-container #name-search {

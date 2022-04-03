@@ -69,20 +69,17 @@
 </script>
 
 <template>
-  <!-- <div v-if="!isCreating" class="fixed" @click="toCreate()">Add philosopher</div> -->
-  <!-- <template v-if="isShowRightSide"> -->
-    <template v-if="!!presentPhId">
-      <template v-if="mode === 'view'">
-        <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
-      </template>
-      <template v-else-if="mode === 'edit'">
-        <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
-      </template>
-      <template v-if="mode === 'confirm'">
-        <PhConfirm @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
-      </template>
+  <template v-if="!!presentPhId">
+    <template v-if="mode === 'view'">
+      <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
     </template>
-  <!-- </template> -->
+    <template v-else-if="mode === 'edit'">
+      <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
+    </template>
+    <template v-if="mode === 'confirm'">
+      <PhConfirm @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
+    </template>
+  </template>
 </template>
 
 <style>

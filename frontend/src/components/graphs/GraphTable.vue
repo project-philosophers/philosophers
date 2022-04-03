@@ -100,14 +100,14 @@
       <tbody>
         <template v-for="ph in data">
           <tr
-            class='records'
+            class='records h-20px'
             @click="selectedPhId.update(ph.id);"
           >
             <template v-for="index in philsIndeces">
               <td
                 :class="index"
               >
-                {{ ph[index] }}
+                <div class="h-20px overflow-y-scroll">{{ ph[index] }}</div>
               </td>
             </template>
           </tr>
@@ -136,14 +136,8 @@
   border-collapse: separate;
   border-spacing: 0px;
   width: 100%;
-  height: 100%;
   table-layout: fixed;
-  /* background-color: green; */
 }
-
-/* .tablehead, .tablebody { */
-  /* display: block; */
-/* } */
 
 .container thead {
   width: 100%;
