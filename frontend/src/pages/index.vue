@@ -1,19 +1,25 @@
 <script setup>
-import Vue from 'vue'
-import Nav from '../components/Navigation.vue';
+  import Nav from '../components/Navigation.vue'
 
 </script>
 
 <template>
-  <!-- <Nav /> -->
-  <li>
-    <ol><a href="/philosophers">Philosophers</a></ol>
-    <ol>Literature</ol>
-  </li>
+  <header>
+    <div class="wrapper">
+      <Nav />
+    </div>
+  </header>
+  <ul>
+    <li><a href="/philosophers">Philosophers</a></li>
+    <li><a href="/literature">Literature</a></li>
+  </ul>
+    <router-view></router-view>
+
 </template>
 
 <style>
   * {
+    overflow: hidden;
     font-family: 'Courier';
   }
 </style>

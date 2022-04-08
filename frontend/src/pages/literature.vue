@@ -4,7 +4,7 @@
 
 <template>
   <div class="main flex">
-    
+    literature
   </div>
 </template>
 
