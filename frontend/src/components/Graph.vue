@@ -1,40 +1,40 @@
 <script setup>
-import { ref, watch } from 'vue';
+  import { ref, watch } from 'vue';
 
-import GraphNetwork from './graphs/GraphNetwork.vue';
-import GraphTimeline from './graphs/GraphTimeline.vue';
-import GraphTable from './graphs/GraphTable.vue';
-// import SideBar from './graphs/SideBar.vue';
+  import GraphNetwork from './graphs/GraphNetwork.vue';
+  import GraphTimeline from './graphs/GraphTimeline.vue';
+  import GraphTable from './graphs/GraphTable.vue';
+  // import SideBar from './graphs/SideBar.vue';
 
-import { usePhFiltered } from '@/stores/filteredPhils'
-const phFiltered = usePhFiltered();
-// const phils = phFiltered.data;
-console.log('kore', phFiltered.data);
-// const phils = ref();
-// phils.value = phFiltered.data;
-const phils = ref(phFiltered.data);
+  import { usePhFiltered } from '@/stores/filteredPhils'
+  const phFiltered = usePhFiltered();
+  // const phils = phFiltered.data;
+  console.log('kore', phFiltered.data);
+  // const phils = ref();
+  // phils.value = phFiltered.data;
+  const phils = ref(phFiltered.data);
 
-// import { useSearchConditions } from '@/stores/conditions';
-// const searchConditions = useSearchConditions();
-// let conditions = searchConditions.$state;
+  // import { useSearchConditions } from '@/stores/conditions';
+  // const searchConditions = useSearchConditions();
+  // let conditions = searchConditions.$state;
 
-const graphType = ref('');
-import { useGraphType } from '@/stores/graphs';
-const storeGraphType = useGraphType();
-graphType.value = storeGraphType.type;
-
-watch(storeGraphType, () => {
+  const graphType = ref('');
+  import { useGraphType } from '@/stores/graphs';
+  const storeGraphType = useGraphType();
   graphType.value = storeGraphType.type;
-})
 
-watch(phFiltered, () => {
-  console.log('korekore', phFiltered.data);
-  phils.value = phFiltered.data;
-  // phFiltered.data === undefined 
-  //   ? console.log(`*`, phils) 
-  //   : phils.value = phFiltered.data
-  
-})
+  watch(storeGraphType, () => {
+    graphType.value = storeGraphType.type;
+  })
+
+  watch(phFiltered, () => {
+    console.log('korekore', phFiltered.data);
+    phils.value = phFiltered.data;
+    // phFiltered.data === undefined 
+    //   ? console.log(`*`, phils) 
+    //   : phils.value = phFiltered.data
+    
+  })
 </script>
 
 

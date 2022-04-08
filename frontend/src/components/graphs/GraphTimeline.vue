@@ -154,6 +154,7 @@
 
     svg_top.call(zoom)
     svg_bottom.call(zoom)
+    
 
 
     function zoomed(event) {
