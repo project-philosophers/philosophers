@@ -10,7 +10,6 @@
   const presentPhId = ref();
   const mode = ref('view')
 
-  const isShowRightSide = ref(true);
   const isCreating = ref(false);
 
   // import { storeToRefs } from 'pinia';
@@ -34,16 +33,7 @@
   // })
 
   watch(selectedPhId, () => {
-    // if (phId === select)
-    // console.log('change');
     presentPhId.value = selectedPhId.id;
-    // console.log(presentPhId.value);
-    // if(mode.value === 'view' && phId.value){
-      // isShowRightSide.value = true;
-    // }
-  //   else {
-  //     console.log('I saw it :)', selectedPhId.value)
-  //   }
   })
 
 
@@ -51,17 +41,16 @@
     mode.value = nextMode
   }
   const goBack = (lastMode) => {
+    console.log('lastMode', lastMode)
     mode.value = lastMode
   }
   const toCreate = () => {
-    isShowRightSide.value = true;
-    // phId.value = 'create';
+    presentPhId.value = 'create';
     mode.value = 'edit';
     isCreating.value = true;
   }
   const cancelCreate = () => {
     isCreating.value = false;
-    isShowRightSide.value =false;
     mode.value = 'view';
   }
 
@@ -69,18 +58,22 @@
 </script>
 
 <template>
-  <template v-if="!!presentPhId">
-    <template v-if="mode === 'view'">
-      <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)" class="w-3/12"/>
-    </template>
-    <template v-else-if="mode === 'edit'">
-      <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()" class="w-3/12"/>
-    </template>
-    <template v-if="mode === 'confirm'">
-      <PhConfirm @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)" class="w-3/12"/>
-    </template>
-  </template>
+  <div>
+    <div v-if="!isCreating" @click="toCreate()" >Add philosopher</div>
+    <div v-if="!!presentPhId">
+      <div v-if="mode === 'view'">
+        <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)"></PhView>
+      </div>
+      <div v-else-if="mode === 'edit'">
+        <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()"/>
+      </div>
+      <div v-if="mode === 'confirm'">
+        <PhConfirm @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"/>
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <style>
 

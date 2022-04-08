@@ -66,12 +66,12 @@
 
 <template>
   <div class="h-screen pb-20 p-8 bg-orange-100 text-xs overflow-y-scroll">
-    <template v-for="key in Object.keys(phDataDic)">
+    <div v-for="(item, idx) in Object.keys(phDataDic)" :key="idx">
       <div class="block w-full my-1">
-        <label>{{ phDataDic[key] }}: </label>
-        <input v-model="inputData[key]" class="pl-2" />
+        <label>{{ phDataDic[item] }}: </label>
+        <input v-model="inputData[item]" class="pl-2" />
       </div>
-    </template>
+    </div>
      <template v-for="key in ['influenced', 'influences']">
       <div class='block w-full my-1'>
         <span>{{ key }}: </span>

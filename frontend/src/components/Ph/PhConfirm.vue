@@ -55,24 +55,24 @@
 
 <template>
   <div class="h-screen pb-20 p-8 bg-green-100 text-xs overflow-y-scroll">
-    <template v-for="info in ph">
-      <template v-if="!!info">
-        <template v-if="info.label === 'Influenced' || info.label === 'Influences'">
+    <div v-for="(info, idx) in ph" :key="idx">
+      <div v-if="!!info">
+        <div v-if="info.label === 'Influenced' || info.label === 'Influences'">
           <div :key="info.label"  class='block w-full my-1'>
             <span>{{ info.label }}: </span>
-            <template v-for="person in info.value" :key="person">
+            <div v-for="person in info.value" :key="person">
               <span class='inline-block bg-white px-2 py-1 m-1 rounded-lg'>{{ person }}</span>
-            </template>
+            </div>
           </div>
-        </template>
-        <template v-else>
+        </div>
+        <div v-else>
           <div :key="info.label"  class='block w-full my-1'>
             <span>{{ info.label }}: </span>
             <span>{{ info.value }}</span>
           </div>
-        </template>
-      </template>
-    </template>
+        </div>
+      </div>
+    </div>
     <p v-if="resError">Fail to {{mode}}, try later.</p>
     <button @click="goBack" class="border-zinc-900 border-2 text-black py-1 px-4 rounded">Back</button>
     <button @click="submitPh" class="pl-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">Submit</button>

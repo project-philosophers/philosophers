@@ -29,11 +29,9 @@ watch(storeGraphType, () => {
 
 watch(phFiltered, () => {
   console.log('korekore', phFiltered.data);
-  phils.value = phFiltered.data;
-  // phFiltered.data === undefined 
-  //   ? console.log(`*`, phils) 
-  //   : phils.value = phFiltered.data
-  
+  // phils.value = phFiltered.data;
+  if (phFiltered.data === undefined) return;
+  phils.value = phFiltered.data
 })
 </script>
 
