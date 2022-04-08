@@ -1,10 +1,11 @@
 <script setup>
-
+  import { useRoute, useRouter } from 'vue-router';
 </script>
 
 <template>
   <div class='user'>
-    user
+    hey
+    {{ this.$route.params.id }}
   </div>
 </template>
 

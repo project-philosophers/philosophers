@@ -4,7 +4,6 @@
   // import { usePhilosophers } from '@/stores/philosophers';
   const phils = props.data;
 
-  console.log('phils', phils);
 
   watch(props.data, (to, from) => {
     console.log('changed');
@@ -14,10 +13,8 @@
     console.log('changed');
     console.log(to === from)
   })
-  const emit = defineEmits(['response']);
 
   import { useSelectedPhId } from '@/stores/selectedPh';
-  // import { storeToRefs } from 'pinia';
   const selectedPhId = useSelectedPhId();
 
   const philsIndeces = [
@@ -43,11 +40,6 @@
   ];
   
   const preprocess = (rowData) => {
-    // console.log(rowData);
-    // const data = rowData.concat();
-    if (rowData === []) {
-      return;
-    }
     const data = JSON.parse(JSON.stringify(rowData));
     // const data = [...rowData];
 
@@ -62,6 +54,7 @@
     data.forEach(d => {
       tagsIndeces.forEach(tagsIndex => {
         d[tagsIndex] = d[tagsIndex].map(t => t.name);
+        // console.log(t.name);
       });
 
       if (d.influences) {
@@ -79,7 +72,7 @@
     console.log('phils', phils);
     console.log(props.data);
   })
-  const philsData = props.data;
+  const philsData = preprocess(props.data);
 
 </script>
 
@@ -89,24 +82,20 @@
       <thead>
         <tr>
           <template v-for="index in philsIndeces">
-            <th
-              :class="`columns ${index}`"
-            >
+            <th :class="`columns ${index}`">
               {{ index.toUpperCase() }}
             </th>
           </template>
         </tr>
       </thead>
       <tbody>
-        <template v-for="ph in data">
+        <template v-for="ph in philsData">
           <tr
             class='records h-20px'
             @click="selectedPhId.update(ph.id);"
           >
             <template v-for="index in philsIndeces">
-              <td
-                :class="index"
-              >
+              <td :class="index">
                 <div class="h-20px overflow-y-scroll">{{ ph[index] }}</div>
               </td>
             </template>
