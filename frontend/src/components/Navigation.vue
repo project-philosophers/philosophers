@@ -1,32 +1,54 @@
 <script setup>
-  import { watch } from 'vue';
+  import { ref } from 'vue';
+  import { useState } from '../lib/state';
 
   const props = defineProps(['userName']);
   const userName = props.userName;
 
-  // import { useUserInfo } from '@/stores/userInfo';
-  // import { storeToRefs } from 'pinia';
-  // const storeUserInfo = useUserInfo();
-  // const { userInfo } = storeToRefs(storeUserInfo);
+  const [isOpen, setIsOpen] = useState(false);
 
-  // let userName = userInfo.name || 'Login';
-  // watch(userInfo, () => {
-  //   const userName = userInfo.name || 'Login';
-  // });
+  // let dropdowns = document.querySelectorAll('.dropdown')
+  // window.addEventListener('click', (event) => {
+  //   if (isOpen.value) {
+  //     // console.log(isOpen.value);
+  //     dropdowns.forEach((dropdownButton) => {
+  //       let dropdown = document.querySelector(`.${dropdownButton.dataset.dropdown}`)
+  //       let targetIsDropdown = dropdown == event.target
+  //       console.log(dropdown, targetIsDropdown);
+
+  //       if (dropdownButton == event.target) {
+  //         return
+  //       }
+
+  //       if ((!targetIsDropdown) && (!dropdown.contains(event.target))) {
+  //         dropdown.classList.remove('show')
+  //       }
+  //     })
+  //   }
+  // })
 </script>
 
 <template>
-  <div class='nav w-full h-12 flex justify-around items-center shadow-md'>
-    <a href="/"><h1 class="absolute top-0 left-0 text-3xl">Philosophers</h1></a>
-    <div class="left-20 w-50 h-10 overflow-y-scroll z-5">
-      <ul>
-        <li>Home</li>
-        <li>Philosophers</li>
-        <li>Literature</li>
-        <li>Keywords</li>
-      </ul>
+  <!-- <div class='nav w-full h-12 flex justify-around items-center shadow-md'> -->
+  <div class='nav w-full h-12 flex items-center'>
+    <div class="ml-10 text-3xl">
+      <a href="/">Falāsifa</a>
     </div>
-    <div class="links">
+    <div class="links ml-20 flex-row pl-10">
+      <div><a href="/home">Home</a></div>
+      <div class="pl-10 cursor-pointer" @click="setIsOpen(!isOpen)">data</div>
+      <template v-if="isOpen">
+        <div class="dropdown fixed top-10 ml-20 w-50 bg-white border-2 border-black rounded-1xl z-999">
+          <ul class="divide-y">
+            <!-- <li>Home</li> -->
+            <li><a href="/philosophers">Philosophers</a></li>
+            <li>Literature</li>
+            <li>Keywords</li>
+          </ul>
+        </div>
+      </template>
+    </div>
+    <div class="absolute right-10">
       <template v-if="!!userName">
         <a href="/users/_id" class="nav-item">{{ userName }}</a>        
       </template>
@@ -38,14 +60,12 @@
 </template>
 
 <style>
-  /* .nav {
-    width: 100vw;
-    height: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  } */
+  .nav {
+    /* display: flex;
+    flex-direction: row; */
+    border-bottom: 2px solid black;
+    box-sizing: border-box
+  }
   .links {
     display: flex;
   }

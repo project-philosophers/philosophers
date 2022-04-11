@@ -14,17 +14,15 @@
   // phils.value = phFiltered.data;
   const phils = ref(phFiltered.data);
 
-  // import { useSearchConditions } from '@/stores/conditions';
-  // const searchConditions = useSearchConditions();
-  // let conditions = searchConditions.$state;
 
-  const graphType = ref('');
-  import { useGraphType } from '@/stores/graphs';
-  const storeGraphType = useGraphType();
-  graphType.value = storeGraphType.type;
+  const graphTypeName = ref('');
+  import { useGraphType } from '@/stores/viewTypes';
+  const graphType = useGraphType();
+  graphTypeName.value = graphType.type;
 
-  watch(storeGraphType, () => {
-    graphType.value = storeGraphType.type;
+// <<<<<<< HEAD
+  watch(graphType, () => {
+    graphTypeName.value = graphType.type;
   })
 
   watch(phFiltered, () => {
@@ -35,18 +33,26 @@
     //   : phils.value = phFiltered.data
     
   })
+// =======
+  // watch(phFiltered, () => {
+  //   console.log('korekore', phFiltered.data);
+  //   // phils.value = phFiltered.data;
+  //   if (phFiltered.data === undefined) return;
+  //   phils.value = phFiltered.data
+  // })
+// >>>>>>> 2fb3d07dfb06598019241c476582935f6c5efffe
 </script>
 
 
 <template>
   <div class='graphs_container flex'>
-    <template v-if="graphType === 'network'">
+    <template v-if="graphTypeName === 'network'">
       <GraphNetwork :data="phils" />
     </template>
-    <template v-else-if="graphType === 'timeline'">
+    <template v-else-if="graphTypeName === 'timeline'">
       <GraphTimeline :data="phils" />
     </template>
-    <template v-else-if="graphType === 'table'">
+    <template v-else-if="graphTypeName === 'table'">
       <GraphTable :data="phils" />
     </template>
   </div>

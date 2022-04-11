@@ -69,18 +69,33 @@ router.post('/create',
 // req: [tagsIndex]
 // res: [tags]
 const readTags = async (req, res, next) => {
-	 // const index = req.body.index;
-	const index = 'languages';
+	const index = req.params.index || req.body.index;
+	// const index = req.body.index;
+	// const index = 'languages';
 
 	const tags = await tagsTables[index]
-		.findAll()
+		.findAll({
+			include: [
+				{ model: db.Philosophers, as: "philosophers" }
+			]
+		})
  		.catch(err => console.error(err.stack));
 
 	res.locals.tags = tags;
 	next();
 }
 
-router.get('/read',
+router.post('/read',
+	readTags,
+	(req, res) => {
+		const tags = res.locals.tags;
+		const resJSON = {
+			'data': tags
+		}
+		res.json(resJSON);
+	}
+);
+router.get('/read/:index',
 	readTags,
 	(req, res) => {
 		const tags = res.locals.tags;

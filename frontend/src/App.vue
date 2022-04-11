@@ -15,10 +15,6 @@
       <Nav :userName="userinfo.name" />
     </div>
   </header>
-  <!-- <ul>
-    <li><a href="/philosophers">Philosophers</a></li>
-    <li><a href="/literature">Literature</a></li>
-  </ul> -->
   <router-view></router-view>
 </template>
 

@@ -8,7 +8,7 @@ import User from "./pages/users/_id.vue";
 import Register from "./pages/users/register.vue";
 import Login from "./pages/users/login.vue";
 
-import Tags from "./components/Tags.vue";
+import TagsPanel from "./components/TagsPanel.vue";
 import Languages from "./pages/tags/languages.vue";
 
 import World from './components/graphs/GraphMap.vue'
@@ -48,8 +48,8 @@ const routes = [
   },
   {
     path: "/tags",
-    name: "Tags",
-    component: Tags,
+    name: "TagsPanel",
+    component: TagsPanel,
   },
   {
     path: "/tags/languages",

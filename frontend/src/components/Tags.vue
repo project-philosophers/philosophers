@@ -1,98 +1,77 @@
 <script setup>
-// name -> id
+  import axios from 'axios';
+  import { ref, watch, onMounted, onBeforeMount } from 'vue';
+  import { useState } from '../lib/state';
 
 
-// import { ref } from 'vue'
-
-// const props = defineProps(['tagsInfo']);
-const tagsInfo = {
-  index: 'languages',
-  oldCheckedTags: ['German']
-}
+  // import { usePhilosophers } from '@/stores/philosophers';
+  // import { storeToRefs } from 'pinia';
+  // const philosophers = usePhilosophers();
+  // const { phils } = storeToRefs(philosophers);
 
 
+  import { useTagsType } from '@/stores/viewTypes';
+  const tagsType = useTagsType();
 
-const tagsIndex = tagsInfo.index;
-// const tagsIndex = defineProps(['tagsIndex']);
-const tagsList = ['German', 'Latin', 'Latin1', 'La2tin', 'L3atin', 'L4atin', 'Lat5in', 'Lat6in'];
-let checkedTagsList = tagsInfo.oldCheckedTags;
+  // onBeforeMount(async () => {
+  //   const tags = await axios.get('/api/tags/read').then(res => res.data.data);
+  //   console.log(tags[0].name);
+  // })
 
-const handleCheck = (e) => {
-  checkedTagsList.push(e.target.id);
-}
+  // const tags = tags0.data.data;
 
-const emit = defineEmits(['newCheckedTags']);
-const done = () => {
-  console.log(checkedTagsList);
-  emit('newCheckedTags', checkedTagsList);
-}
+
+  const tagsTypes = ['languages', 'nationalities', 'education', 'categories'];
+
+  const tags = [
+    {name: 'Latin'},
+    {name: 'German'}
+  ]
+
+  const tagClick = (tagName) => {
+    console.log(tagName);
+  }
+
+  const newTag = ref('');
+  const addTag = () => {
+    const addTagInfo = {
+      tagsType: tagsType.type,
+      newTag: newTag.value
+    }
+    console.log(addTagInfo);
+  }
+
 
 </script>
 
 <template>
-  <div class='tags-container'>
-    <div>{{ tagsIndex }}</div>
-    <div class='tags-list'>
-      <template v-for="t in tagsList">
-        <div class="tag">
-          <input
-            type="checkbox"
-            :name="t"
-            :id="t"
-            :checked="checkedTagsList.includes(t)"
-            @change="(e) => handleCheck(e)"
-          />
-          <label
-            :for="t"
-          >
-            {{ t }}
-          </label>
+  <!-- <Sidebar /> -->
+  <div class="tags absolute ml-15 z-10">
+    <template v-for="tagsType in tagsTypes">
+    <div class="pb-10">
+    <!-- <h1 class="font-bold">{{ tagsType.type }}</h1> -->
+    <h1 class="font-bold">{{ tagsType }}</h1>
+    <div class="tags-area">
+      <template v-for="tag in tags">
+        <div @click="tagClick(tag.name)">
+          <span>{{ tag.name }}</span>
         </div>
       </template>
     </div>
-    <div
-      class="done"
-      @click="done"
-    >
-      OK
+    <div class="new-tag">
+      <input
+        id="tags-input"
+        class="border-1 border-black"
+        placeholder="new"
+        v-model="newTag"
+      />
+      <div @click="addTag()">add</div>
     </div>
+    </div>
+    </template>
   </div>
 </template>
 
 <style>
-.tags-container {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  height: 200px;
-  border: 1px solid black;
-}
-.tags-list {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  overflow-x: scroll;
-  width: 90%;
-  height: 70%;
-  margin-left: 5%;
-}
-.tags-list .tag {
-  position: relative;
-  width: 150px;
-  height: 18px;
-}
-.tags-list .tag input {
-  position: absolute;
-  bottom: 0;
-  cursor: pointer;
-}
-.tags-list .tag label {
-  position: absolute;
-  left: 20px;
-  font-size: 15px;
-  cursor: pointer;
-}
-.done {
-  cursor: pointer;
-}
+
 </style>

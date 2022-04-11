@@ -1,7 +1,6 @@
 <script setup>
   import axios from 'axios';
   import { ref, onMounted, onBeforeMount } from 'vue';
-  // import SideBar from '../../components/graphs/SideBar.vue';
 
 
   // import { usePhilosophers } from '@/stores/philosophers';
@@ -36,8 +35,8 @@
 </script>
 
 <template>
-  <!-- <SideBar /> -->
-  <div class="tags languages">
+  <!-- <Sidebar /> -->
+  <div class="tags languages absolute ml-15 z-10">
     <h1 class="font-bold">Languages</h1>
     <div class="tags-area">
       <template v-for="tag in tags">
