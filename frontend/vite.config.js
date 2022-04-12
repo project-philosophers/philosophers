@@ -21,8 +21,8 @@ if (isLocal) {
         changeOrigin: true,
         secure: false,
         ws: true,
-        // cors: false,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        cors: false,
+        // rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   };

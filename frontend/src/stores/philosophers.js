@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const usePhilosophers = defineStore({
-  id: 'philosophers',
+export const useStorePhils = defineStore({
+  id: 'storePhils',
   state: () => ({
-    phils: []
+    data: []
   }),
   getters: {
     preprocessTimeline (state) {
@@ -26,8 +26,23 @@ export const usePhilosophers = defineStore({
     }
   },
   actions: {
-    updatePhils (data) {
-      this.phils = data;
+    setStorePhils(data) {
+      this.data = data;
     }
   }
+})
+
+export const usePresentPhils = defineStore({
+  id: 'presentPhils',
+  state: () => ({
+    data: []
+  }),
+  getters: {
+    getPresentPhils: (state) => state.data,
+  },
+  actions: {
+    setPresentPhils(data) {
+      this.data = data;
+    }
+  } 
 })

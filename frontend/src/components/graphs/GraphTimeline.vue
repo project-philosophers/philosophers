@@ -149,7 +149,7 @@
 
 
     const zoom = d3.zoom()
-      // .scaleExtent([1, 10])
+      .scaleExtent([1, 10])
       .on("zoom", zoomed);
 
     svg_top.call(zoom)

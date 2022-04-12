@@ -1,37 +1,30 @@
 <script setup>
   import { ref, watch } from 'vue';
+  import { useState } from '../lib/state';
 
   import GraphNetwork from './graphs/GraphNetwork.vue';
   import GraphTimeline from './graphs/GraphTimeline.vue';
   import GraphTable from './graphs/GraphTable.vue';
-  // import SideBar from './graphs/SideBar.vue';
 
-  import { usePhFiltered } from '@/stores/filteredPhils'
-  const phFiltered = usePhFiltered();
-  // const phils = phFiltered.data;
-  console.log('kore', phFiltered.data);
-  // const phils = ref();
-  // phils.value = phFiltered.data;
-  const phils = ref(phFiltered.data);
-
-
-  const graphTypeName = ref('');
   import { useGraphType } from '@/stores/viewTypes';
   const graphType = useGraphType();
-  graphTypeName.value = graphType.type;
 
-// <<<<<<< HEAD
-  watch(graphType, () => {
-    graphTypeName.value = graphType.type;
-  })
 
-  watch(phFiltered, () => {
-    console.log('korekore', phFiltered.data);
-    phils.value = phFiltered.data;
-    // phFiltered.data === undefined 
+  import { usePresentPhils } from '@/stores/philosophers'
+  const presentPhils = usePresentPhils();
+  console.log('presentPhils', presentPhils.data);
+
+  // const phils = ref(presentPhils.data);
+  const [phils, setPhils] = useState([]);
+
+
+  watch(presentPhils, () => {
+    setPhils(presentPhils.data);
+    // phils.value = presentPhils.data;
+    // presentPhils.data === undefined 
     //   ? console.log(`*`, phils) 
-    //   : phils.value = phFiltered.data
-    
+    //   : phils.value = presentPhils.data
+    console.log('korekore', presentPhils.data);
   })
 // =======
   // watch(phFiltered, () => {
@@ -46,13 +39,13 @@
 
 <template>
   <div class='graphs_container flex'>
-    <template v-if="graphTypeName === 'network'">
+    <template v-if="graphType.type === 'network'">
       <GraphNetwork :data="phils" />
     </template>
-    <template v-else-if="graphTypeName === 'timeline'">
+    <template v-else-if="graphType.type === 'timeline'">
       <GraphTimeline :data="phils" />
     </template>
-    <template v-else-if="graphTypeName === 'table'">
+    <template v-else-if="graphType.type === 'table'">
       <GraphTable :data="phils" />
     </template>
   </div>

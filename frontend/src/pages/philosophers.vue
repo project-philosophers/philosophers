@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, watchEffect, watch, onBeforeMount } from 'vue';
+  import { ref, watchEffect, watch, onBeforeMount, onMounted } from 'vue';
 
   import axios from 'axios';
 
@@ -11,28 +11,37 @@
 
   import Tags from '../components/Tags.vue';
 
-  import { search } from '../lib/search';
+  import { useStorePhils, usePresentPhils } from '@/stores/philosophers';
+  const storePhils = useStorePhils();
+  const presentPhils = usePresentPhils();
+
 
   // import data from '../util/data';
   import { toEmptyArray } from '../lib/toEmptyArrays';
-  onBeforeMount(async () => {
-    const data = await axios.get('https://philosophers-v3-api.herokuapp.com/philosophers/read')
+  onMounted(async () => {
+    const data = await axios.get('/api/philosophers/read')
       .then(res => toEmptyArray(res.data.data));
-    console.log(data);
+    storePhils.setStorePhils(data);
+    presentPhils.setPresentPhils(data);
+    console.log('data', data);
   })
 
-  import { usePhFiltered } from '@/stores/filteredPhils'
-  const phFiltered = usePhFiltered();
+  // const phils = ref(storePhils.data);
+  // watch(phils, () => {
+  //   console.log('phils', phils.value);
+  // })
 
+
+  import { search } from '../lib/search';
   import { useIsSearching, useSearchConditions } from '@/stores/search';
   const isSearching = useIsSearching();
-
   const searchConditions = useSearchConditions();
-  let conditions = searchConditions.conditions;
 
+  let conditions = searchConditions.conditions;
   watch(conditions, async () => {
-    const filteredPhils = await search(data, conditions);
-    phFiltered.filterPhils(filteredPhils);
+    const phils = storePhils.data;
+    const filteredPhils = await search(phils, conditions);
+    presentPhils.setPresentPhils(filteredPhils);
   })
 
   // import { useTagsType } from '@/stores/viewTypes';
