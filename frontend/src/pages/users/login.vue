@@ -5,9 +5,7 @@
   import axios from 'axios';
 
   import { useUserInfo } from '@/stores/userInfo';
-  import { storeToRefs } from 'pinia';
   const storeUserInfo = useUserInfo();
-  const { userInfo } = storeToRefs(storeUserInfo);
 
   const router = useRouter();
 
@@ -28,8 +26,9 @@
     .then(res => {
       const userData = res.data;
       storeUserInfo.addUserInfo(userData);
-      console.log(userInfo.value);
-      router.push('/philosophers');
+      console.log(storeUserInfo.info);
+      // router.push('/users/_id');
+      router.go(-1);
     })
     .catch(err => console.log(err.response));
   }

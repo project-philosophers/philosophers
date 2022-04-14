@@ -1,29 +1,45 @@
 <script setup>
   import { ref, watch } from 'vue'
-  import { getPh, parsePh, getNameList } from '../../util/philosopher';
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
+  // import { getPh, parsePh, getNameList } from '../../util/philosopher';
   import { usePhInput } from '@/stores/phForm'
   import { useSelectedPhId } from '@/stores/selectedPh';
+  import { useState } from '@/lib/state';
 
   const props = defineProps(['phId', 'type'])
   const emit = defineEmits(['toNextMode'])
   const phInput = usePhInput()
 
-  let phData = getPh(props.phId);
+
+  import { useStorePhils } from '@/stores/philosophers';
+  const storePhils = useStorePhils();
+  const data = storePhils.data;
+  const getPh = id => data.find(ph => ph.id === id);
+  const getNameList = (arr) => arr.map(id => getPh(id).name);
+
+
+  const phData = getPh(props.phId);
   const selectedPhId = useSelectedPhId();
 
-  const ph = ref({});
-  // ph.value = parsePh(phData);
-  ph.value = phData;
+  const ph = ref(phData);
 
   watch(selectedPhId, () => {
-    phData = getPh(selectedPhId.id);
-    // ph.value = parsePh(phData);
-    ph.value = phData;
+    ph.value = getPh(selectedPhId.id);
   })
 
+  const [phViewType, setPhViewType] = useState('info');
+
+  import { useUserInfo } from '@/stores/userInfo';
+  const storeUserInfo = useUserInfo();
   const toEdit = () => {
-    phInput.init(phData);
-    emit('toNextMode', 'edit')
+    if (storeUserInfo.info.id) {
+      phInput.init(phData);
+      emit('toNextMode', 'edit');
+      // console.log(storeUserInfo.info);
+    } else {
+      router.push('/users/login');
+    }
   }
 
   const phDataDic = {
@@ -38,50 +54,47 @@
     died_date: 'Died Date',
     deathplace: 'Death Place'
   }
+
+  const goPage = () => {
+    // router.push(`/philosophers/${phData.id}`);
+  }
+
+  console.log(phData);
 </script>
 
 <template>
-  <div class="h-screen pb-20 p-8 bg-gray-100 text-xs overflow-y-scroll">
-    <div v-for="(item, idx) in Object.keys(phDataDic)" :key="idx">
-      <div class='block w-full my-1'>
-        <span>{{ phDataDic[item] }}: </span>
-        <span>{{ ph[item] }}</span>
-      </div>
+  <div class="relative h-screen pb-20 p-5 bg-gray-100">
+    <div class="pb-2 text-1xl">{{ ph.name_full }}</div>
+    <div class="w-2/2 flex flex-row">
+      <div class="w-1/2 text-center text-xs cursor-default" @click="setPhViewType('info')">INFO</div>
+      <div class="w-1/2 text-center text-xs cursor-default" @click="setPhViewType('tags')">TAGS</div>
     </div>
-    <div v-for="(key, idx) in ['influenced', 'influences']" :key="idx">
-      <div class='block w-full my-1' :key="idx">
-        <span>{{ key }}: </span>
-        <div v-for="(p, idx) in getNameList(ph[key])" :key="idx">
-          <span :key="idx" class='inline-block bg-white px-2 py-1 m-1 rounded-lg cursor-pointer'>{{ p }}</span>
+    <div class="w-2/2 text-xs overflow-y-scroll">
+      <template v-if="phViewType === 'info'">
+        <div v-for="(item, idx) in Object.keys(phDataDic)" :key="idx">
+          <div class='block w-full my-1'>
+            <span>{{ phDataDic[item] }}: </span>
+            <span>{{ ph[item] }}</span>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- <div v-for="info in ph">
-      <div v-if="!!info">
-        <div v-if="info.label === 'Influenced' || info.label === 'Influences'">
-          <div :key="info.label"  class='block w-full my-1'>
-            <span>{{ info.label }}: </span>
-            <div v-for="person in info.value">
-              <span class='inline-block bg-white px-2 py-1 m-1 rounded-lg'>{{ person }}</span>
+        <div v-for="(key, idx) in ['influenced', 'influences']" :key="idx">
+          <div class='block w-full my-1' :key="idx">
+            <span>{{ key }}: </span>
+            <div v-for="(p, idx) in getNameList(ph[key])" :key="idx">
+              <span :key="idx" class='inline-block bg-white px-2 py-1 m-1 rounded-lg cursor-pointer'>{{ p }}</span>
             </div>
           </div>
         </div>
-        <div v-else-if="!!info.value">
-          <div :key="info.label"  class='block w-full my-1'>
-            <span>{{ info.label }}: </span>
-            <span>{{ info.value }}</span>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <button @click="toEdit" class="ml-2 border-zinc-900 border-2 text-black py-1 px-4 rounded">
-      <div v-if="type === 'page'">
-        <router-link :to="`/philosopher/edit/${phId}`">Edit</router-link>
-      </div>
-      <div v-else>
-        Edit
-      </div>
-    </button>
+      </template>
+    </div>
+    <div>
+      <button @click="toEdit" class="bottom-5 ml-2 0px border-zinc-900 border-2 text-xs text-black py-1 px-4 rounded cursor-pointer">Edit</button>
+    </div>
+    <div class="absolute top-0 right-0 text-xs cursor-pointer" @click="goPage()">
+      <!-- page -->
+      <router-link :to="`/philosophers/${phId}`">page</router-link>
+      <!-- <a :href="`/philosophers/${phId}`">page</a> -->
+    </div>
   </div>
 </template>
 

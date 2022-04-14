@@ -1,7 +1,8 @@
 <script setup>
-  import { ref, watchEffect, watch, onBeforeMount, onMounted } from 'vue';
+  import { ref, watch, onBeforeMount, onMounted } from 'vue';
 
   import axios from 'axios';
+  import client from '../../config/axios';
 
   import Sidebar from '../components/Sidebar.vue';
   import Graph from '../components/Graph.vue';
@@ -15,15 +16,17 @@
   const storePhils = useStorePhils();
   const presentPhils = usePresentPhils();
 
-
   // import data from '../util/data';
   import { toEmptyArray } from '../lib/toEmptyArrays';
-  onMounted(async () => {
+  const phils = ref([]);
+
+  onBeforeMount(async () => {
     const data = await axios.get('/api/philosophers/read')
       .then(res => toEmptyArray(res.data.data));
+    phils.value = data;
     storePhils.setStorePhils(data);
     presentPhils.setPresentPhils(data);
-    console.log('data', data);
+    // console.log('phils', phils.value);
   })
 
   // const phils = ref(storePhils.data);
@@ -39,9 +42,11 @@
 
   let conditions = searchConditions.conditions;
   watch(conditions, async () => {
-    const phils = storePhils.data;
-    const filteredPhils = await search(phils, conditions);
-    presentPhils.setPresentPhils(filteredPhils);
+    if (isSearching.isSearching) {
+      const phils = storePhils.data;
+      const filteredPhils = await search(phils, conditions);
+      presentPhils.setPresentPhils(filteredPhils);
+    }
   })
 
   // import { useTagsType } from '@/stores/viewTypes';
@@ -50,12 +55,13 @@
 </script>
 
 <template>
-  <div class="main flex">
-    <Sidebar class="absolute h-screen w-15 flex-col items-center bg-red-200"/>
+  <div class="main relative flex">
+    <Sidebar class="sidebar absolute h-screen w-12 flex-col items-center border-r-1 border-black divide-y-1 divide-black"/>
     <div v-if="isSearching.isSearching">
-      <Search class="w-9/12 fixed bottom-0" />
+      <Search class="absolute bottom-0 left-12 ml-3 w-8/12" />
     </div>
-    <Graph class="graph w-9/12 ml-15" />
+    <!-- <template v-if="" -->
+    <Graph class="graph w-9/12 ml-12 p-2" />
     <Right class="w-3/12">
       <Ph />
     </Right>
@@ -64,5 +70,7 @@
 </template>
 
 <style>
-
+  .sidebar {
+    box-sizing: border-box;
+  }
 </style>

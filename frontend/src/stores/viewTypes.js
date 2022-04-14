@@ -23,3 +23,15 @@ export const useTagsType = defineStore({
     }
   }
 })
+
+export const useViewType = defineStore({
+  id: 'viewType',
+  state: () => ({
+    type: ['graph', 'table']
+  }),
+  actions: {
+    switchType(type) {
+      this.type = type;
+    }
+  }
+})

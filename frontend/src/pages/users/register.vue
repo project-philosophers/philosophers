@@ -1,7 +1,6 @@
 <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
-  import Nav from '../../components/Navigation.vue';
 
   const username = ref('');
   const email = ref('');

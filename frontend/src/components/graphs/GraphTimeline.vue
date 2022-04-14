@@ -40,7 +40,7 @@
 
 
     let limits = {
-      minX: 0,
+      minX: -1000,
       maxX: 2000
     };
 
@@ -74,6 +74,7 @@
     
     const svg_bottom = d3.select('#graph-timeline')
       .append('svg')
+      .attr('class', 'axis-bottom')
       .attr('width', width)
       .attr('height', padding.bottom)
       .style('position','sticky')
@@ -99,7 +100,7 @@
       .data(data)
       .join('g')
         .attr('class', 'rows')
-        .attr("clip-path", "url(#clip-rect)")
+        // .attr("clip-path", "url(#clip-rect)")
         // .attr('x', 0)
         // .attr('y', 100)
         // .call(d => console.log(d.data))
@@ -124,7 +125,8 @@
       .attr('y', d => lineY(d))
       // .attr('y', chartCenterY)
       .attr('dy', '0.7rem')
-      .attr('font-size', 10);
+      .attr('font-size', 10)
+      .attr('position', 'sticky');
 
 
     // const axisArea = svg.append('g')
@@ -158,14 +160,23 @@
 
 
     function zoomed(event) {
-        gX_top.call(xAxis_top.scale(event.transform.rescaleX(xScale)));
-        gX_bottom.call(xAxis_bottom.scale(event.transform.rescaleX(xScale)));
+        // gX_top.on(rescaling);
+        // gX_bottom.on(rescaling);
+        gX_top.call(xAxis_top.scale(event.transform.rescaleX(xScale)))
+          // .call(xAxis_bottom.scale(event.transform.rescaleX(xScale)));
+        gX_bottom.call(xAxis_bottom.scale(event.transform.rescaleX(xScale)))
+          // .call(xAxis_top.scale(event.transform.rescaleX(xScale)));
         let new_xScale = event.transform.rescaleX(xScale);
 
         d3.selectAll('.timeBar')
           .attr('x', d => new_xScale(d.born))
           .attr('width', d => new_xScale(d.died) - new_xScale(d.born))
     }
+
+    function rescaling(event) {
+      xAxis_top.scale(event.transform.rescaleX(xScale));
+      xAxis_bottom.scale(event.transform.rescaleX(xScale));
+    } 
     
     const eventClick = (d_all) => {
       const d = d_all.target.__data__;
@@ -189,16 +200,20 @@
 
 <style scoped>
   .container {
+    position: relative;
     /* width: calc(70vw - 20px); */
     width: 1000px;
+    /* height: 500px; */
+    /* background-color: aqua; */
   }
 
   #graph-timeline {
-    position: relative;
+    /* position: absolute; */
     /* border: solid 1px red; */
     /* width: 600px; */
     height: 150px;
-    overflow: scroll;
+    /* height: 100%; */
+    overflow-y: scroll;
   }
 
   .textElems {
@@ -206,5 +221,11 @@
     font-size: 10;
     /* overflow-y: scroll; */
   }
+
+  /* .axis-bottom {
+    position: absolute;
+    color: brown;
+    bottom: 0;
+  } */
 
 </style>

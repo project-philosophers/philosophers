@@ -165,7 +165,8 @@ router.post('/update',
 	// 	next();
 	// },
 	(req, res) => {
-		res.json('updated');
+		// res.json('updated');
+		res.status(200);
 	}
 );
 

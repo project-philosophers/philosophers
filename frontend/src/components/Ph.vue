@@ -12,7 +12,6 @@
 
   const isCreating = ref(false);
 
-  // import { storeToRefs } from 'pinia';
   import { useSelectedPhId } from '@/stores/selectedPh';
   const selectedPhId = useSelectedPhId();
   
@@ -59,10 +58,10 @@
 
 <template>
   <div>
-    <div v-if="!isCreating" @click="toCreate()" >Add philosopher</div>
+    <!-- <div v-if="!isCreating" @click="toCreate()" >Add philosopher</div> -->
     <div v-if="!!presentPhId">
       <div v-if="mode === 'view'">
-        <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)"></PhView>
+        <PhView :phId="presentPhId" @toNextMode="nextMode => toNext(nextMode)" class="transition"></PhView>
       </div>
       <div v-else-if="mode === 'edit'">
         <PhEdit @toNextMode="nextMode => toNext(nextMode)" @toLastMode="lastMode => goBack(lastMode)"  @toCancel="cancelCreate()"/>

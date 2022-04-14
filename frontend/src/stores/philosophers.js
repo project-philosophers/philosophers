@@ -7,7 +7,7 @@ export const useStorePhils = defineStore({
   }),
   getters: {
     preprocessTimeline (state) {
-      const phils = state.phils;
+      const phils = state.data;
       return phils.map(d => {
         return {
           id: d.id,

@@ -46,28 +46,28 @@
 
 <template>
   <!-- <Sidebar /> -->
-  <div class="tags absolute ml-15 z-10">
+  <div class="tags absolute ml-15">
     <template v-for="tagsType in tagsTypes">
-    <div class="pb-10">
-    <!-- <h1 class="font-bold">{{ tagsType.type }}</h1> -->
-    <h1 class="font-bold">{{ tagsType }}</h1>
-    <div class="tags-area">
-      <template v-for="tag in tags">
-        <div @click="tagClick(tag.name)">
-          <span>{{ tag.name }}</span>
+      <div class="pb-10">
+        <!-- <h1 class="font-bold">{{ tagsType.type }}</h1> -->
+        <h1 class="font-bold">{{ tagsType }}</h1>
+        <div class="tags-area">
+          <template v-for="tag in tags">
+            <div @click="tagClick(tag.name)">
+              <span>{{ tag.name }}</span>
+            </div>
+          </template>
         </div>
-      </template>
-    </div>
-    <div class="new-tag">
-      <input
-        id="tags-input"
-        class="border-1 border-black"
-        placeholder="new"
-        v-model="newTag"
-      />
-      <div @click="addTag()">add</div>
-    </div>
-    </div>
+        <div class="new-tag">
+          <input
+            id="tags-input"
+            class="border-1 border-black"
+            placeholder="new"
+            v-model="newTag"
+          />
+          <div @click="addTag()">add</div>
+        </div>
+      </div>
     </template>
   </div>
 </template>

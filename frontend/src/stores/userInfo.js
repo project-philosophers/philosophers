@@ -3,16 +3,17 @@ import { defineStore } from 'pinia'
 export const useUserInfo = defineStore({
   id: 'userInfo',
   state: () => ({
-    userInfo: {}
+    info: {}
   }),
   getters: {
+    getUserInfo: (state) => state.info
   },
   actions: {
     addUserInfo (data) {
-      this.userInfo = data;
+      this.info = data;
     },
     removeUserInfo () {
-      this.userInfo = {}
+      this.info = {}
     }
   }
 })

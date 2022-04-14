@@ -1,5 +1,8 @@
 import { ref, reactive } from 'vue';
 import data from './data';
+// import { useStorePhils } from '@/stores/philosophers';
+// const storePhils = useStorePhils();
+// const data = storePhils.data;
 
 export const initPh = () => {
   return {
@@ -21,7 +24,7 @@ export const initPh = () => {
 }
 
 export const getPh = (id) => {
-  return data.find(person => person.id === id)
+  return data.find(ph => ph.id === id)
 }
 
 export const parsePh = (ph) => {

@@ -2,6 +2,7 @@ import * as vueRouter from "vue-router";
 
 
 import Philosophers from './pages/philosophers.vue';
+import PhPage from './pages/philosophers/_id.vue';
 import Literature from './pages/literature.vue';
 
 import User from "./pages/users/_id.vue";
@@ -25,6 +26,11 @@ const routes = [
     path: "/philosophers",
     name: "Philosophers",
     component: Philosophers,
+  },
+  {
+    path: "/philosophers/:id",
+    name: "PhPage",
+    component: PhPage,
   },
   {
     path: "/literature",

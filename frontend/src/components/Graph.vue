@@ -15,16 +15,17 @@
   console.log('presentPhils', presentPhils.data);
 
   // const phils = ref(presentPhils.data);
-  const [phils, setPhils] = useState([]);
-
+  // const [phils, setPhils] = useState([]);
+  const phils = ref([]);
+  // phils.value = presentPhils.data;
 
   watch(presentPhils, () => {
-    setPhils(presentPhils.data);
-    // phils.value = presentPhils.data;
+    // setPhils(presentPhils.data);
+    phils.value = presentPhils.data;
     // presentPhils.data === undefined 
     //   ? console.log(`*`, phils) 
     //   : phils.value = presentPhils.data
-    console.log('korekore', presentPhils.data);
+    console.log('graphs', phils.value);
   })
 // =======
   // watch(phFiltered, () => {

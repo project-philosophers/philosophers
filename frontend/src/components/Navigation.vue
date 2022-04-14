@@ -1,31 +1,30 @@
 <script setup>
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { useState } from '../lib/state';
 
-  const props = defineProps(['userName']);
-  const userName = props.userName;
+  // const userinfo = ref();
+  const userinfo_init = {
+    'id': '',
+    'name': ''
+  }
+  const [userinfo, setUserinfo] = useState(userinfo_init);
+  import { useUserInfo } from '@/stores/userInfo';
+  const storeUserInfo = useUserInfo();
+  watch(storeUserInfo, () => {
+    setUserinfo(storeUserInfo.info);
+    // userinfo.value = storeUserInfo.info;
+    console.log(storeUserInfo.info);
+  })
 
-  const [isOpen, setIsOpen] = useState(false);
 
-  // let dropdowns = document.querySelectorAll('.dropdown')
-  // window.addEventListener('click', (event) => {
-  //   if (isOpen.value) {
-  //     // console.log(isOpen.value);
-  //     dropdowns.forEach((dropdownButton) => {
-  //       let dropdown = document.querySelector(`.${dropdownButton.dataset.dropdown}`)
-  //       let targetIsDropdown = dropdown == event.target
-  //       console.log(dropdown, targetIsDropdown);
+  const [isOpenData, setIsOpenData] = useState(false);
+  const [isOpenUser, setIsOpenUser] = useState(false);
 
-  //       if (dropdownButton == event.target) {
-  //         return
-  //       }
-
-  //       if ((!targetIsDropdown) && (!dropdown.contains(event.target))) {
-  //         dropdown.classList.remove('show')
-  //       }
-  //     })
-  //   }
-  // })
+  import axios from 'axios';
+  const logout = () => {
+    axios.get('/api/users/logout');
+    console.log('logged out');
+  }
 </script>
 
 <template>
@@ -36,10 +35,10 @@
     </div>
     <div class="links ml-20 flex-row pl-10">
       <div><a href="/home">Home</a></div>
-      <div class="pl-10 cursor-pointer" @click="setIsOpen(!isOpen)">data</div>
-      <template v-if="isOpen">
-        <div class="dropdown fixed top-10 ml-20 w-50 bg-white border-2 border-black rounded-1xl z-999">
-          <ul class="divide-y">
+      <div class="pl-10 cursor-default" @click="setIsOpenData(!isOpenData)">data</div>
+      <template v-if="isOpenData">
+        <div class="dropdown fixed top-10 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
+          <ul class="divide-y-1 divide-black">
             <!-- <li>Home</li> -->
             <li><a href="/philosophers">Philosophers</a></li>
             <li>Literature</li>
@@ -49,8 +48,18 @@
       </template>
     </div>
     <div class="absolute right-10">
-      <template v-if="!!userName">
-        <a href="/users/_id" class="nav-item">{{ userName }}</a>        
+      <!-- <template v-if="isDefinedUserinfo"> -->
+      <template v-if="!!userinfo.id">
+        <!-- <a href="/users/:id" class="nav-item">{{ userinfo.name }}</a>         -->
+        <div class="cursor-default" @click="setIsOpenUser(!isOpenUser)">{{ userinfo.name }}</div>
+        <template v-if="isOpenUser">
+          <div class="dropdown fixed top-10 right-10 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
+            <ul class="divide-y-1 divide-black">
+              <li><a href="/philosophers">My Page</a></li>
+              <li class="cursor-default" @click="logout()">log out</li>
+            </ul>
+          </div>
+        </template>
       </template>
       <template v-else>
         <a href="/users/login" class="nav-item">Login</a>

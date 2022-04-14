@@ -14,25 +14,44 @@ const errorRes = require('../lib/error');
 const log = require('../lib/log');
 
 
-// userpage
-router.get('/', (req, res) => {
-  // if (!req.session.views) {
-  //       req.session.views = 0;
-  //   }
-  //   req.session.views++;
-  //   res.send('Hello World! Count:' + req.session.views);
-  req.session.username = "taiyo";
-  // console.log(req.cookies.username);
-
-  // if logged in
-  if (!req.session.username) {
-    // console.log(req.session.username);
-    req.session.username = "taiyo";
-  // } else {
-  //   res.redirect('/api/users/login');
+// userinfo
+router.get('/info', (req, res) => {
+  const noInfo = {
+    id: '',
+    name: ''
   }
-  res.render('index', { title: req.session.username });
-});
+  const userInfo = req.session.userinfo || noInfo;
+  // const userInfo = {
+  //   id: '123456789',
+  //   name: 'unchi'
+  // }
+  const resJson = {
+    'data': userInfo
+  }
+  res.json(resJson);
+  console.log(userInfo);
+})
+
+
+// userpage
+// router.get('/', (req, res) => {
+//   // if (!req.session.views) {
+//   //       req.session.views = 0;
+//   //   }
+//   //   req.session.views++;
+//   //   res.send('Hello World! Count:' + req.session.views);
+//   req.session.username = "taiyo";
+//   // console.log(req.cookies.username);
+
+//   // if logged in
+//   if (!req.session.username) {
+//     // console.log(req.session.username);
+//     req.session.username = "taiyo";
+//   // } else {
+//   //   res.redirect('/api/users/login');
+//   }
+//   res.render('index', { title: req.session.username });
+// });
 
 router.get('/hey', (req, res) => {
   console.log('hey', req.session.username);
@@ -155,7 +174,7 @@ router.post('/login', [
   // console.log(username);
   // res.json(username)
   // req.session.regenerate(err => {
-  // req.session.username = username;
+  req.session.userinfo = userData;
   // req.session.save();
   res.json(userData);
     // res.render('index', { title: req.session.username });
@@ -166,10 +185,12 @@ router.post('/login', [
 
 
 // logout
-router.get('/logout', function(req, res, next) {
-  const username = req.session.username;
-  console.log(req.session);
-  res.render('index', { title: username });
+router.get('/logout', (req, res, next) => {
+  // const username = req.session.username;
+  req.session.destroy();
+  res.status(200);
+  // console.log(req.session);
+  // res.render('index', { title: username });
 });
 
 

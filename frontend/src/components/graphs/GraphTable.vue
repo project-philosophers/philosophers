@@ -1,18 +1,7 @@
 <script setup>
-  import { nextTick, onBeforeMount, onMounted, ref, watch, computed } from 'vue';
+  import { nextTick, onBeforeMount, onMounted, ref, watch, toRefs } from 'vue';
   const props = defineProps(['data']);
-  // import { usePhilosophers } from '@/stores/philosophers';
-  const phils = props.data;
 
-
-  watch(props.data, (to, from) => {
-    console.log('changed');
-    console.log(to === from)
-  })
-  watch(phils, (to, from) => {
-    console.log('changed');
-    console.log(to === from)
-  })
 
   import { useSelectedPhId } from '@/stores/selectedPh';
   const selectedPhId = useSelectedPhId();
@@ -39,9 +28,11 @@
     "influenced"
   ];
   
+
   const preprocess = (rowData) => {
     const data = JSON.parse(JSON.stringify(rowData));
     // const data = [...rowData];
+    // if (!data) { return []; }
 
     const tagsIndeces = [
       'languages',
@@ -68,11 +59,16 @@
     return data;
   }
 
-  watch(phils, () => {
-    console.log('phils', phils);
-    console.log(props.data);
+  // const phils = toRefs(props);
+  const philsData = ref(preprocess(props.data));
+  watch(props, () => {
+    // phils.value = props.data;
+    // console.log('props', props.data);
+    // philsData.value = props.data ? preprocess(props.data) : [];
+    philsData.value = preprocess(props.data);
+    console.log('phils', philsData.value);
+
   })
-  const philsData = preprocess(props.data);
 
 </script>
 
@@ -91,7 +87,7 @@
       <tbody>
         <template v-for="ph in philsData">
           <tr
-            class='records h-20px'
+            class='records h-20px text-sm'
             @click="selectedPhId.update(ph.id);"
           >
             <template v-for="index in philsIndeces">
@@ -175,7 +171,7 @@
   display: none;
 }
 .container tbody tr {
-  height: 40px;
+  height: 30px;
   /* max-height: 40px; */
   cursor: default;
   /* overflow-y: hidden; */

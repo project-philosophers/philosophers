@@ -2,7 +2,8 @@
   import { ref } from 'vue'
   import { usePhInput } from '@/stores/phForm'
   import { parsePh } from '../../util/philosopher';
-  import client from '../../../config/axios.js'
+  import axios from 'axios';
+  import client from '../../../config/axios.js';
 
   const emit = defineEmits(['toNextMode', 'toLastMode'])
   const props = defineProps(['phId'])
@@ -13,40 +14,39 @@
   ph.value = parsePh(info);
   const resError = ref(false);
 
-  // const submitPh = async () => {
-  //   if (mode.value === 'create'){
-  //     const res = await client({
-  //       method: 'post',
-  //       url: `/create`,
-  //       data: {
-  //         id: ph.id,
-  //         ...info
-  //       }
-  //     }).catch(error => {
-  //       console.log(error),
-  //       resError.value = true
-  //     })
-  //   } else {
-  //     const res = await client({
-  //       method: 'put',
-  //       url: `/update`,
-  //       data: {
-  //         ...info
-  //       }
-  //     }).catch(error => {
-  //       console.log(error),
-  //       resError.value = true
-  //     })
-  //   }
+  const submitPh = async () => {
+    if (mode.value === 'create'){
+      const res = await axios({
+        method: 'post',
+        url: `/api/philosophers//create`,
+        data: {
+          ph: info
+        }
+      }).catch(error => {
+        console.log(error),
+        resError.value = true
+      })
+    } else {
+      const res = await axios({
+        method: 'post',
+        url: `/api/philosophers/update`,
+        data: {
+          ph: info
+        }
+      }).catch(error => {
+        console.log(error),
+        resError.value = true
+      })
+    }
 
-  //   if (ref.state === 200) {
-  //     emit('toNextMode', 'view')
-  //   }
-  // }
-
-  const submitPh = () => {
-    console.log(info);
+    if (res.status === 200) {
+      emit('toNextMode', 'view')
+    }
   }
+
+  // const submitPh = () => {
+  //   console.log(info);
+  // }
 
   const goBack = () => {
     emit('toLastMode', 'edit')
