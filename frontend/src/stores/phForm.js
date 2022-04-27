@@ -40,3 +40,15 @@ export const usePhInput = defineStore({
     }
   }
 })
+
+export const useMode = defineStore({
+  id: 'mode',
+  state: () => ({
+    mode: 'view'
+  }),
+  actions: {
+    switchMode(mode) {
+      this.mode = mode;
+    }
+  }
+})

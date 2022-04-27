@@ -29,7 +29,7 @@
 
 <template>
   <!-- <div class='nav w-full h-12 flex justify-around items-center shadow-md'> -->
-  <div class='nav w-full h-12 flex items-center'>
+  <div class='nav flex items-center'>
     <div class="ml-10 text-3xl">
       <a href="/">Falāsifa</a>
     </div>
@@ -41,7 +41,7 @@
           <ul class="divide-y-1 divide-black">
             <!-- <li>Home</li> -->
             <li><a href="/philosophers">Philosophers</a></li>
-            <li>Literature</li>
+            <li><a href="/literature">Literature</a></li>
             <li>Keywords</li>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 <script setup>
   import { ref, watch } from 'vue';
-  import { usePhInput } from '@/stores/phForm'
+  import { usePhInput } from '@/stores/phForm';
   import { initPh, getPh, getNameList } from '../../util/philosopher';
 
   const emit = defineEmits(['toNextMode', 'toLastMode', 'toCancel'])

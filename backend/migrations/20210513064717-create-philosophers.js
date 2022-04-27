@@ -49,12 +49,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       influences: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        comment: 'tags'
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       influenced: {
-        type: Sequelize.ARRAY(Sequelize.STRING),
-        comment: 'tags'
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       createdAt: {
         allowNull: false,

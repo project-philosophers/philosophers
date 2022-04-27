@@ -18,18 +18,25 @@
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <Nav />
-      <!-- <Nav /> -->
+  <!-- <header> -->
+  <div class="wrapper flex flex-col">
+    <Nav class="top-0 w-screen h-12" />
+    <div class="flex-1">
+      <router-view></router-view>
     </div>
-  </header>
-  <router-view></router-view>
+  </div>
+  <!-- </header> -->
 </template>
 
 <style>
   * {
+    /* width: 100vw; */
+    /* height: 100vh; */
     overflow: hidden;
     font-family: 'Courier';
+  }
+  .wrapper {
+    width: 100vw;
+    height: 100vh;
   }
 </style>

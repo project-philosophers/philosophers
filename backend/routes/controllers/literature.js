@@ -81,33 +81,57 @@ router.post('/create',
 // read
 // req: null
 // res: [phils]
-const readPhils = async (req, res, next) => {
-	const phils = await db.Philosophers.
-		findAll({
-			include: [
-				{ model: db.Languages, as: "languages" },
-				{ model: db.Nationalities, as: "nationalities" },
-				{ model: db.Education, as: "education" },
-				{ model: db.Categories, as: "categories" },
-				{ model: db.Keywords, as: "keywords" }
-			]
+const readLitAll = async (req, res, next) => {
+	const lit_all = await db.Literature
+		.findAll({
+			// include: [
+			// 	{ model: db.Languages, as: "languages" },
+			// 	{ model: db.Nationalities, as: "nationalities" },
+			// 	{ model: db.Education, as: "education" },
+			// 	{ model: db.Categories, as: "categories" },
+			// 	{ model: db.Keywords, as: "keywords" }
+			// ]
 		})
 		.catch(err => console.error(err.stack));
 
-	res.locals.phils = phils;
+	res.locals.lit_all = lit_all;
 	next();
 }
 
 router.get('/read',
-	readPhils,
+	readLitAll,
 	(req, res) => {
-		const phils = res.locals.phils;
+		const lit_all = res.locals.lit_all;
 		const resJSON = {
-			'data': phils
+			'data': lit_all
 		};
 		res.json(resJSON);
 	}
 );
+
+const readPh = async (req, res, next) => {
+	const ph = await db.Philosophers
+		.findOne({
+			where: {
+				id: req.params.id
+			}
+		})
+		.catch(err => console.error(err.stack));
+		// console.log(ph.dataValues);
+		res.locals.ph = ph;
+		next();
+}
+
+router.get('/read/:id',
+	readPh,
+	(req, res) => {
+		const ph = res.locals.ph;
+		const resJSON = {
+			'data': ph
+		};
+		res.json(resJSON);
+	}
+)
 
 
 

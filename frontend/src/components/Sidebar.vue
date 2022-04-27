@@ -42,7 +42,7 @@
         <li class="cursor-pointer" @click="graphType.switchType('timeline')">Keywords</li>
       </ul>
     </div>
-    <div class="absolute bottom-15">Add</div>
+    <div class="absolute bottom-0">Add</div>
   </div>
 </template>
 

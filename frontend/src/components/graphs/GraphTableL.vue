@@ -4,75 +4,50 @@
 
   const props = defineProps(['data']);
 
-
   import { useSelectedPhId } from '@/stores/selectedPh';
   const selectedPhId = useSelectedPhId();
 
   const dataIndeces = [
-    "name",
+    "title",
     // "name_original",
     // "name_other",
-    "born",
-    // "born_date",
-    // "born_questioning",
-    "died",
-    // "died_date",
-    // "died_questioning",
-    "gender",
-    "birthplace",
-    "deathplace",
-    "languages",
-    "nationalities",
-    "education",
-    "categories",
-    "keywords",
-    "influences",
-    "influenced"
+    "year",
+    "authors",
+    // "languages"
   ];
   
 
   const preprocess = (rowData) => {
     const data = JSON.parse(JSON.stringify(rowData));
+
     // const data = [...rowData];
     // if (!data) { return []; }
 
-    const tagsIndeces = [
-      'languages',
-      'nationalities',
-      'education',
-      'categories',
-      'keywords'
-    ];
+    // const tagsIndeces = [
+    //   'authors',
+    //   // 'languages'
+    // ];
 
-    data.forEach(d => {
-      tagsIndeces.forEach(tagsIndex => {
-        d[tagsIndex] = d[tagsIndex].map(t => t.name);
-        // console.log(t.name);
-      });
-
-      if (d.influences) {
-        d.influences = d.influences.map(infs => data.find(dd => dd.id == infs).name);
-      }
-      if (d.influenced) {
-        d.influenced = d.influenced.map(infd => data.find(dd => dd.id == infd).name);
-      }
-    });
+    // data.forEach(d => {
+    //   tagsIndeces.forEach(tagsIndex => {
+    //     d[tagsIndex] = d[tagsIndex].map(t => t.name);
+    //     // console.log(t.name);
+    //   });
+    // });
 
     return data;
   }
 
-  // const phils = toRefs(props);
-  const philsData = ref(preprocess(props.data));
   const [viewData, setViewData] = useState(preprocess(props.data));
   watch(props, () => {
     setViewData(preprocess(props.data));
-    // console.log('view', viewData.value);
+    console.log('view', viewData.value);
   })
 
 </script>
 
 <template>
-  <div class="container relative">
+  <div class="container">
     <table>
       <thead>
         <tr>
@@ -103,7 +78,7 @@
 
 <style>
 .container {
-  /* position: inherit; */
+  position: inherit;
   /* width: calc(100vw - 300px); */
   height: calc(100vh - 63px);
   overflow-x: scroll;

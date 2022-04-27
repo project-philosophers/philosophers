@@ -12,10 +12,13 @@ router.post('/post', (req, res) => {
 })
 
 
-const philsContoroller = require(('./model_routers/philosophers'));
+const philsContoroller = require(('./controllers/philosophers'));
 router.use('/philosophers', philsContoroller);
 
-const tagsContoroller = require(('./model_routers/tags'));
+const LitContoroller = require(('./controllers/literature'));
+router.use('/literature', LitContoroller);
+
+const tagsContoroller = require(('./controllers/tags'));
 router.use('/tags', tagsContoroller);
 
 module.exports = router;

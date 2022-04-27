@@ -1,6 +1,5 @@
 <script setup>
   import { ref, watch } from 'vue';
-  import { useState } from '../lib/state';
 
   import GraphNetwork from './graphs/GraphNetwork.vue';
   import GraphTimeline from './graphs/GraphTimeline.vue';
@@ -12,42 +11,39 @@
 
   import { usePresentPhils } from '@/stores/philosophers'
   const presentPhils = usePresentPhils();
-  console.log('presentPhils', presentPhils.data);
+  // console.log('presentPhils', presentPhils.data);
 
   // const phils = ref(presentPhils.data);
   // const [phils, setPhils] = useState([]);
-  const phils = ref([]);
+  // const phils = ref([]);
   // phils.value = presentPhils.data;
+  import { useState } from '@/lib/state';
+  const [data, setData] = useState([]);
 
   watch(presentPhils, () => {
+    setData(presentPhils.data);
     // setPhils(presentPhils.data);
-    phils.value = presentPhils.data;
+    // phils.value = presentPhils.data;
     // presentPhils.data === undefined 
     //   ? console.log(`*`, phils) 
     //   : phils.value = presentPhils.data
-    console.log('graphs', phils.value);
+
+    // console.log('graphs', phils.value);
   })
-// =======
-  // watch(phFiltered, () => {
-  //   console.log('korekore', phFiltered.data);
-  //   // phils.value = phFiltered.data;
-  //   if (phFiltered.data === undefined) return;
-  //   phils.value = phFiltered.data
-  // })
-// >>>>>>> 2fb3d07dfb06598019241c476582935f6c5efffe
+
 </script>
 
 
 <template>
   <div class='graphs_container flex'>
     <template v-if="graphType.type === 'network'">
-      <GraphNetwork :data="phils" />
+      <GraphNetwork :data="data" />
     </template>
     <template v-else-if="graphType.type === 'timeline'">
-      <GraphTimeline :data="phils" />
+      <GraphTimeline :data="data" />
     </template>
     <template v-else-if="graphType.type === 'table'">
-      <GraphTable :data="phils" />
+      <GraphTable :data="data" />
     </template>
   </div>
 </template>
