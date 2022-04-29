@@ -21,53 +21,57 @@
   // // const getNameList = (arr) => arr.map(id => getPh(id).name);
 
 
-  // const props = defineProps(['phId'])
+  const props = defineProps(['data'])
   // // const props = defineProps(['data'])
   // // const [phData, setPhData] = useState({});
   // // let phData = [];
-  // import { copyObj } from '@/lib/funcObjs';
+  import { copyObj } from '@/lib/funcObjs';
   // let viewPhData = copyObj(getPh(props.phId));
-
+  let viewPhData = copyObj(props.data);
+  watch(props, () => {
+    viewPhData = props.data;
+  })
+  console.log('view', viewPhData);
 
   // const emit = defineEmits(['setInputData']);
 
 
-  // const resetKey = ref(0);
-  // const reset = () => resetKey.value++;
+  const resetKey = ref(0);
+  const reset = () => resetKey.value++;
 
 
-  // import { useMode } from '@/stores/phForm';
-  // const storeMode = useMode();
-  // const [mode, setMode] = useState(storeMode.mode);
-  // watch(storeMode, (from, to) => {
-  //   setMode(storeMode.mode);
-  //   if (mode.value === 'view') {
-  //     reset();
-  //   } else if (mode.value === 'edit') {
-  //     console.log('edit!');
-  //   } else {
-  //     // check
-  //     console.log('phData', getPh(props.phId));
-  //     console.log('viewPhData', viewPhData);
-  //     emit('setInputData', viewPhData);
-  //   }
-  // })
+  import { useMode } from '@/stores/phForm';
+  const storeMode = useMode();
+  const [mode, setMode] = useState(storeMode.mode);
+  watch(storeMode, (from, to) => {
+    setMode(storeMode.mode);
+    if (mode.value === 'view') {
+      reset();
+    } else if (mode.value === 'edit') {
+      console.log('edit!');
+    } else {
+      // check
+      // console.log('phData', getPh(props.phId));
+      // console.log('viewPhData', viewPhData);
+      // emit('setInputData', viewPhData);
+    }
+  })
 
 
   // const [phDataViewType, setPhDataViewType] = useState('info');
 
-  // const phDataDic = {
-  //   name: 'Name',
-  //   name_original: 'Original Name',
-  //   name_other: 'Other Names',
-  //   gender: 'Gender',
-  //   born: 'Born',
-  //   born_date: 'Born Date (dd/mm)',
-  //   birthplace: 'Birth Place',
-  //   died: 'Died',
-  //   died_date: 'Died Date (dd/mm)',
-  //   deathplace: 'Death Place'
-  // }
+  const phDataDic = {
+    name: 'Name',
+    name_original: 'Original Name',
+    name_other: 'Other Names',
+    gender: 'Gender',
+    born: 'Born',
+    born_date: 'Born Date (dd/mm)',
+    birthplace: 'Birth Place',
+    died: 'Died',
+    died_date: 'Died Date (dd/mm)',
+    deathplace: 'Death Place'
+  }
 
 
   // const input = (e, item) => {
@@ -101,15 +105,14 @@
 </script>
 
 <template>
-  {{ data[0].id }}
-  <!-- <template v-if="!!viewPhData"> -->
+  <!-- {{ data[0] ? data[0].id : '' }} -->
+  <template v-if="!!viewPhData">
   <div class="h-12/12" :key="resetKey">
     <div class="w-2/2 h-12/12 mt-2 pb-10 text-xs overflow-y-scroll">
-      <!-- <template v-for="item in Object.keys(phDataDic)">
+      <template v-for="item in Object.keys(phDataDic)">
         <div class='block w-full my-1'>
           <div
             class="input pl-2"
-            name="div"
             :contenteditable="mode === 'edit'"
             @input="(e) => input(e, item)"
             :placeholder="phDataDic[item]"
@@ -117,10 +120,10 @@
             {{ viewPhData[item] }}
           </div>
         </div>
-      </template> -->
+      </template>
     </div>
   </div>
-  <!-- </template> -->
+  </template>
 </template>
 
 <style scoped>

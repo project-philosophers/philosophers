@@ -1,7 +1,8 @@
 const env = process.env.NODE_ENV || 'development';
 // const isLocal = process.env.IS_LOCAL || false;
-const isLocal = import.meta.env.IS_LOCAL || false;
-console.log(isLocal)
+// const isLocal = import.meta.env.IS_LOCAL || false;
+const isLocal = true;
+// console.log(import.meta.env)
 
 import axios from 'axios';
 // import log from '../../backend/lib/log';

@@ -5,10 +5,13 @@
   const props = defineProps(['data']);
 
   const [phData, setPhData] = useState(props.data);
+  // let data = props.data;
   watch(props, () => {
+    // data = props.data;
     setPhData(props.data)
     // console.log(props.data);
   })
+  // console.log(phData.value);
 
   import Info from './Info.vue';
   import Items from './Items.vue';
@@ -26,7 +29,7 @@
     </div>
     <div class="flex-1 flex flex-row">
       <div class="right-0 w-3/12">
-        <!-- <Info /> -->
+        <Info :data="phData" />
         <!-- <PhData :data="phData" /> -->
         <!-- <Buttons :storeMode="storePageMode" @submit="submit()" /> -->
       </div>

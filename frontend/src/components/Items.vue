@@ -25,6 +25,12 @@
     { ref: 'ref2', quote: 'quote2' },
     { ref: 'ref3', quote: 'quote3' }
   ]
+
+  const literatureLists = [
+    { year: 'year1', title: 'title1' },
+    { year: 'year2', title: 'title2' },
+    { year: 'year3', title: 'title3' }
+  ]
 </script>
 
 <template>
@@ -54,12 +60,18 @@
         </div>
       </template>
       <template v-if="selectedItem === 'literature'">
-        <div class="h-12/12 p-3 divide-y divide-black">
-          <template v-for="article in aboutArticles">
-            <div class="p-1">
-              <div>{{ article.ref }}</div>
-              <div>{{ article.quote }}</div>
-            </div>
+        <div class="h-12/12 p-3">
+          <template v-for="lit in literatureLists">
+            <!-- <div class=""> -->
+              <table>
+                <tbody>
+                  <tr>
+                    <td>{{ lit.year }}</td>
+                    <td>{{ lit.title }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            <!-- </div> -->
           </template>
         </div>
       </template>
