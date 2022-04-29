@@ -7,6 +7,7 @@ import WindiCSS from 'vite-plugin-windicss'
 const isLocal = process.env.IS_LOCAL || false;
 let serverConfig;
 if (isLocal) {
+  console.log('local');
   serverConfig = {
     port: 8080,
     proxy: {
@@ -14,6 +15,7 @@ if (isLocal) {
     }
   };
 } else {
+  console.log('remote');
   serverConfig = {
     port: 8080,
     proxy: {
@@ -28,7 +30,6 @@ if (isLocal) {
   };
 }
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), WindiCSS()],
   resolve: {

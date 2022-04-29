@@ -64,12 +64,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class='search-container left-1/12 w-7/12 pt-5 pl-10 border-2 rounded-3xl z-2'>
+  <div class='search-container left-1/12 w-7/12 pt-5 pl-10 border-2 rounded-1xl z-2 flex flex-col'>
     <!-- <div>Search</div> -->
-    <div>
+    <div class="h-10">
       <input
         id="name-search"
-        class="ml-5"
+        class="m-2 h-5 text-sm"
         placeholder="Name"
         @input="(e) => changeText(e)"
       />

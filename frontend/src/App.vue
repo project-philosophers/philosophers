@@ -20,7 +20,7 @@
 <template>
   <!-- <header> -->
   <div class="wrapper flex flex-col">
-    <Nav class="top-0 w-screen h-12" />
+    <Nav class="top-0 w-screen h-10" />
     <div class="flex-1">
       <router-view></router-view>
     </div>

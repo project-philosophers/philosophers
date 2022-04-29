@@ -37,7 +37,7 @@
       <div><a href="/home">Home</a></div>
       <div class="pl-10 cursor-default" @click="setIsOpenData(!isOpenData)">data</div>
       <template v-if="isOpenData">
-        <div class="dropdown fixed top-10 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
+        <div class="dropdown fixed top-11 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
           <ul class="divide-y-1 divide-black">
             <!-- <li>Home</li> -->
             <li><a href="/philosophers">Philosophers</a></li>
@@ -53,7 +53,7 @@
         <!-- <a href="/users/:id" class="nav-item">{{ userinfo.name }}</a>         -->
         <div class="cursor-default" @click="setIsOpenUser(!isOpenUser)">{{ userinfo.name }}</div>
         <template v-if="isOpenUser">
-          <div class="dropdown fixed top-10 right-10 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
+          <div class="dropdown fixed top-11 right-10 p-2 w-50 bg-white border-1 border-black rounded-md shadow-xl z-999">
             <ul class="divide-y-1 divide-black">
               <li><a href="/philosophers">My Page</a></li>
               <li class="cursor-default" @click="logout()">log out</li>

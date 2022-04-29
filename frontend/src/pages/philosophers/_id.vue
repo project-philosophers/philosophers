@@ -4,13 +4,27 @@
   const route = useRoute();
   const phId = route.params.id;
 
-  // import PhView from '../../components/Ph/PhView.vue';
-  // import Ph from '../../components/Ph.vue';
+
   import Page from '../../components/Page.vue';
 
+
+  import { useState } from '@/lib/state';
+
+// Or, get in 'App.vue'
   import { useStorePhils } from '@/stores/philosophers';
   const storePhils = useStorePhils();
-  console.log(storePhils.data);
+  import { lenObj } from '@/lib/funcObjs';
+  import { toEmptyArray } from '@/lib/toEmptyArrays';
+  onMounted(async () => {
+    let data;
+    if (lenObj(storePhils.data) === 0) {
+      data = await axios.get('/api/philosophers/read').then(res => toEmptyArray(res.data.data));
+    } else {
+      data = storePhils.data;
+    }
+    storePhils.setStorePhils(data);
+  })
+  // console.log(storePhils.data);
   // const data = storePhils.data;
   // const getPh = id => data.find(ph => ph.id === id);
   // const getNameList = (arr) => arr.map(id => getPh(id).name);
@@ -18,9 +32,7 @@
   // const phData = getPh(phId);
   // console.log(phData);
 
-  import { useState } from '@/lib/state';
   const [phData, setPhData] = useState([]);
-
   import axios from 'axios';
   onMounted(async () => {
     const data = await axios.get(`/api/philosophers/read/${phId}`).then(res => res.data.data);

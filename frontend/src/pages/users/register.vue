@@ -50,7 +50,7 @@
           </div>
           <div class="w-full flex flex-wrap">
             <!-- <button class="flex justify-center items-center px-1 bg-gray-600 text-white rounded-xl h-8 min-w-[150px]" @click="handleClick()">Register</button> -->
-            <div class="flex justify-center items-center px-1 bg-gray-600 text-white rounded-xl h-8 min-w-[150px]" @click="handleClick()">Register</div>
+            <div class="flex justify-center items-center px-1 bg-gray-600 text-white rounded-xl h-8 min-w-[150px] cursor-default" @click="handleClick()">Register</div>
           </div>
         </form>
       </div>
