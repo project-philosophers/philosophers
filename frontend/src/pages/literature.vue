@@ -19,7 +19,7 @@
 
   import { toEmptyArray } from '../lib/toEmptyArrays';
   onBeforeMount(async () => {
-    const gotData = await axios.get('/api/literature/read')
+    const gotData = await client.get('/api/literature/read')
       // .then(res => toEmptyArray(res.data.data));
       .then(res => res.data.data);
       // phils.value = data;

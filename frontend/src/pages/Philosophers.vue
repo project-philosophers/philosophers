@@ -21,7 +21,7 @@
 
   import { toEmptyArray } from '../lib/toEmptyArrays';
   onBeforeMount(async () => {
-    const gotData = await axios.get('/api/philosophers/read')
+    const gotData = await client.get('/api/philosophers/read')
       .then(res => toEmptyArray(res.data.data));
     setData(gotData);
     setStorePhilsData(gotData);

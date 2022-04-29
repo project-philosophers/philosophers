@@ -1,16 +1,18 @@
 <script setup>
   import { ref, onBeforeMount } from 'vue';
-  import axios from 'axios';
+  // import axios from 'axios';
+  import client from '../config/axios';
 
   import { useUserInfo } from '@/stores/userInfo';
   const storeUserInfo = useUserInfo();
   // const userinfo = ref();
   onBeforeMount(async () => {
-    const userinfo = await axios.get('/api/users/info')
+    const userinfo = await client.get('/api/users/info')
       .then(res => res.data.data)
       .catch(err => console.error(err.stack));
     // userinfo.value = userinfo0;
-    storeUserInfo.info = userinfo;
+    // storeUserInfo.info = userinfo;
+    storeUserInfo.addUserInfo(userinfo)
   })
 
   import Nav from './components/Navigation.vue';

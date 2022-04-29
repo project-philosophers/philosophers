@@ -4,6 +4,9 @@
   const route = useRoute();
   const phId = route.params.id;
 
+  import axios from 'axios';
+  import client from '../../../config/axios';
+
 
   import Page from '../../components/Page.vue';
 
@@ -18,7 +21,7 @@
   onMounted(async () => {
     let data;
     if (lenObj(storePhils.data) === 0) {
-      data = await axios.get('/api/philosophers/read').then(res => toEmptyArray(res.data.data));
+      data = await client.get('/api/philosophers/read').then(res => toEmptyArray(res.data.data));
     } else {
       data = storePhils.data;
     }
@@ -33,9 +36,8 @@
   // console.log(phData);
 
   const [phData, setPhData] = useState([]);
-  import axios from 'axios';
   onMounted(async () => {
-    const data = await axios.get(`/api/philosophers/read/${phId}`).then(res => res.data.data);
+    const data = await client.get(`/api/philosophers/read/${phId}`).then(res => res.data.data);
     setPhData(data)
   });
 

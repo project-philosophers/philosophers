@@ -3,13 +3,10 @@
   import { useState } from '../lib/state';
 
   // const userinfo = ref();
-  const userinfo_init = {
-    'id': '',
-    'name': ''
-  }
-  const [userinfo, setUserinfo] = useState(userinfo_init);
+
   import { useUserInfo } from '@/stores/userInfo';
   const storeUserInfo = useUserInfo();
+  const [userinfo, setUserinfo] = useState(storeUserInfo.info);
   watch(storeUserInfo, () => {
     setUserinfo(storeUserInfo.info);
     // userinfo.value = storeUserInfo.info;
@@ -21,8 +18,9 @@
   const [isOpenUser, setIsOpenUser] = useState(false);
 
   import axios from 'axios';
+  import client from '../../config/axios';
   const logout = () => {
-    axios.get('/api/users/logout');
+    client.get('/api/users/logout');
     console.log('logged out');
   }
 </script>
