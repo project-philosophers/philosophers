@@ -2,7 +2,6 @@ const env = process.env.NODE_ENV || 'development';
 const isLocal = import.meta.env.VITE_IS_LOCAL || false;
 
 import axios from 'axios';
-// import log from '../../backend/lib/log';
 
 let client = axios;
 if (isLocal) {
