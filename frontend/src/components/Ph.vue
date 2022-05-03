@@ -56,13 +56,14 @@
     //   storeMode.switchMode('view');
     // }
     // }
-    submitPh(inputData.value)
+    const res = submitPh(inputData.value)
       // .then(res => {
       //   if (res.status === 200) {
       //     storeMode.switchMode('view');
       //   }
       // })
       .catch(err => console.error(err.stack));
+    console.log(res.status);
   }
 
 

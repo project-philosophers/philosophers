@@ -5,14 +5,32 @@ const db = require('../../models/index');
 
 const log = require('../../lib/log');
 
+// const TagsController = require('./controllers/tags.js');
 
-// authentification
+
+
+const initReq = (req, res, next) => {
+	const userinfo = req.session.userinfo;
+
+	const infomation = {
+		userId: userinfo.id,
+		DB: 'philosophers',
+		action: '',
+		reqBody: null
+	}
+	next();
+}
+
 const authUser = (req, res, next) => {
-	// const userinfo = req.session.userinfo;
-  // if (!userinfo) {
-  // 	console.log("not login");
-	// 	throw new Error("not login");
-  // }
+	const userinfo = req.session.userinfo;
+  if (!userinfo.id) {
+  	console.log("not login");
+		throw new Error("not login");
+  }
+	next();
+}
+
+const saveLogs = (req, res, next) => {
 	next();
 }
 
@@ -153,6 +171,7 @@ const updatePh = (req, res, next) => {
 	db.Philosophers
 		.update({
 			name: ph.name,
+			name_full: ph.name_full,
 			name_original: ph.name_original,
 			name_other: ph.name_other,
 			born: ph.born,
@@ -173,10 +192,16 @@ const updatePh = (req, res, next) => {
 	next();
 }
 
+const updatePhTags = async (req, res, next) => {
+	next();
+}
+
 router.post('/update',
+	initReq,
 	authUser,
 	findPh,
 	updatePh,
+	updatePhTags,
 	// (req, res, next) => {
 	// 	const logData = {
 	// 		userId: userinfo.id,

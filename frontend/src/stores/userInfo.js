@@ -4,8 +4,8 @@ export const useUserInfo = defineStore({
   id: 'userInfo',
   state: () => ({
     info: {
-      'id': '',
-      'name': ''
+      id: '',
+      name: ''
     }
   }),
   getters: {

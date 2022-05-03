@@ -27,11 +27,18 @@ export const useTagsType = defineStore({
 export const useViewType = defineStore({
   id: 'viewType',
   state: () => ({
-    type: ['graph', 'table']
+    view: {
+      thema: 'graph',
+      type: 'table'
+    }
   }),
   actions: {
-    switchType(type) {
-      this.type = type;
+    switchType(arr) {
+      this.view = {
+        // ...this.type,
+        thema: arr[0],
+        type: arr[1]
+      }
     }
   }
 })

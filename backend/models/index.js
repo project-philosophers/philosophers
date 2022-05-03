@@ -91,6 +91,21 @@ tags.forEach(tagName => {
 })
 
 
+db.Philosophers.belongsToMany(db.Literature, {
+  through: "phils-literature",
+  as: 'literature',
+  foreignKey: "ph_id",
+  onDelete: "CASCADE"
+});
+db.Literature.belongsToMany(db.Philosophers, {
+  through: "phils-literature",
+  as: "philosophers",
+  foreignKey: "lit_id",
+  onDelete: "CASCADE"
+});
+
+
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

@@ -27,9 +27,9 @@ module.exports = {
       year_questioning: {
         type: Sequelize.BOOLEAN
       },
-      authors: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
-      },
+      // authors: {
+      //   type: Sequelize.ARRAY(Sequelize.STRING)
+      // },
       authors_questioning: {
         type: Sequelize.BOOLEAN
       },

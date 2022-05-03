@@ -15,9 +15,9 @@
     <div class="mt-10">
       <!-- GRAPHS -->
       <ul>
-        <li class="cursor-pointer" @click="graphType.switchType('table')">table</li>
-        <li class="cursor-pointer" @click="graphType.switchType('timeline')">timeline</li>
-        <li class="cursor-pointer" @click="graphType.switchType('network')">network</li>
+        <li class="cursor-pointer" @click="viewType.switchType(['graph', 'table'])">table</li>
+        <li class="cursor-pointer" @click="viewType.switchType(['graph', 'timeline'])">timeline</li>
+        <li class="cursor-pointer" @click="viewType.switchType(['graph', 'network'])">network</li>
 
         <!-- <li class="cursor-pointer" @click="viewType.switchType(['graph', 'table'])">table</li> -->
         <!-- <li class="cursor-pointer" @click="viewType.switchType(['graph', 'timeline'])">timeline</li> -->

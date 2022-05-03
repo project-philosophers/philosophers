@@ -13,6 +13,7 @@
     // userinfo.value = userinfo0;
     // storeUserInfo.info = userinfo;
     storeUserInfo.addUserInfo(userinfo)
+    console.log('App', userinfo);
   })
 
   import Nav from './components/Navigation.vue';

@@ -12,6 +12,10 @@
     // userinfo.value = storeUserInfo.info;
     console.log(storeUserInfo.info);
   })
+  // let userInfo = storeUserInfo.info;
+  // watch(storeUserInfo, () => {
+  //   userInfo = storeUserInfo.info;
+  // })
 
 
   const [isOpenData, setIsOpenData] = useState(false);

@@ -26,9 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     title_other: {
       type: Sequelize.STRING
     },
-    authors: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
-    },
+    // authors: {
+    //   type: Sequelize.ARRAY(Sequelize.STRING),
+    // },
     authors_questioning: {
       type: Sequelize.BOOLEAN
     },

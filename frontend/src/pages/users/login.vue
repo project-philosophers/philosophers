@@ -3,6 +3,7 @@
   import { useRouter } from 'vue-router';
 
   import axios from 'axios';
+  import client from '../../../config/axios';
 
   import { useUserInfo } from '@/stores/userInfo';
   const storeUserInfo = useUserInfo();
@@ -20,7 +21,7 @@
     }
     // console.log(userinfo);
 
-    axios.post('/api/users/login', {
+    client.post('/api/users/login', {
       data: userinfo
     })
     .then(res => {

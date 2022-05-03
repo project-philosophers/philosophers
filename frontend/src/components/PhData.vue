@@ -69,6 +69,7 @@
       ...viewPhData,
       [item]: value
     };
+    console.log(viewPhData);
   }
 
 
@@ -91,6 +92,14 @@
     }
   })
 
+
+  const tagsIndeces = [
+      'languages',
+      'nationalities',
+      'education',
+      'categories',
+      'keywords'
+    ];
 </script>
 
 <template>
@@ -146,6 +155,18 @@
                   </span>
                 </template>
               </div>
+            </div>
+          </template>
+        </div>
+      </template>
+      <template v-else>
+        <div class="pl-2">
+          <template v-for="key in tagsIndeces">
+            <div>
+              <span>{{ key }}: </span>
+              <template v-if="mode === 'edit'">
+                <span :id="key" :key="editingKey" class='plus inline-block bg-white px-1 py-0 rounded-lg cursor-pointer' @click="(e) => plusInf(e)">{{ editingKey !== key ? '+' : '-' }}</span>
+              </template>
             </div>
           </template>
         </div>
