@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "dev:local": "VITE_IS_LOCAL=true vite",
     "build": "vite build",
     "preview": "vite preview --port 5050"
   },
